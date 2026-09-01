@@ -124,6 +124,7 @@ export function Header() {
           : "bg-background border-b border-transparent",
       )}
     >
+      <TopBar />
       <div className="container-central flex h-16 items-center justify-between gap-6 md:h-20">
         <div className="flex items-center gap-8">
           <Wordmark />
