@@ -195,7 +195,7 @@ export function Header() {
                   <Clock className="size-3.5" aria-hidden />
                   Hoy {todayHours()}
                 </p>
-                <
+                <a
                   href={site.brandUrl}
                   target="_blank"
                   rel="noreferrer"
