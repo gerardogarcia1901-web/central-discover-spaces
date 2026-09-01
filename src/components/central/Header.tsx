@@ -191,12 +191,11 @@ export function Header() {
                 ))}
               </nav>
               <div className="px-6 py-8">
-                <Button asChild variant="secondary" className="w-full rounded-none">
-                  <Link to="/contacto" onClick={() => setOpen(false)}>
-                    Contacto
-                  </Link>
-                </Button>
-                <a
+                <p className="flex items-center gap-2 eyebrow text-ink-foreground/60">
+                  <Clock className="size-3.5" aria-hidden />
+                  Hoy {todayHours()}
+                </p>
+                <
                   href={site.brandUrl}
                   target="_blank"
                   rel="noreferrer"
