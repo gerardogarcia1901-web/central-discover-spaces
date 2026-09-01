@@ -142,22 +142,17 @@ export function Header() {
           </nav>
         </div>
 
-        <div className="flex items-center gap-1 md:gap-2">
-          <a
-            href={site.brandUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="hidden items-center gap-2 rounded-full px-3 py-2 eyebrow text-foreground/70 transition-colors hover:bg-foreground/10 hover:text-foreground lg:inline-flex"
+        <div className="flex items-center gap-1 md:gap-3">
+          <Link
+            to="/visitanos"
+            className="hidden items-center gap-2 eyebrow text-foreground/70 transition-colors hover:text-foreground lg:inline-flex"
           >
-            Ver todos los CENTRAL
-            <ExternalLink className="size-3.5" aria-hidden />
-          </a>
+            <Clock className="size-3.5" aria-hidden />
+            Hoy {todayHours()}
+          </Link>
 
           <SearchDialog />
 
-          <Button asChild size="sm" className="hidden rounded-none px-5 eyebrow md:inline-flex">
-            <Link to="/contacto">Contacto</Link>
-          </Button>
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
