@@ -1,25 +1,26 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, MapPin, Search, Globe, X } from "lucide-react";
+import { Menu, Search, ExternalLink, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { mainNav } from "@/data/site";
-import { locations, statusLabels } from "@/data/locations";
-import { stores } from "@/data/catalog";
+import { mainNav, site } from "@/data/site";
+import { allStores } from "@/data/stores";
 import { cn } from "@/lib/utils";
 
-function Wordmark({ className }: { className?: string }) {
+function Wordmark({ onNavigate }: { onNavigate?: () => void }) {
   return (
-    <Link to="/" className={cn("wordmark text-xl leading-none md:text-2xl", className)} aria-label="CENTRAL, inicio">
-      CENTRAL
+    <Link
+      to="/"
+      onClick={onNavigate}
+      className="flex flex-col leading-none"
+      aria-label={`${site.fullName}, inicio`}
+    >
+      <span className="wordmark text-xl leading-none md:text-2xl">CENTRAL</span>
+      <span className="mt-1 text-[0.6rem] font-medium uppercase tracking-[0.28em] text-muted-foreground md:text-[0.65rem]">
+        {site.subtitle}
+      </span>
     </Link>
   );
 }
@@ -27,7 +28,7 @@ function Wordmark({ className }: { className?: string }) {
 function SearchDialog() {
   const [query, setQuery] = useState("");
   const results = query.trim()
-    ? stores.filter((s) => s.name.toLowerCase().includes(query.trim().toLowerCase())).slice(0, 6)
+    ? allStores.filter((s) => s.name.toLowerCase().includes(query.trim().toLowerCase())).slice(0, 6)
     : [];
 
   return (
@@ -42,7 +43,7 @@ function SearchDialog() {
       </DialogTrigger>
       <DialogContent className="top-24 max-w-2xl translate-y-0 rounded-none border-border p-0">
         <DialogHeader className="border-b px-6 py-4">
-          <DialogTitle className="eyebrow text-muted-foreground">Buscar en CENTRAL</DialogTitle>
+          <DialogTitle className="eyebrow text-muted-foreground">Buscar en San Miguel Centro</DialogTitle>
         </DialogHeader>
         <div className="p-6">
           <Input
@@ -90,7 +91,9 @@ export function Header() {
     <header
       className={cn(
         "sticky top-0 z-50 w-full transition-all duration-500",
-        scrolled ? "bg-background/95 backdrop-blur border-b border-border" : "bg-background border-b border-transparent",
+        scrolled
+          ? "bg-background/95 backdrop-blur border-b border-border"
+          : "bg-background border-b border-transparent",
       )}
     >
       <div className="container-central flex h-16 items-center justify-between gap-6 md:h-20">
@@ -111,48 +114,19 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-1 md:gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="hidden items-center gap-2 rounded-full px-3 py-2 eyebrow transition-colors hover:bg-foreground/10 md:inline-flex">
-                <MapPin className="size-4" />
-                Ubicaciones
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-72 rounded-none">
-              {locations.map((loc) => (
-                <DropdownMenuItem key={loc.slug} asChild>
-                  <Link to="/ubicaciones/$slug" params={{ slug: loc.slug }} className="flex flex-col items-start gap-0.5 py-3">
-                    <span className="font-display text-sm font-semibold uppercase tracking-wide">{loc.shortName}</span>
-                    <span className="text-xs text-muted-foreground">{statusLabels[loc.status]}</span>
-                  </Link>
-                </DropdownMenuItem>
-              ))}
-              <DropdownMenuItem asChild>
-                <Link to="/ubicaciones" className="py-3 text-xs uppercase tracking-widest">
-                  Ver todos los centros
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <a
+            href={site.brandUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="hidden items-center gap-2 rounded-full px-3 py-2 eyebrow text-foreground/70 transition-colors hover:bg-foreground/10 hover:text-foreground lg:inline-flex"
+          >
+            Ver todos los CENTRAL
+            <ExternalLink className="size-3.5" aria-hidden />
+          </a>
 
           <SearchDialog />
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button
-                className="hidden size-9 items-center justify-center rounded-full transition-colors hover:bg-foreground/10 md:inline-flex"
-                aria-label="Seleccionar idioma"
-              >
-                <Globe className="size-4" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="rounded-none">
-              <DropdownMenuItem>Español</DropdownMenuItem>
-              <DropdownMenuItem disabled>English (próximamente)</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          <Button asChild size="sm" className="hidden rounded-none px-5 eyebrow lg:inline-flex">
+          <Button asChild size="sm" className="hidden rounded-none px-5 eyebrow md:inline-flex">
             <Link to="/contacto">Contacto</Link>
           </Button>
 
@@ -165,9 +139,17 @@ export function Header() {
                 <Menu className="size-5" />
               </button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-full border-l-0 bg-ink p-0 text-ink-foreground sm:max-w-md [&>button]:hidden">
+            <SheetContent
+              side="right"
+              className="w-full overflow-y-auto border-l-0 bg-ink p-0 text-ink-foreground sm:max-w-md [&>button]:hidden"
+            >
               <div className="flex h-16 items-center justify-between px-6">
-                <span className="wordmark text-lg">CENTRAL</span>
+                <div className="flex flex-col leading-none">
+                  <span className="wordmark text-lg">CENTRAL</span>
+                  <span className="mt-1 text-[0.6rem] uppercase tracking-[0.28em] text-ink-foreground/50">
+                    {site.subtitle}
+                  </span>
+                </div>
                 <button onClick={() => setOpen(false)} aria-label="Cerrar menú" className="p-2">
                   <X className="size-5" />
                 </button>
@@ -184,27 +166,26 @@ export function Header() {
                   </Link>
                 ))}
               </nav>
-              <div className="px-6 pt-8">
-                <p className="eyebrow text-ink-foreground/50">Nuestros centros</p>
-                <div className="mt-4 space-y-3">
-                  {locations.map((loc) => (
-                    <Link
-                      key={loc.slug}
-                      to="/ubicaciones/$slug"
-                      params={{ slug: loc.slug }}
-                      onClick={() => setOpen(false)}
-                      className="block border border-white/15 px-4 py-3"
-                    >
-                      <span className="block text-sm font-semibold uppercase tracking-wide">{loc.shortName}</span>
-                      <span className="text-xs text-ink-foreground/60">{statusLabels[loc.status]}</span>
-                    </Link>
-                  ))}
-                </div>
-                <Button asChild variant="secondary" className="mt-6 w-full rounded-none">
+              <div className="px-6 py-8">
+                <Button asChild variant="secondary" className="w-full rounded-none">
                   <Link to="/contacto" onClick={() => setOpen(false)}>
                     Contacto
                   </Link>
                 </Button>
+                <a
+                  href={site.brandUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-4 inline-flex w-full items-center justify-center gap-2 border border-white/25 px-4 py-3 eyebrow text-ink-foreground/80"
+                >
+                  Ver todos los CENTRAL
+                  <ExternalLink className="size-3.5" aria-hidden />
+                </a>
+                <p className="mt-8 text-xs leading-relaxed text-ink-foreground/50">
+                  {site.address}
+                  <br />
+                  {site.phone}
+                </p>
               </div>
             </SheetContent>
           </Sheet>

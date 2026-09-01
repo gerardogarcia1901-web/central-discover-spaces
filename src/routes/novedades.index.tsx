@@ -1,19 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
-import lifestyleImg from "@/assets/lifestyle.jpg";
+import lifestyleImg from "@/assets/smc-lifestyle.jpg";
 import { PageHero, Section } from "@/components/central/primitives";
 import { NewsCard } from "@/components/central/cards";
-import { articles } from "@/data/catalog";
+import { articles } from "@/data/news";
+
+const TITLE = "Novedades del centro | CENTRAL San Miguel Centro";
+const DESCRIPTION =
+  "Aperturas, mejoras y notas de la comunidad de CENTRAL San Miguel Centro: lo que ocurre dentro y alrededor de la plaza.";
 
 export const Route = createFileRoute("/novedades/")({
   head: () => ({
     meta: [
-      { title: "Novedades | CENTRAL" },
-      {
-        name: "description",
-        content: "Noticias, aperturas, experiencias y anuncios de los centros comerciales CENTRAL en El Salvador.",
-      },
-      { property: "og:title", content: "Novedades | CENTRAL" },
-      { property: "og:description", content: "Historias y anuncios de la red de centros comerciales CENTRAL." },
+      { title: TITLE },
+      { name: "description", content: DESCRIPTION },
+      { property: "og:title", content: TITLE },
+      { property: "og:description", content: DESCRIPTION },
     ],
   }),
   component: NovedadesPage,
@@ -26,18 +27,20 @@ function NovedadesPage() {
     <>
       <PageHero
         eyebrow="Editorial"
-        title="Novedades CENTRAL"
-        description="Aperturas, expansión, experiencias y comunidad: lo que ocurre dentro y alrededor de nuestros centros comerciales."
+        title="Novedades del centro"
+        description="Aperturas, mejoras a la plaza, programación cultural y comunidad migueleña."
         image={lifestyleImg}
         breadcrumbs={[{ label: "Novedades" }]}
       />
       <Section>
         {featured && <NewsCard article={featured} featured />}
-        <div className="mt-16 grid gap-12 border-t border-border pt-16 md:grid-cols-3">
-          {rest.map((article) => (
-            <NewsCard key={article.slug} article={article} />
-          ))}
-        </div>
+        {rest.length > 0 && (
+          <div className="mt-16 grid gap-12 border-t border-border pt-16 md:grid-cols-3">
+            {rest.map((article) => (
+              <NewsCard key={article.slug} article={article} />
+            ))}
+          </div>
+        )}
       </Section>
     </>
   );

@@ -1,60 +1,59 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import modaImg from "@/assets/moda.jpg";
+import modaImg from "@/assets/smc-moda.jpg";
 import { PageHero, Section } from "@/components/central/primitives";
 import { PromotionCard } from "@/components/central/cards";
 import { FilterBar } from "@/components/central/Filters";
 import { CtaSection } from "@/components/central/CtaSection";
-import { categories, promotions } from "@/data/catalog";
-import { locations } from "@/data/locations";
+import { categories } from "@/data/taxonomy";
+import { promotions } from "@/data/promotions";
+import { allStores } from "@/data/stores";
+
+const TITLE = "Promociones vigentes | CENTRAL San Miguel Centro";
+const DESCRIPTION =
+  "Descuentos y beneficios vigentes en las marcas de CENTRAL San Miguel Centro, con su vigencia y la tienda participante.";
 
 export const Route = createFileRoute("/promociones")({
   head: () => ({
     meta: [
-      { title: "Promociones y campañas | CENTRAL" },
-      {
-        name: "description",
-        content: "Descuentos, campañas y beneficios vigentes en los centros comerciales CENTRAL de El Salvador.",
-      },
-      { property: "og:title", content: "Promociones y campañas | CENTRAL" },
-      { property: "og:description", content: "Aprovecha las promociones activas en los centros CENTRAL." },
+      { title: TITLE },
+      { name: "description", content: DESCRIPTION },
+      { property: "og:title", content: TITLE },
+      { property: "og:description", content: DESCRIPTION },
     ],
   }),
   component: PromocionesPage,
 });
 
 function PromocionesPage() {
-  const [ubicacion, setUbicacion] = useState("todas");
   const [categoria, setCategoria] = useState("todas");
+  const [query, setQuery] = useState("");
+  const storeName = (slug: string) => allStores.find((s) => s.slug === slug)?.name;
 
-  const results = promotions.filter(
-    (p) =>
-      (ubicacion === "todas" || p.locationSlug === ubicacion) &&
-      (categoria === "todas" || p.categorySlug === categoria),
-  );
+  const results = promotions.filter((p) => {
+    const matchCat = categoria === "todas" || p.categorySlug === categoria;
+    const matchQ =
+      !query ||
+      (p.title + p.description + (storeName(p.storeSlug) ?? "")).toLowerCase().includes(query.toLowerCase());
+    return matchCat && matchQ;
+  });
 
   return (
     <>
       <PageHero
         eyebrow="Beneficios"
-        title="Promociones CENTRAL"
-        description="Campañas de temporada, beneficios por consumo y descuentos en marcas participantes de nuestros centros."
+        title="Promociones vigentes"
+        description="Beneficios de temporada en las marcas de la plaza. Cada promoción indica su vigencia y la tienda participante."
         image={modaImg}
         breadcrumbs={[{ label: "Promociones" }]}
       />
 
       <Section className="py-12 md:py-16">
         <FilterBar
+          query={query}
+          onQueryChange={setQuery}
+          searchPlaceholder="Buscar promoción o marca"
           selects={[
-            {
-              label: "Centro",
-              value: ubicacion,
-              onChange: setUbicacion,
-              options: [
-                { value: "todas", label: "Todos los centros" },
-                ...locations.map((l) => ({ value: l.slug, label: l.shortName })),
-              ],
-            },
             {
               label: "Categoría",
               value: categoria,
@@ -72,7 +71,7 @@ function PromocionesPage() {
         {results.length ? (
           <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {results.map((promo) => (
-              <PromotionCard key={promo.slug} promotion={promo} />
+              <PromotionCard key={promo.slug} promotion={promo} storeName={storeName(promo.storeSlug)} />
             ))}
           </div>
         ) : (
@@ -81,16 +80,16 @@ function PromocionesPage() {
           </p>
         )}
         <p className="mt-10 max-w-3xl text-xs leading-relaxed text-muted-foreground">
-          Las promociones aplican únicamente en marcas participantes y durante las fechas indicadas. Consulta términos
-          y condiciones en el punto de venta de cada tienda.
+          Las promociones aplican únicamente en las marcas participantes de CENTRAL San Miguel Centro y durante las
+          fechas indicadas. Consulta términos y condiciones en el punto de venta de cada tienda.
         </p>
       </Section>
 
       <CtaSection
         eyebrow="Marcas participantes"
-        title="Suma tu marca a las campañas CENTRAL"
-        description="Las marcas que operan en nuestros centros participan en campañas conjuntas de temporada con difusión en todos nuestros canales."
-        primary={{ label: "Quiero arrendar", to: "/arrendamientos" }}
+        title="Suma tu marca a las campañas de la plaza"
+        description="Las marcas que operan en San Miguel Centro participan en campañas conjuntas de temporada con difusión en todos nuestros canales."
+        primary={{ label: "Solicitar espacio", to: "/arrendamientos" }}
         secondary={{ label: "Contactar", to: "/contacto" }}
         image={modaImg}
       />

@@ -1,60 +1,48 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import gastronomiaImg from "@/assets/gastronomia.jpg";
+import foodhallImg from "@/assets/smc-foodhall.jpg";
 import { PageHero, Section, SectionHeading } from "@/components/central/primitives";
 import { StoreCard } from "@/components/central/cards";
-import { FilterBar } from "@/components/central/Filters";
+import { CategoryChips, FilterBar } from "@/components/central/Filters";
 import { CtaSection } from "@/components/central/CtaSection";
-import { stores } from "@/data/catalog";
-import { locations } from "@/data/locations";
+import { cuisines, levels } from "@/data/taxonomy";
+import { dining } from "@/data/dining";
 
-const conceptos = [
-  { value: "todos", label: "Todos los conceptos" },
-  { value: "cafe", label: "Cafés y panadería" },
-  { value: "restaurante", label: "Restaurantes" },
-  { value: "postres", label: "Postres y snacks" },
-];
+const TITLE = "Gastronomía y food hall | CENTRAL San Miguel Centro";
+const DESCRIPTION =
+  "Doce restaurantes, cafés y conceptos de food hall en CENTRAL San Miguel Centro. Filtra por tipo de cocina y encuentra horarios y locales.";
 
 export const Route = createFileRoute("/gastronomia")({
   head: () => ({
     meta: [
-      { title: "Gastronomía | CENTRAL" },
-      {
-        name: "description",
-        content:
-          "Restaurantes, cafés y conceptos gastronómicos en los centros comerciales CENTRAL de El Salvador.",
-      },
-      { property: "og:title", content: "Gastronomía | CENTRAL" },
-      { property: "og:description", content: "Descubre la oferta gastronómica de los centros CENTRAL." },
+      { title: TITLE },
+      { name: "description", content: DESCRIPTION },
+      { property: "og:title", content: TITLE },
+      { property: "og:description", content: DESCRIPTION },
     ],
   }),
   component: GastronomiaPage,
 });
 
 function GastronomiaPage() {
-  const [ubicacion, setUbicacion] = useState("todas");
-  const [concepto, setConcepto] = useState("todos");
+  const [cocina, setCocina] = useState("todas");
+  const [nivel, setNivel] = useState("todos");
   const [query, setQuery] = useState("");
 
-  const base = stores.filter((s) => s.gastronomy);
-  const results = base.filter((s) => {
-    const matchLoc = ubicacion === "todas" || s.locationSlug === ubicacion;
+  const results = dining.filter((s) => {
+    const matchCocina = cocina === "todas" || s.cuisineSlug === cocina;
+    const matchNivel = nivel === "todos" || s.level === nivel;
     const matchQ = !query || s.name.toLowerCase().includes(query.toLowerCase());
-    const matchConcepto =
-      concepto === "todos" ||
-      (concepto === "cafe" && /caf|tostada|pan/i.test(s.name + s.description)) ||
-      (concepto === "restaurante" && /brasa|mercado|cocina|parrilla/i.test(s.name + s.description)) ||
-      (concepto === "postres" && /dulce|poster|helado|reposter/i.test(s.name + s.description));
-    return matchLoc && matchQ && matchConcepto;
+    return matchCocina && matchNivel && matchQ;
   });
 
   return (
     <>
       <PageHero
         eyebrow="Mesa y sabor"
-        title="Gastronomía CENTRAL"
-        description="Cafés de especialidad, parrillas, cocina regional y postres artesanales. Espacios abiertos pensados para compartir, trabajar o quedarse un rato más."
-        image={gastronomiaImg}
+        title="Gastronomía y food hall"
+        description="Doce conceptos entre cocina salvadoreña, parrilla, cocina asiática, repostería artesanal y coctelería, distribuidos entre el Nivel 1, el food hall del Nivel 2 y la terraza."
+        image={foodhallImg}
         breadcrumbs={[{ label: "Gastronomía" }]}
       />
 
@@ -65,22 +53,32 @@ function GastronomiaPage() {
           searchPlaceholder="Buscar restaurante o café"
           selects={[
             {
-              label: "Concepto",
-              value: concepto,
-              onChange: setConcepto,
-              options: conceptos,
+              label: "Tipo de cocina",
+              value: cocina,
+              onChange: setCocina,
+              options: [
+                { value: "todas", label: "Todas las cocinas" },
+                ...cuisines.map((c) => ({ value: c.slug, label: c.name })),
+              ],
             },
             {
-              label: "Centro",
-              value: ubicacion,
-              onChange: setUbicacion,
+              label: "Nivel",
+              value: nivel,
+              onChange: setNivel,
               options: [
-                { value: "todas", label: "Todos los centros" },
-                ...locations.map((l) => ({ value: l.slug, label: l.shortName })),
+                { value: "todos", label: "Todos los niveles" },
+                ...levels.map((l) => ({ value: l.slug, label: l.name })),
               ],
             },
           ]}
         />
+        <div className="mt-8 hidden lg:block">
+          <CategoryChips
+            value={cocina}
+            onChange={setCocina}
+            options={[{ value: "todas", label: "Todas" }, ...cuisines.map((c) => ({ value: c.slug, label: c.name }))]}
+          />
+        </div>
         <p className="mt-8 text-sm text-muted-foreground" aria-live="polite">
           {results.length} {results.length === 1 ? "propuesta" : "propuestas"}
         </p>
@@ -99,15 +97,24 @@ function GastronomiaPage() {
 
       <Section tone="sand">
         <SectionHeading
-          eyebrow="Experiencias"
-          title="Comer en CENTRAL"
-          description="Terrazas abiertas, horarios extendidos los fines de semana y programación gastronómica durante todo el año."
+          eyebrow="Cómo funciona"
+          title="Comer en San Miguel Centro"
+          description="El food hall del Nivel 2 abre al atrio de doble altura, con mesas comunales para 260 personas y horario extendido una hora después del cierre del centro."
         />
         <div className="mt-12 grid gap-8 md:grid-cols-3">
           {[
-            { title: "Terrazas al aire libre", text: "Áreas con sombra natural y vista a la ciudad para desayunos largos y cenas tranquilas." },
-            { title: "Cocina de la región", text: "Ingredientes y recetas del oriente salvadoreño en manos de operadores locales." },
-            { title: "Festivales y menús", text: "Ferias gastronómicas, menús de temporada y activaciones con cocineros invitados." },
+            {
+              title: "Food hall del Nivel 2",
+              text: "Ocho módulos alrededor de mesas comunales, estaciones de agua gratuita y lockers en el pasillo.",
+            },
+            {
+              title: "Terraza al aire libre",
+              text: "Parrilla, coctelería y música en vivo los viernes, con vista a la plaza de eventos.",
+            },
+            {
+              title: "Cafés del Nivel 1",
+              text: "Café de origen salvadoreño y panadería de masa madre desde las 7:00 a.m., ideal para trabajar.",
+            },
           ].map((item) => (
             <article key={item.title} className="border-t border-foreground/20 pt-6">
               <h3 className="display-md text-xl">{item.title}</h3>
@@ -119,11 +126,11 @@ function GastronomiaPage() {
 
       <CtaSection
         eyebrow="Operadores gastronómicos"
-        title="Abre tu restaurante en CENTRAL"
-        description="Contamos con espacios diseñados para operación gastronómica: instalaciones preparadas, alto tráfico y acompañamiento comercial."
-        primary={{ label: "Quiero arrendar", to: "/arrendamientos" }}
+        title="Abre tu restaurante en esta plaza"
+        description="Módulos de food hall con instalaciones preparadas, locales en terraza y espacios para café en el Nivel 1, con acompañamiento comercial."
+        primary={{ label: "Solicitar espacio", to: "/arrendamientos" }}
         secondary={{ label: "Contactar", to: "/contacto" }}
-        image={gastronomiaImg}
+        image={foodhallImg}
       />
     </>
   );
