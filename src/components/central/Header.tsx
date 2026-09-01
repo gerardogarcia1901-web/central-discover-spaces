@@ -13,7 +13,7 @@ const DAYS = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "
 
 function todayHours() {
   const day = DAYS[new Date().getDay()];
-  return center.hours.find((h) => h.label === day)?.value ?? center.hours[0].value;
+  return center.hours.find((h) => h.label === day)?.value ?? "9:00 a.m. – 8:00 p.m.";
 }
 
 function TopBar() {
