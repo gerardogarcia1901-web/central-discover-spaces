@@ -34,6 +34,7 @@ export const mainNav = [
   { label: "Novedades", to: "/novedades" },
   { label: "Visítanos", to: "/visitanos" },
   { label: "Arrendamientos", to: "/arrendamientos" },
+  { label: "Contacto", to: "/contacto" },
 ] as const;
 
 export const legalLinks = [
