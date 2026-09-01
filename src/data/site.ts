@@ -26,6 +26,7 @@ export const site = {
 } as const;
 
 export const mainNav = [
+  { label: "Inicio", to: "/" },
   { label: "Directorio", to: "/directorio" },
   { label: "Gastronomía", to: "/gastronomia" },
   { label: "Promociones", to: "/promociones" },
@@ -33,6 +34,7 @@ export const mainNav = [
   { label: "Novedades", to: "/novedades" },
   { label: "Visítanos", to: "/visitanos" },
   { label: "Arrendamientos", to: "/arrendamientos" },
+  { label: "Contacto", to: "/contacto" },
 ] as const;
 
 export const legalLinks = [

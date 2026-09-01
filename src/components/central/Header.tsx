@@ -1,13 +1,41 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, Search, ExternalLink, X } from "lucide-react";
+import { Menu, Search, ExternalLink, X, ArrowUpRight, Clock } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { mainNav, site } from "@/data/site";
+import { center } from "@/data/center";
 import { allStores } from "@/data/stores";
 import { cn } from "@/lib/utils";
+
+const DAYS = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+
+function todayHours() {
+  const day = DAYS[new Date().getDay()];
+  return center.hours.find((h) => h.label === day)?.value ?? "9:00 a.m. – 8:00 p.m.";
+}
+
+function TopBar() {
+  return (
+    <div className="w-full bg-ink text-ink-foreground">
+      <div className="container-central flex h-9 items-center justify-between gap-4">
+        <p className="eyebrow truncate text-ink-foreground/60">
+          {center.city}, {center.department} · En operación
+        </p>
+        <a
+          href={site.brandUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex shrink-0 items-center gap-1.5 eyebrow text-ink-foreground/70 transition-colors hover:text-ink-foreground"
+        >
+          Sitio principal de CENTRAL
+          <ArrowUpRight className="size-3.5" aria-hidden />
+        </a>
+      </div>
+    </div>
+  );
+}
 
 function Wordmark({ onNavigate }: { onNavigate?: () => void }) {
   return (
@@ -96,6 +124,7 @@ export function Header() {
           : "bg-background border-b border-transparent",
       )}
     >
+      <TopBar />
       <div className="container-central flex h-16 items-center justify-between gap-6 md:h-20">
         <div className="flex items-center gap-8">
           <Wordmark />
@@ -113,22 +142,17 @@ export function Header() {
           </nav>
         </div>
 
-        <div className="flex items-center gap-1 md:gap-2">
-          <a
-            href={site.brandUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="hidden items-center gap-2 rounded-full px-3 py-2 eyebrow text-foreground/70 transition-colors hover:bg-foreground/10 hover:text-foreground lg:inline-flex"
+        <div className="flex items-center gap-1 md:gap-3">
+          <Link
+            to="/visitanos"
+            className="hidden items-center gap-2 eyebrow text-foreground/70 transition-colors hover:text-foreground lg:inline-flex"
           >
-            Ver todos los CENTRAL
-            <ExternalLink className="size-3.5" aria-hidden />
-          </a>
+            <Clock className="size-3.5" aria-hidden />
+            Hoy {todayHours()}
+          </Link>
 
           <SearchDialog />
 
-          <Button asChild size="sm" className="hidden rounded-none px-5 eyebrow md:inline-flex">
-            <Link to="/contacto">Contacto</Link>
-          </Button>
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
@@ -167,11 +191,10 @@ export function Header() {
                 ))}
               </nav>
               <div className="px-6 py-8">
-                <Button asChild variant="secondary" className="w-full rounded-none">
-                  <Link to="/contacto" onClick={() => setOpen(false)}>
-                    Contacto
-                  </Link>
-                </Button>
+                <p className="flex items-center gap-2 eyebrow text-ink-foreground/60">
+                  <Clock className="size-3.5" aria-hidden />
+                  Hoy {todayHours()}
+                </p>
                 <a
                   href={site.brandUrl}
                   target="_blank"
