@@ -52,7 +52,7 @@ export function StoreCard({ store }: { store: Store }) {
   );
 }
 
-export function PromotionCard({ promotion, storeName }: { promotion: Promotion; storeName?: string }) {
+export function PromotionCard({ promotion, storeName }: { promotion: Promotion; storeName?: string | undefined }) {
   return (
     <article className="group relative isolate flex min-h-[26rem] flex-col justify-end overflow-hidden bg-ink text-ink-foreground">
       <img

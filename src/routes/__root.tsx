@@ -80,17 +80,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "CENTRAL | Centros comerciales de El Salvador" },
+      { title: "CENTRAL San Miguel Centro" },
       {
         name: "description",
         content:
-          "CENTRAL, la red de centros comerciales de Grupo Galo en El Salvador: tiendas, gastronomía, eventos y experiencias.",
+          "Centro comercial CENTRAL San Miguel Centro: marcas, gastronomía, cine y eventos en el corazón de San Miguel, El Salvador.",
       },
-      { name: "author", content: "CENTRAL · Grupo Galo" },
-      { property: "og:title", content: "CENTRAL | Centros comerciales de El Salvador" },
+      { name: "author", content: "CENTRAL San Miguel Centro · Grupo Galo" },
+      { property: "og:title", content: "CENTRAL San Miguel Centro" },
       {
         property: "og:description",
-        content: "Compras, gastronomía, experiencias y entretenimiento en los centros comerciales CENTRAL.",
+        content: "Marcas, gastronomía, cine y eventos en CENTRAL San Miguel Centro.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
