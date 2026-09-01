@@ -2,8 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import type { LocationStatus } from "@/data/types";
-import { statusLabels } from "@/data/locations";
 
 export function Section({
   children,
@@ -58,17 +56,10 @@ export function SectionHeading({
   );
 }
 
-export function StatusBadge({ status, className }: { status: LocationStatus; className?: string }) {
+export function Tag({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <span
-      className={cn(
-        "inline-flex items-center gap-2 border border-current/25 px-3 py-1 eyebrow",
-        status === "operativo" ? "text-emerald-700" : "text-highlight",
-        className,
-      )}
-    >
-      <span className="size-1.5 rounded-full bg-current" aria-hidden />
-      {statusLabels[status]}
+    <span className={cn("inline-flex items-center gap-2 border border-current/25 px-3 py-1 eyebrow", className)}>
+      {children}
     </span>
   );
 }

@@ -1,69 +1,8 @@
-import type React from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight, CalendarDays, Clock, MapPin } from "lucide-react";
+import { ArrowUpRight, CalendarDays, Clock, Layers, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { StatusBadge } from "./primitives";
-import { locationName } from "@/data/locations";
-import { categoryName } from "@/data/catalog";
-import type { Article, CentralEvent, CentralLocation, Promotion, Store } from "@/data/types";
-
-export function LocationCard({ location, size = "default" }: { location: CentralLocation; size?: "default" | "large" }) {
-  const external = Boolean(location.siteUrl);
-  const linkLabel = external
-    ? `Ir al sitio de ${location.shortName}`
-    : location.status === "operativo"
-      ? `Visitar ${location.shortName}`
-      : "Descubrir proyecto";
-
-  const wrap = (className: string, children: React.ReactNode, ariaLabel?: string) =>
-    external ? (
-      <a
-        href={location.siteUrl!}
-        target="_blank"
-        rel="noreferrer"
-        className={className}
-        aria-label={ariaLabel}
-      >
-        {children}
-      </a>
-    ) : (
-      <Link to="/ubicaciones/$slug" params={{ slug: location.slug }} className={className} aria-label={ariaLabel}>
-        {children}
-      </Link>
-    );
-
-  return (
-    <article className="group relative flex flex-col overflow-hidden bg-card">
-      {wrap(
-        "hover-zoom relative block aspect-4/3 overflow-hidden",
-        <>
-          <img
-            src={location.image}
-            alt={`Vista de ${location.name}`}
-            className="image-cover"
-            loading="lazy"
-            width={1600}
-            height={1100}
-          />
-          <span className="absolute left-5 top-5 bg-background/90 px-3 py-1 eyebrow">{location.department}</span>
-        </>,
-        `Ver ${location.name}`,
-      )}
-      <div className={cn("flex flex-1 flex-col gap-4 border border-t-0 border-border p-6", size === "large" && "p-8")}>
-        <StatusBadge status={location.status} className="self-start" />
-        <h3 className={cn("display-md", size === "large" ? "text-3xl md:text-4xl" : "text-2xl")}>{location.name}</h3>
-        <p className="text-sm leading-relaxed text-muted-foreground">{location.description}</p>
-        {wrap(
-          "mt-auto inline-flex items-center gap-2 eyebrow underline-offset-8 transition-all hover:gap-3 hover:underline",
-          <>
-            {linkLabel}
-            <ArrowUpRight className="size-4" />
-          </>,
-        )}
-      </div>
-    </article>
-  );
-}
+import { categoryName, cuisineName, levelName } from "@/data/taxonomy";
+import type { Article, CentralEvent, Promotion, Store } from "@/data/types";
 
 export function StoreCard({ store }: { store: Store }) {
   return (
@@ -84,21 +23,23 @@ export function StoreCard({ store }: { store: Store }) {
       </Link>
       <div className="flex flex-1 flex-col gap-3 p-5">
         <div className="flex items-center gap-3">
-          <span className="flex size-9 items-center justify-center bg-ink text-xs font-semibold tracking-widest text-ink-foreground">
+          <span className="flex size-9 shrink-0 items-center justify-center bg-ink text-xs font-semibold tracking-widest text-ink-foreground">
             {store.logoText}
           </span>
-          <div>
-            <h3 className="font-display text-base font-semibold uppercase tracking-tight">{store.name}</h3>
-            <p className="text-xs text-muted-foreground">{categoryName(store.categorySlug)}</p>
+          <div className="min-w-0">
+            <h3 className="truncate font-display text-base font-semibold uppercase tracking-tight">{store.name}</h3>
+            <p className="text-xs text-muted-foreground">
+              {store.gastronomy ? cuisineName(store.cuisineSlug) : categoryName(store.categorySlug)}
+            </p>
           </div>
         </div>
         <p className="line-clamp-2 text-sm text-muted-foreground">{store.description}</p>
         <dl className="mt-auto grid grid-cols-2 gap-2 border-t border-border pt-4 text-xs text-muted-foreground">
           <div>
-            <dt className="sr-only">Centro</dt>
+            <dt className="sr-only">Nivel</dt>
             <dd className="flex items-center gap-1.5">
-              <MapPin className="size-3.5" aria-hidden />
-              {locationName(store.locationSlug)}
+              <Layers className="size-3.5" aria-hidden />
+              {levelName(store.level)}
             </dd>
           </div>
           <div>
@@ -111,7 +52,7 @@ export function StoreCard({ store }: { store: Store }) {
   );
 }
 
-export function PromotionCard({ promotion }: { promotion: Promotion }) {
+export function PromotionCard({ promotion, storeName }: { promotion: Promotion; storeName?: string }) {
   return (
     <article className="group relative isolate flex min-h-[26rem] flex-col justify-end overflow-hidden bg-ink text-ink-foreground">
       <img
@@ -125,11 +66,19 @@ export function PromotionCard({ promotion }: { promotion: Promotion }) {
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-ink/60 to-transparent" aria-hidden />
       <div className="p-7">
         <p className="eyebrow text-ink-foreground/60">
-          {locationName(promotion.locationSlug)} · {categoryName(promotion.categorySlug)}
+          {(storeName ?? "San Miguel Centro") + " · " + categoryName(promotion.categorySlug)}
         </p>
         <h3 className="display-md mt-4 text-2xl md:text-3xl">{promotion.title}</h3>
         <p className="mt-3 text-sm text-ink-foreground/75">{promotion.description}</p>
         <p className="mt-4 text-xs uppercase tracking-widest text-ink-foreground/50">{promotion.validity}</p>
+        <Link
+          to="/directorio/$slug"
+          params={{ slug: promotion.storeSlug }}
+          className="mt-6 inline-flex items-center gap-2 eyebrow underline-offset-8 transition-all hover:gap-3 hover:underline"
+        >
+          {promotion.cta}
+          <ArrowUpRight className="size-4" aria-hidden />
+        </Link>
       </div>
     </article>
   );
@@ -138,7 +87,11 @@ export function PromotionCard({ promotion }: { promotion: Promotion }) {
 export function EventCard({ event }: { event: CentralEvent }) {
   return (
     <article className="group flex flex-col border border-border bg-card md:flex-row">
-      <div className="hover-zoom relative aspect-[16/10] w-full overflow-hidden md:aspect-auto md:w-2/5">
+      <Link
+        to="/eventos/$slug"
+        params={{ slug: event.slug }}
+        className="hover-zoom relative aspect-[16/10] w-full overflow-hidden md:aspect-auto md:w-2/5"
+      >
         <img
           src={event.image}
           alt={event.title}
@@ -147,10 +100,14 @@ export function EventCard({ event }: { event: CentralEvent }) {
           width={1600}
           height={1100}
         />
-      </div>
+      </Link>
       <div className="flex flex-1 flex-col gap-3 p-6 md:p-8">
-        <p className="eyebrow text-muted-foreground">{locationName(event.locationSlug)}</p>
-        <h3 className="display-md text-2xl">{event.title}</h3>
+        <p className="eyebrow text-muted-foreground">{event.admission}</p>
+        <h3 className="display-md text-2xl">
+          <Link to="/eventos/$slug" params={{ slug: event.slug }} className="underline-offset-8 hover:underline">
+            {event.title}
+          </Link>
+        </h3>
         <p className="text-sm leading-relaxed text-muted-foreground">{event.description}</p>
         <ul className="mt-auto flex flex-wrap gap-x-6 gap-y-2 pt-4 text-xs uppercase tracking-widest text-muted-foreground">
           <li className="flex items-center gap-2">
@@ -189,8 +146,13 @@ export function NewsCard({ article, featured = false }: { article: Article; feat
         <p className="eyebrow text-muted-foreground">
           {article.category} · {article.displayDate}
         </p>
-        <h3 className={cn("mt-3 font-display font-semibold uppercase tracking-tight", featured ? "display-md" : "text-xl")}>
-          <Link to="/novedades/$slug" params={{ slug: article.slug }} className="hover:underline underline-offset-8">
+        <h3
+          className={cn(
+            "mt-3 font-display font-semibold uppercase tracking-tight",
+            featured ? "display-md" : "text-xl",
+          )}
+        >
+          <Link to="/novedades/$slug" params={{ slug: article.slug }} className="underline-offset-8 hover:underline">
             {article.title}
           </Link>
         </h3>

@@ -3,32 +3,32 @@ import { useMemo } from "react";
 import { PageHero, Section } from "@/components/central/primitives";
 import { StoreCard } from "@/components/central/cards";
 import { CategoryChips, FilterBar } from "@/components/central/Filters";
-import { categories, stores } from "@/data/catalog";
-import { locations } from "@/data/locations";
-import modaImg from "@/assets/moda.jpg";
+import { categories, levels } from "@/data/taxonomy";
+import { allStores } from "@/data/stores";
+import pasilloImg from "@/assets/smc-pasillo.jpg";
 
 interface DirectorioSearch {
   categoria?: string | undefined;
-  ubicacion?: string | undefined;
+  nivel?: string | undefined;
   q?: string | undefined;
 }
+
+const TITLE = "Directorio de marcas | CENTRAL San Miguel Centro";
+const DESCRIPTION =
+  "Busca entre las más de 40 marcas de CENTRAL San Miguel Centro. Filtra por categoría y nivel y encuentra el local, el horario y el teléfono de cada tienda.";
 
 export const Route = createFileRoute("/directorio/")({
   validateSearch: (search: Record<string, unknown>): DirectorioSearch => ({
     categoria: typeof search["categoria"] === "string" ? search["categoria"] : undefined,
-    ubicacion: typeof search["ubicacion"] === "string" ? search["ubicacion"] : undefined,
+    nivel: typeof search["nivel"] === "string" ? search["nivel"] : undefined,
     q: typeof search["q"] === "string" ? search["q"] : undefined,
   }),
   head: () => ({
     meta: [
-      { title: "Directorio comercial | CENTRAL" },
-      {
-        name: "description",
-        content:
-          "Busca tiendas, restaurantes y servicios en los centros comerciales CENTRAL. Filtra por categoría y ubicación.",
-      },
-      { property: "og:title", content: "Directorio comercial | CENTRAL" },
-      { property: "og:description", content: "Todas las marcas y tiendas de los centros comerciales CENTRAL." },
+      { title: TITLE },
+      { name: "description", content: DESCRIPTION },
+      { property: "og:title", content: TITLE },
+      { property: "og:description", content: DESCRIPTION },
     ],
   }),
   component: DirectorioPage,
@@ -42,27 +42,27 @@ function DirectorioPage() {
     navigate({ search: (prev: DirectorioSearch) => ({ ...prev, ...patch }), replace: true });
 
   const categoria = search.categoria ?? "todas";
-  const ubicacion = search.ubicacion ?? "todas";
+  const nivel = search.nivel ?? "todos";
   const q = search.q ?? "";
 
   const results = useMemo(
     () =>
-      stores.filter((s) => {
+      allStores.filter((s) => {
         const matchCat = categoria === "todas" || s.categorySlug === categoria;
-        const matchLoc = ubicacion === "todas" || s.locationSlug === ubicacion;
+        const matchLevel = nivel === "todos" || s.level === nivel;
         const matchQ = !q || s.name.toLowerCase().includes(q.toLowerCase());
-        return matchCat && matchLoc && matchQ;
+        return matchCat && matchLevel && matchQ;
       }),
-    [categoria, ubicacion, q],
+    [categoria, nivel, q],
   );
 
   return (
     <>
       <PageHero
         eyebrow="Marcas y tiendas"
-        title="Directorio comercial"
-        description="Encuentra rápidamente una tienda, restaurante o servicio dentro de los centros comerciales CENTRAL."
-        image={modaImg}
+        title="Directorio de marcas"
+        description="Encuentra rápidamente una tienda, restaurante o servicio dentro de CENTRAL San Miguel Centro."
+        image={pasilloImg}
         breadcrumbs={[{ label: "Directorio" }]}
       />
       <Section className="py-12 md:py-16">
@@ -81,12 +81,12 @@ function DirectorioPage() {
               ],
             },
             {
-              label: "Centro",
-              value: ubicacion,
-              onChange: (value) => setSearch({ ubicacion: value === "todas" ? undefined : value }),
+              label: "Nivel",
+              value: nivel,
+              onChange: (value) => setSearch({ nivel: value === "todos" ? undefined : value }),
               options: [
-                { value: "todas", label: "Todos los centros" },
-                ...locations.map((l) => ({ value: l.slug, label: l.shortName })),
+                { value: "todos", label: "Todos los niveles" },
+                ...levels.map((l) => ({ value: l.slug, label: l.name })),
               ],
             },
           ]}
@@ -115,7 +115,7 @@ function DirectorioPage() {
           </div>
         ) : (
           <p className="mt-6 border border-dashed border-border p-12 text-center text-sm text-muted-foreground">
-            No encontramos marcas con esos criterios. Prueba con otra categoría o centro comercial.
+            No encontramos marcas con esos criterios. Prueba con otra categoría o nivel.
           </p>
         )}
       </Section>

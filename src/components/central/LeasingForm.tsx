@@ -8,25 +8,28 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SectionHeading } from "@/components/central/primitives";
-import { locations } from "@/data/locations";
 import { site } from "@/data/site";
+import { center } from "@/data/center";
 
 const tiposEspacio = [
   { value: "local", label: "Local en línea" },
   { value: "ancla", label: "Local ancla / gran formato" },
   { value: "isla", label: "Isla o kiosco" },
-  { value: "gastronomia", label: "Espacio gastronómico" },
+  { value: "foodhall", label: "Módulo de food hall" },
+  { value: "terraza", label: "Local en terraza" },
   { value: "temporal", label: "Activación temporal" },
 ];
 
-const categorias = [
+const giros = [
   { value: "moda", label: "Moda y accesorios" },
   { value: "gastronomia", label: "Gastronomía" },
-  { value: "servicios", label: "Servicios" },
-  { value: "entretenimiento", label: "Entretenimiento" },
+  { value: "belleza", label: "Belleza y cuidado personal" },
+  { value: "tecnologia", label: "Tecnología" },
+  { value: "hogar", label: "Hogar y decoración" },
+  { value: "servicios", label: "Servicios financieros" },
   { value: "salud", label: "Salud y bienestar" },
-  { value: "hogar", label: "Hogar y tecnología" },
-  { value: "otro", label: "Otra categoría" },
+  { value: "entretenimiento", label: "Entretenimiento" },
+  { value: "otro", label: "Otro giro" },
 ];
 
 const metrajes = [
@@ -37,9 +40,8 @@ const metrajes = [
 ];
 
 export function LeasingForm() {
-  const [centro, setCentro] = useState(locations[0]?.slug ?? "");
   const [tipo, setTipo] = useState("local");
-  const [categoria, setCategoria] = useState("moda");
+  const [giro, setGiro] = useState("moda");
   const [metraje, setMetraje] = useState("30-80");
   const [acepta, setAcepta] = useState(false);
 
@@ -61,7 +63,7 @@ export function LeasingForm() {
         <SectionHeading
           eyebrow="Formulario de arrendamiento"
           title="Solicita tu espacio"
-          description="Cuéntanos sobre tu marca y el espacio que necesitas. El equipo comercial de CENTRAL revisará tu solicitud y te contactará con la información del proyecto."
+          description={`Cuéntanos sobre tu marca y el espacio que necesitas. El equipo comercial de ${site.fullName} revisará tu solicitud y te contactará con disponibilidad y condiciones.`}
         />
 
         <form onSubmit={onSubmit} className="mt-10 space-y-6">
@@ -84,22 +86,6 @@ export function LeasingForm() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="l-centro">Centro de interés</Label>
-              <Select value={centro} onValueChange={setCentro}>
-                <SelectTrigger id="l-centro" className="h-11 rounded-none">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="rounded-none">
-                  {locations.map((l) => (
-                    <SelectItem key={l.slug} value={l.slug}>
-                      {l.shortName}
-                    </SelectItem>
-                  ))}
-                  <SelectItem value="varios">Varios centros</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
               <Label htmlFor="l-tipo">Tipo de espacio</Label>
               <Select value={tipo} onValueChange={setTipo}>
                 <SelectTrigger id="l-tipo" className="h-11 rounded-none">
@@ -115,21 +101,6 @@ export function LeasingForm() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="l-categoria">Categoría comercial</Label>
-              <Select value={categoria} onValueChange={setCategoria}>
-                <SelectTrigger id="l-categoria" className="h-11 rounded-none">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="rounded-none">
-                  {categorias.map((c) => (
-                    <SelectItem key={c.value} value={c.value}>
-                      {c.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
               <Label htmlFor="l-metraje">Metraje aproximado</Label>
               <Select value={metraje} onValueChange={setMetraje}>
                 <SelectTrigger id="l-metraje" className="h-11 rounded-none">
@@ -139,6 +110,21 @@ export function LeasingForm() {
                   {metrajes.map((m) => (
                     <SelectItem key={m.value} value={m.value}>
                       {m.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2 sm:col-span-2">
+              <Label htmlFor="l-giro">Giro comercial</Label>
+              <Select value={giro} onValueChange={setGiro}>
+                <SelectTrigger id="l-giro" className="h-11 rounded-none">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="rounded-none">
+                  {giros.map((g) => (
+                    <SelectItem key={g.value} value={g.value}>
+                      {g.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -166,7 +152,7 @@ export function LeasingForm() {
               className="mt-0.5 rounded-none"
             />
             <Label htmlFor="l-acepta" className="text-xs font-normal leading-relaxed text-muted-foreground">
-              Autorizo a CENTRAL a utilizar mis datos para dar seguimiento a esta solicitud de arrendamiento.
+              Autorizo a {site.fullName} a utilizar mis datos para dar seguimiento a esta solicitud de arrendamiento.
             </Label>
           </div>
 
@@ -182,7 +168,7 @@ export function LeasingForm() {
           <ul className="mt-5 space-y-3 text-sm">
             <li className="flex gap-3">
               <Mail className="mt-0.5 size-4 shrink-0" aria-hidden />
-              <a href={`mailto:${site.leasingEmail}`} className="hover:underline">
+              <a href={`mailto:${site.leasingEmail}`} className="break-all hover:underline">
                 {site.leasingEmail}
               </a>
             </li>
@@ -198,20 +184,31 @@ export function LeasingForm() {
           <p className="eyebrow text-muted-foreground">Qué sigue</p>
           <ol className="mt-5 space-y-4 text-sm text-muted-foreground">
             <li className="border-t border-border pt-4">Confirmamos la recepción de tu solicitud.</li>
-            <li className="border-t border-border pt-4">Evaluamos categoría, metraje y disponibilidad.</li>
-            <li className="border-t border-border pt-4">Agendamos una reunión con el equipo comercial.</li>
+            <li className="border-t border-border pt-4">Evaluamos giro, metraje y disponibilidad por nivel.</li>
+            <li className="border-t border-border pt-4">Agendamos una visita al espacio y presentamos condiciones.</li>
           </ol>
         </div>
         <div>
-          <p className="eyebrow text-muted-foreground">Centros disponibles</p>
+          <p className="eyebrow text-muted-foreground">Espacios por nivel</p>
           <ul className="mt-5 divide-y divide-border border-y border-border text-sm">
-            {locations.map((l) => (
+            {center.levels.map((l) => (
               <li key={l.slug} className="py-4">
                 <p className="font-display font-semibold uppercase tracking-tight">{l.name}</p>
-                <p className="mt-1 text-muted-foreground">{l.city}, {l.department}</p>
+                <p className="mt-1 text-muted-foreground">{l.description}</p>
               </li>
             ))}
           </ul>
+        </div>
+        <div>
+          <p className="eyebrow text-muted-foreground">La plaza en números</p>
+          <dl className="mt-5 grid grid-cols-2 gap-6">
+            {center.stats.map((s) => (
+              <div key={s.label}>
+                <dt className="text-xs uppercase tracking-widest text-muted-foreground">{s.label}</dt>
+                <dd className="display-md mt-2 text-2xl">{s.value}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </aside>
     </div>

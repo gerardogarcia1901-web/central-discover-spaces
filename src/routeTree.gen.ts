@@ -12,15 +12,15 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArrendamientosRouteImport } from './routes/arrendamientos'
 import { Route as ContactoRouteImport } from './routes/contacto'
-import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as GastronomiaRouteImport } from './routes/gastronomia'
 import { Route as PromocionesRouteImport } from './routes/promociones'
+import { Route as VisitanosRouteImport } from './routes/visitanos'
 import { Route as DirectorioIndexRouteImport } from './routes/directorio.index'
 import { Route as DirectorioSlugRouteImport } from './routes/directorio.$slug'
+import { Route as EventosIndexRouteImport } from './routes/eventos.index'
+import { Route as EventosSlugRouteImport } from './routes/eventos.$slug'
 import { Route as NovedadesIndexRouteImport } from './routes/novedades.index'
 import { Route as NovedadesSlugRouteImport } from './routes/novedades.$slug'
-import { Route as UbicacionesIndexRouteImport } from './routes/ubicaciones.index'
-import { Route as UbicacionesSlugRouteImport } from './routes/ubicaciones.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -37,11 +37,6 @@ const ContactoRoute = ContactoRouteImport.update({
   path: '/contacto',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EventosRoute = EventosRouteImport.update({
-  id: '/eventos',
-  path: '/eventos',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const GastronomiaRoute = GastronomiaRouteImport.update({
   id: '/gastronomia',
   path: '/gastronomia',
@@ -50,6 +45,11 @@ const GastronomiaRoute = GastronomiaRouteImport.update({
 const PromocionesRoute = PromocionesRouteImport.update({
   id: '/promociones',
   path: '/promociones',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VisitanosRoute = VisitanosRouteImport.update({
+  id: '/visitanos',
+  path: '/visitanos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DirectorioIndexRoute = DirectorioIndexRouteImport.update({
@@ -62,6 +62,16 @@ const DirectorioSlugRoute = DirectorioSlugRouteImport.update({
   path: '/directorio/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EventosIndexRoute = EventosIndexRouteImport.update({
+  id: '/eventos/',
+  path: '/eventos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventosSlugRoute = EventosSlugRouteImport.update({
+  id: '/eventos/$slug',
+  path: '/eventos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NovedadesIndexRoute = NovedadesIndexRouteImport.update({
   id: '/novedades/',
   path: '/novedades/',
@@ -72,59 +82,49 @@ const NovedadesSlugRoute = NovedadesSlugRouteImport.update({
   path: '/novedades/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const UbicacionesIndexRoute = UbicacionesIndexRouteImport.update({
-  id: '/ubicaciones/',
-  path: '/ubicaciones/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const UbicacionesSlugRoute = UbicacionesSlugRouteImport.update({
-  id: '/ubicaciones/$slug',
-  path: '/ubicaciones/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/arrendamientos': typeof ArrendamientosRoute
   '/contacto': typeof ContactoRoute
-  '/eventos': typeof EventosRoute
   '/gastronomia': typeof GastronomiaRoute
   '/promociones': typeof PromocionesRoute
+  '/visitanos': typeof VisitanosRoute
   '/directorio/$slug': typeof DirectorioSlugRoute
+  '/eventos/$slug': typeof EventosSlugRoute
   '/novedades/$slug': typeof NovedadesSlugRoute
-  '/ubicaciones/$slug': typeof UbicacionesSlugRoute
   '/directorio/': typeof DirectorioIndexRoute
+  '/eventos/': typeof EventosIndexRoute
   '/novedades/': typeof NovedadesIndexRoute
-  '/ubicaciones/': typeof UbicacionesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/arrendamientos': typeof ArrendamientosRoute
   '/contacto': typeof ContactoRoute
-  '/eventos': typeof EventosRoute
   '/gastronomia': typeof GastronomiaRoute
   '/promociones': typeof PromocionesRoute
+  '/visitanos': typeof VisitanosRoute
   '/directorio/$slug': typeof DirectorioSlugRoute
+  '/eventos/$slug': typeof EventosSlugRoute
   '/novedades/$slug': typeof NovedadesSlugRoute
-  '/ubicaciones/$slug': typeof UbicacionesSlugRoute
   '/directorio': typeof DirectorioIndexRoute
+  '/eventos': typeof EventosIndexRoute
   '/novedades': typeof NovedadesIndexRoute
-  '/ubicaciones': typeof UbicacionesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/arrendamientos': typeof ArrendamientosRoute
   '/contacto': typeof ContactoRoute
-  '/eventos': typeof EventosRoute
   '/gastronomia': typeof GastronomiaRoute
   '/promociones': typeof PromocionesRoute
+  '/visitanos': typeof VisitanosRoute
   '/directorio/$slug': typeof DirectorioSlugRoute
+  '/eventos/$slug': typeof EventosSlugRoute
   '/novedades/$slug': typeof NovedadesSlugRoute
-  '/ubicaciones/$slug': typeof UbicacionesSlugRoute
   '/directorio/': typeof DirectorioIndexRoute
+  '/eventos/': typeof EventosIndexRoute
   '/novedades/': typeof NovedadesIndexRoute
-  '/ubicaciones/': typeof UbicacionesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -132,58 +132,58 @@ export interface FileRouteTypes {
     | '/'
     | '/arrendamientos'
     | '/contacto'
-    | '/eventos'
     | '/gastronomia'
     | '/promociones'
+    | '/visitanos'
     | '/directorio/$slug'
+    | '/eventos/$slug'
     | '/novedades/$slug'
-    | '/ubicaciones/$slug'
     | '/directorio/'
+    | '/eventos/'
     | '/novedades/'
-    | '/ubicaciones/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/arrendamientos'
     | '/contacto'
-    | '/eventos'
     | '/gastronomia'
     | '/promociones'
+    | '/visitanos'
     | '/directorio/$slug'
+    | '/eventos/$slug'
     | '/novedades/$slug'
-    | '/ubicaciones/$slug'
     | '/directorio'
+    | '/eventos'
     | '/novedades'
-    | '/ubicaciones'
   id:
     | '__root__'
     | '/'
     | '/arrendamientos'
     | '/contacto'
-    | '/eventos'
     | '/gastronomia'
     | '/promociones'
+    | '/visitanos'
     | '/directorio/$slug'
+    | '/eventos/$slug'
     | '/novedades/$slug'
-    | '/ubicaciones/$slug'
     | '/directorio/'
+    | '/eventos/'
     | '/novedades/'
-    | '/ubicaciones/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ArrendamientosRoute: typeof ArrendamientosRoute
   ContactoRoute: typeof ContactoRoute
-  EventosRoute: typeof EventosRoute
   GastronomiaRoute: typeof GastronomiaRoute
   PromocionesRoute: typeof PromocionesRoute
+  VisitanosRoute: typeof VisitanosRoute
   DirectorioSlugRoute: typeof DirectorioSlugRoute
+  EventosSlugRoute: typeof EventosSlugRoute
   NovedadesSlugRoute: typeof NovedadesSlugRoute
-  UbicacionesSlugRoute: typeof UbicacionesSlugRoute
   DirectorioIndexRoute: typeof DirectorioIndexRoute
+  EventosIndexRoute: typeof EventosIndexRoute
   NovedadesIndexRoute: typeof NovedadesIndexRoute
-  UbicacionesIndexRoute: typeof UbicacionesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -209,13 +209,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/eventos': {
-      id: '/eventos'
-      path: '/eventos'
-      fullPath: '/eventos'
-      preLoaderRoute: typeof EventosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/gastronomia': {
       id: '/gastronomia'
       path: '/gastronomia'
@@ -228,6 +221,13 @@ declare module '@tanstack/react-router' {
       path: '/promociones'
       fullPath: '/promociones'
       preLoaderRoute: typeof PromocionesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/visitanos': {
+      id: '/visitanos'
+      path: '/visitanos'
+      fullPath: '/visitanos'
+      preLoaderRoute: typeof VisitanosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/directorio/': {
@@ -244,6 +244,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DirectorioSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/eventos/': {
+      id: '/eventos/'
+      path: '/eventos'
+      fullPath: '/eventos/'
+      preLoaderRoute: typeof EventosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/eventos/$slug': {
+      id: '/eventos/$slug'
+      path: '/eventos/$slug'
+      fullPath: '/eventos/$slug'
+      preLoaderRoute: typeof EventosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/novedades/': {
       id: '/novedades/'
       path: '/novedades'
@@ -258,20 +272,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NovedadesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/ubicaciones/': {
-      id: '/ubicaciones/'
-      path: '/ubicaciones'
-      fullPath: '/ubicaciones/'
-      preLoaderRoute: typeof UbicacionesIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ubicaciones/$slug': {
-      id: '/ubicaciones/$slug'
-      path: '/ubicaciones/$slug'
-      fullPath: '/ubicaciones/$slug'
-      preLoaderRoute: typeof UbicacionesSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -279,15 +279,15 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ArrendamientosRoute: ArrendamientosRoute,
   ContactoRoute: ContactoRoute,
-  EventosRoute: EventosRoute,
   GastronomiaRoute: GastronomiaRoute,
   PromocionesRoute: PromocionesRoute,
+  VisitanosRoute: VisitanosRoute,
   DirectorioSlugRoute: DirectorioSlugRoute,
+  EventosSlugRoute: EventosSlugRoute,
   NovedadesSlugRoute: NovedadesSlugRoute,
-  UbicacionesSlugRoute: UbicacionesSlugRoute,
   DirectorioIndexRoute: DirectorioIndexRoute,
+  EventosIndexRoute: EventosIndexRoute,
   NovedadesIndexRoute: NovedadesIndexRoute,
-  UbicacionesIndexRoute: UbicacionesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

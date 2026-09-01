@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Breadcrumbs, Section, SectionHeading } from "@/components/central/primitives";
 import { BackButton } from "@/components/central/BackButton";
 import { NewsCard } from "@/components/central/cards";
-import { articles, getArticle } from "@/data/catalog";
+import { articles, getArticle } from "@/data/news";
 
 export const Route = createFileRoute("/novedades/$slug")({
   loader: ({ params }) => {
@@ -13,12 +13,17 @@ export const Route = createFileRoute("/novedades/$slug")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return { meta: [{ title: "Nota no encontrada | CENTRAL" }, { name: "robots", content: "noindex" }] };
+      return {
+        meta: [
+          { title: "Nota no encontrada | CENTRAL San Miguel Centro" },
+          { name: "robots", content: "noindex" },
+        ],
+      };
     }
     const { article } = loaderData;
     return {
       meta: [
-        { title: `${article.title} | CENTRAL` },
+        { title: `${article.title} | CENTRAL San Miguel Centro` },
         { name: "description", content: article.summary },
         { property: "og:title", content: article.title },
         { property: "og:description", content: article.summary },
@@ -62,7 +67,7 @@ function ArticlePage() {
           <img
             src={article.image}
             alt={article.title}
-            className="aspect-[16/9] w-full object-cover"
+            className="aspect-video w-full object-cover"
             width={1600}
             height={1100}
           />
@@ -79,20 +84,25 @@ function ArticlePage() {
               <Link to="/novedades">Ver más novedades</Link>
             </Button>
             <Button asChild variant="outline" className="rounded-none eyebrow">
-              <Link to="/ubicaciones">Conocer nuestros centros</Link>
+              <Link to="/visitanos">Planifica tu visita</Link>
             </Button>
+          </div>
+          <div className="mt-8">
+            <BackButton fallbackTo="/novedades" />
           </div>
         </div>
       </article>
 
-      <Section tone="sand">
-        <SectionHeading eyebrow="Seguir leyendo" title="Otras historias" />
-        <div className="mt-12 grid gap-10 md:grid-cols-3">
-          {related.map((a) => (
-            <NewsCard key={a.slug} article={a} />
-          ))}
-        </div>
-      </Section>
+      {related.length > 0 && (
+        <Section tone="sand">
+          <SectionHeading eyebrow="Seguir leyendo" title="Otras notas" />
+          <div className="mt-12 grid gap-10 md:grid-cols-3">
+            {related.map((a) => (
+              <NewsCard key={a.slug} article={a} />
+            ))}
+          </div>
+        </Section>
+      )}
     </>
   );
 }
