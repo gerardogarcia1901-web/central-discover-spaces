@@ -33,6 +33,7 @@ export const mainNav = [
   { label: "Eventos", to: "/eventos" },
   { label: "Novedades", to: "/novedades" },
   { label: "Visítanos", to: "/visitanos" },
+  { label: "Servicios y amenidades", to: "/servicios" },
   { label: "Arrendamientos", to: "/arrendamientos" },
   { label: "Contacto", to: "/contacto" },
 ] as const;
