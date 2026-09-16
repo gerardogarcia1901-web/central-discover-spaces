@@ -1,15 +1,51 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, Search, ExternalLink, X, ArrowUpRight, Clock } from "lucide-react";
+import { Menu, Search, ExternalLink, X, ArrowUpRight, Clock, Globe2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { mainNav, site } from "@/data/site";
 import { center } from "@/data/center";
 import { allStores } from "@/data/stores";
 import { cn } from "@/lib/utils";
 
 const DAYS = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+
+const menuGroups = [
+  {
+    label: "Explorar",
+    links: [
+      { label: "Inicio", to: "/" },
+      { label: "Eventos", to: "/eventos" },
+      { label: "Promociones", to: "/promociones" },
+      { label: "Novedades", to: "/novedades" },
+    ],
+  },
+  {
+    label: "Descubre",
+    links: [
+      { label: "Marcas y tiendas", to: "/directorio" },
+      { label: "Gastronomía", to: "/gastronomia" },
+      { label: "Directorio completo", to: "/directorio" },
+    ],
+  },
+  {
+    label: "Tu visita",
+    links: [
+      { label: "Planifica tu visita", to: "/visitanos" },
+      { label: "Horarios", to: "/visitanos" },
+      { label: "Cómo llegar", to: "/visitanos" },
+    ],
+  },
+  {
+    label: "Conecta",
+    links: [
+      { label: "Arrendamientos", to: "/arrendamientos" },
+      { label: "Contacto", to: "/contacto" },
+    ],
+  },
+] as const;
 
 function todayHours() {
   const day = DAYS[new Date().getDay()];
@@ -53,7 +89,7 @@ function Wordmark({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
-function SearchDialog() {
+function SearchDialog({ expanded = false }: { expanded?: boolean }) {
   const [query, setQuery] = useState("");
   const results = query.trim()
     ? allStores.filter((s) => s.name.toLowerCase().includes(query.trim().toLowerCase())).slice(0, 6)
@@ -62,12 +98,18 @@ function SearchDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button
-          className="inline-flex size-9 items-center justify-center rounded-full transition-colors hover:bg-foreground/10"
+        <Button
+          variant="ghost"
+          size={expanded ? "default" : "icon"}
+          className={cn(
+            "rounded-full",
+            expanded && "h-auto justify-start gap-4 px-0 py-2 text-ink-foreground/60 hover:bg-transparent hover:text-ink-foreground",
+          )}
           aria-label="Buscar"
         >
           <Search className="size-4" />
-        </button>
+          {expanded && <span className="text-sm font-normal">Buscar en CENTRAL</span>}
+        </Button>
       </DialogTrigger>
       <DialogContent className="top-24 max-w-2xl translate-y-0 rounded-none border-border p-0">
         <DialogHeader className="border-b px-6 py-4">
@@ -156,59 +198,89 @@ export function Header() {
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <button
-                className="inline-flex size-9 items-center justify-center rounded-full transition-colors hover:bg-foreground/10 2xl:hidden"
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full 2xl:hidden"
                 aria-label="Abrir menú"
               >
                 <Menu className="size-5" />
-              </button>
+              </Button>
             </SheetTrigger>
             <SheetContent
               side="right"
-              className="w-full overflow-y-auto border-l-0 bg-ink p-0 text-ink-foreground sm:max-w-md [&>button]:hidden"
+              className="w-full overflow-y-auto border-0 bg-ink p-0 text-ink-foreground shadow-none sm:max-w-none [&>button]:hidden"
             >
-              <div className="flex h-16 items-center justify-between px-6">
-                <div className="flex flex-col leading-none">
-                  <span className="wordmark text-lg">CENTRAL</span>
-                  <span className="mt-1 text-[0.6rem] uppercase tracking-[0.28em] text-ink-foreground/50">
-                    {site.subtitle}
-                  </span>
-                </div>
-                <button onClick={() => setOpen(false)} aria-label="Cerrar menú" className="p-2">
-                  <X className="size-5" />
-                </button>
-              </div>
-              <nav aria-label="Navegación móvil" className="flex flex-col px-6 pt-6">
-                {mainNav.map((item) => (
-                  <Link
-                    key={item.to}
-                    to={item.to}
+              <div className="grid min-h-full grid-rows-[auto_1fr_auto]">
+                <div className="grid min-h-20 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center border-b border-ink-foreground/15 px-5 md:min-h-24 md:px-12">
+                  <Button
+                    variant="ghost"
                     onClick={() => setOpen(false)}
-                    className="display-md border-b border-white/10 py-4 text-[1.6rem] text-ink-foreground/90 transition-colors hover:text-ink-foreground"
+                    className="w-fit justify-start gap-2 px-0 text-ink-foreground hover:bg-transparent hover:text-ink-foreground/70"
+                    aria-label="Cerrar menú"
                   >
-                    {item.label}
+                    <X className="size-5" />
+                    <span className="hidden sm:inline">Cerrar</span>
+                  </Button>
+                  <Link to="/" onClick={() => setOpen(false)} className="wordmark text-lg md:text-2xl" aria-label="CENTRAL San Miguel Centro, inicio">
+                    CENTRAL
                   </Link>
-                ))}
-              </nav>
-              <div className="px-6 py-8">
-                <p className="flex items-center gap-2 eyebrow text-ink-foreground/60">
-                  <Clock className="size-3.5" aria-hidden />
-                  Hoy {todayHours()}
-                </p>
-                <a
-                  href={site.brandUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-4 inline-flex w-full items-center justify-center gap-2 border border-white/25 px-4 py-3 eyebrow text-ink-foreground/80"
+                  <Link
+                    to="/visitanos"
+                    onClick={() => setOpen(false)}
+                    className="ml-auto inline-flex items-center gap-2 text-sm font-medium text-ink-foreground transition-opacity hover:opacity-70"
+                  >
+                    <Clock className="size-5" aria-hidden />
+                    <span className="hidden sm:inline">Horarios</span>
+                  </Link>
+                </div>
+
+                <nav
+                  aria-label="Menú principal"
+                  className="container-central grid content-start grid-cols-1 gap-x-10 gap-y-10 py-12 sm:grid-cols-2 lg:grid-cols-4 lg:py-24"
                 >
-                  Ver todos los CENTRAL
-                  <ExternalLink className="size-3.5" aria-hidden />
-                </a>
-                <p className="mt-8 text-xs leading-relaxed text-ink-foreground/50">
-                  {site.address}
-                  <br />
-                  {site.phone}
-                </p>
+                  {menuGroups.map((group) => (
+                    <section key={group.label} aria-labelledby={`menu-${group.label}`}>
+                      <h2 id={`menu-${group.label}`} className="eyebrow border-b border-ink-foreground/15 pb-5 text-ink-foreground/45">
+                        {group.label}
+                      </h2>
+                      <ul className="space-y-4 pt-7">
+                        {group.links.map((item) => (
+                          <li key={`${group.label}-${item.label}`}>
+                            <Link
+                              to={item.to}
+                              onClick={() => setOpen(false)}
+                              className="text-xl font-medium text-ink-foreground/90 transition-colors hover:text-highlight md:text-2xl"
+                            >
+                              {item.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                      {group.label === "Conecta" && (
+                        <a
+                          href={site.brandUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="mt-4 inline-flex items-center gap-2 text-xl font-medium text-ink-foreground/90 transition-colors hover:text-highlight md:text-2xl"
+                        >
+                          Todos los CENTRAL
+                          <ExternalLink className="size-4" aria-hidden />
+                        </a>
+                      )}
+                    </section>
+                  ))}
+                </nav>
+
+                <div className="border-t border-ink-foreground/15">
+                  <div className="container-central flex min-h-24 items-center justify-between gap-6">
+                    <SearchDialog expanded />
+                    <span className="inline-flex items-center gap-2 text-sm text-ink-foreground/50">
+                      <Globe2 className="size-4" aria-hidden />
+                      Español
+                    </span>
+                  </div>
+                </div>
               </div>
             </SheetContent>
           </Sheet>
