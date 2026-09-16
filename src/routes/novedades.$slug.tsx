@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Breadcrumbs, Section, SectionHeading } from "@/components/central/primitives";
 import { BackButton } from "@/components/central/BackButton";
 import { NewsCard } from "@/components/central/cards";
+import { MediaPlaceholder } from "@/components/central/Placeholders";
 import { articles, getArticle } from "@/data/news";
 
 export const Route = createFileRoute("/novedades/$slug")({
@@ -60,17 +61,19 @@ function ArticlePage() {
           </p>
           <h1 className="display-lg mt-6">{article.title}</h1>
           <p className="mt-6 text-lg leading-relaxed text-muted-foreground">{article.summary}</p>
-          <p className="mt-6 text-xs uppercase tracking-widest text-muted-foreground">Por {article.author}</p>
+          {article.author && (
+            <p className="mt-6 text-xs uppercase tracking-widest text-muted-foreground">Por {article.author}</p>
+          )}
         </header>
 
         <div className="container-central mt-12">
-          <img
-            src={article.image}
-            alt={article.title}
-            className="aspect-video w-full object-cover"
-            width={1600}
-            height={1100}
-          />
+          <div className="aspect-video w-full overflow-hidden border border-border">
+            {article.image ? (
+              <img src={article.image} alt={article.title} className="image-cover" width={1600} height={1100} />
+            ) : (
+              <MediaPlaceholder label="Imagen próximamente" />
+            )}
+          </div>
         </div>
 
         <div className="container-central max-w-3xl py-14 md:py-20">
