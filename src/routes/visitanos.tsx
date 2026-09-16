@@ -114,14 +114,17 @@ function VisitanosPage() {
           <div className="lg:col-span-7">
             <div className="overflow-hidden border border-border">
               <iframe
-                title={`Mapa de ubicación de ${center.name}`}
+                title={`Ubicación exacta de ${center.name}`}
                 src={center.mapsEmbedUrl}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 className="aspect-[4/3] w-full border-0"
               />
               <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border bg-card p-4">
-                <p className="text-xs text-muted-foreground">{center.addressDetail}</p>
+                <p className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <MapPin className="size-3.5 shrink-0" aria-hidden />
+                  Ubicación exacta · {center.addressDetail}
+                </p>
                 <Button asChild variant="outline" size="sm" className="rounded-none eyebrow">
                   <a href={center.mapsUrl} target="_blank" rel="noreferrer">
                     Cómo llegar

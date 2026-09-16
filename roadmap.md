@@ -2,6 +2,7 @@
 
 ## En curso
 - [x] Aplicar el Brief oficial de CENTRAL San Miguel Centro (sept 2026): datos reales, eliminar contenido provisional, navegación propia, directorio de 5 comercios, visítanos sin parqueo, contacto oficial, arrendamientos.
+- [x] Restaurar el menú previo, añadir selector de ubicación, precisar el mapa y simplificar el pie.
 
 ## Pendiente (bloqueado por Grupo Galo)
 - [ ] Fotografías reales de la plaza y de cada comercio (placeholders en su lugar).

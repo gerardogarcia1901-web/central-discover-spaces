@@ -1,6 +1,6 @@
 import type { CenterInfo } from "./types";
 
-const MAPS_QUERY = "2da Calle Poniente y 1ra Avenida Norte, Centro de San Miguel, El Salvador";
+const MAPS_QUERY = "CENTRAL San Miguel Centro, 2da Calle Poniente y 1ra Avenida Norte, Centro de San Miguel, El Salvador";
 
 export const center: CenterInfo = {
   name: "CENTRAL San Miguel Centro",
@@ -17,7 +17,7 @@ export const center: CenterInfo = {
   address: "2da Calle Poniente y 1ra Avenida Norte, Centro de San Miguel, El Salvador",
   addressDetail: "Frente al nuevo Mercado Central, ex Parque Barrios.",
   mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MAPS_QUERY)}`,
-  mapsEmbedUrl: `https://www.google.com/maps?q=${encodeURIComponent(MAPS_QUERY)}&output=embed`,
+  mapsEmbedUrl: `https://www.google.com/maps?q=${encodeURIComponent(MAPS_QUERY)}&z=18&output=embed`,
   hoursNote:
     "Los horarios pueden variar según cada comercio. Consulta nuestro directorio para conocer los horarios de atención de cada establecimiento.",
   stats: [

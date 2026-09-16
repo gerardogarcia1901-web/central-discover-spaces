@@ -3,6 +3,7 @@ import { ExternalLink, Mail, MapPin, MessageCircle } from "lucide-react";
 import { legalLinks, mainNav, site } from "@/data/site";
 import { center } from "@/data/center";
 import { stores } from "@/data/stores";
+import { LocationSwitcher } from "@/components/central/Header";
 
 export function Footer() {
   return (
@@ -12,16 +13,12 @@ export function Footer() {
           <div>
             <p className="wordmark text-3xl md:text-4xl">CENTRAL</p>
             <p className="mt-2 eyebrow text-ink-foreground/60">{site.subtitle}</p>
-            <p className="mt-6 max-w-sm text-sm leading-relaxed text-ink-foreground/60">{center.description}</p>
-            <a
-              href={site.brandUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-6 inline-flex items-center gap-2 eyebrow text-ink-foreground/80 underline-offset-8 hover:underline"
-            >
-              Cambiar / elegir ubicación
-              <ExternalLink className="size-3.5" aria-hidden />
-            </a>
+            <p className="mt-6 max-w-sm text-sm leading-relaxed text-ink-foreground/60">
+              Plaza urbana y peatonal en el corazón de San Miguel.
+            </p>
+            <div className="mt-4 w-fit">
+              <LocationSwitcher inverse />
+            </div>
             <p className="mt-6 eyebrow text-ink-foreground/40">Una plaza de {site.operator}</p>
           </div>
 
