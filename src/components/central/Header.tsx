@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, Search, ExternalLink, X, ArrowUpRight, Clock, Globe2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Menu, Search, ExternalLink, X, ArrowUpRight, Globe2 } from "lucide-react";
+import { useState } from "react";
+import { useEffect } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -10,32 +11,20 @@ import { center } from "@/data/center";
 import { allStores } from "@/data/stores";
 import { cn } from "@/lib/utils";
 
-const DAYS = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-
 const menuGroups = [
   {
-    label: "Explorar",
+    label: "La plaza",
     links: [
       { label: "Inicio", to: "/" },
-      { label: "Eventos", to: "/eventos" },
+      { label: "Comercios", to: "/comercios" },
+      { label: "Visítanos", to: "/visitanos" },
+    ],
+  },
+  {
+    label: "Contenido",
+    links: [
       { label: "Promociones", to: "/promociones" },
       { label: "Novedades", to: "/novedades" },
-    ],
-  },
-  {
-    label: "Descubre",
-    links: [
-      { label: "Marcas y tiendas", to: "/directorio" },
-      { label: "Gastronomía", to: "/gastronomia" },
-      { label: "Directorio completo", to: "/directorio" },
-    ],
-  },
-  {
-    label: "Tu visita",
-    links: [
-      { label: "Planifica tu visita", to: "/visitanos" },
-      { label: "Horarios", to: "/visitanos" },
-      { label: "Cómo llegar", to: "/visitanos" },
     ],
   },
   {
@@ -47,17 +36,12 @@ const menuGroups = [
   },
 ] as const;
 
-function todayHours() {
-  const day = DAYS[new Date().getDay()];
-  return center.hours.find((h) => h.label === day)?.value ?? "9:00 a.m. – 8:00 p.m.";
-}
-
 function TopBar() {
   return (
     <div className="w-full bg-ink text-ink-foreground">
       <div className="container-central flex h-9 items-center justify-between gap-4">
         <p className="eyebrow truncate text-ink-foreground/60">
-          {center.city}, {center.department} · En operación
+          {center.city}, {center.department} · Plaza peatonal en el centro
         </p>
         <a
           href={site.brandUrl}
@@ -65,7 +49,8 @@ function TopBar() {
           rel="noreferrer"
           className="inline-flex shrink-0 items-center gap-1.5 eyebrow text-ink-foreground/70 transition-colors hover:text-ink-foreground"
         >
-          Sitio principal de CENTRAL
+          <Globe2 className="size-3.5" aria-hidden />
+          Cambiar ubicación
           <ArrowUpRight className="size-3.5" aria-hidden />
         </a>
       </div>
@@ -75,12 +60,7 @@ function TopBar() {
 
 function Wordmark({ onNavigate }: { onNavigate?: () => void }) {
   return (
-    <Link
-      to="/"
-      onClick={onNavigate}
-      className="flex flex-col leading-none"
-      aria-label={`${site.fullName}, inicio`}
-    >
+    <Link to="/" onClick={onNavigate} className="flex flex-col leading-none" aria-label={`${site.fullName}, inicio`}>
       <span className="wordmark text-xl leading-none md:text-2xl">CENTRAL</span>
       <span className="mt-1 text-[0.6rem] font-medium uppercase tracking-[0.28em] text-muted-foreground md:text-[0.65rem]">
         {site.subtitle}
@@ -92,7 +72,7 @@ function Wordmark({ onNavigate }: { onNavigate?: () => void }) {
 function SearchDialog({ expanded = false }: { expanded?: boolean }) {
   const [query, setQuery] = useState("");
   const results = query.trim()
-    ? allStores.filter((s) => s.name.toLowerCase().includes(query.trim().toLowerCase())).slice(0, 6)
+    ? allStores.filter((s) => s.name.toLowerCase().includes(query.trim().toLowerCase()))
     : [];
 
   return (
@@ -103,12 +83,13 @@ function SearchDialog({ expanded = false }: { expanded?: boolean }) {
           size={expanded ? "default" : "icon"}
           className={cn(
             "rounded-full",
-            expanded && "h-auto justify-start gap-4 px-0 py-2 text-ink-foreground/60 hover:bg-transparent hover:text-ink-foreground",
+            expanded &&
+              "h-auto justify-start gap-4 px-0 py-2 text-ink-foreground/60 hover:bg-transparent hover:text-ink-foreground",
           )}
-          aria-label="Buscar"
+          aria-label="Buscar comercio"
         >
           <Search className="size-4" />
-          {expanded && <span className="text-sm font-normal">Buscar en CENTRAL</span>}
+          {expanded && <span className="text-sm font-normal">Buscar un comercio</span>}
         </Button>
       </DialogTrigger>
       <DialogContent className="top-24 max-w-2xl translate-y-0 rounded-none border-border p-0">
@@ -120,14 +101,14 @@ function SearchDialog({ expanded = false }: { expanded?: boolean }) {
             autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Busca una tienda, restaurante o marca"
+            placeholder="Busca un comercio de la plaza"
             className="h-12 rounded-none border-0 border-b border-border px-0 text-lg focus-visible:ring-0"
           />
           <ul className="mt-6 space-y-1">
             {results.map((store) => (
               <li key={store.slug}>
                 <Link
-                  to="/directorio/$slug"
+                  to="/comercios/$slug"
                   params={{ slug: store.slug }}
                   className="flex items-center justify-between px-2 py-3 text-sm transition-colors hover:bg-muted"
                 >
@@ -170,7 +151,7 @@ export function Header() {
       <div className="container-central flex h-16 items-center justify-between gap-6 md:h-20">
         <div className="flex items-center gap-8">
           <Wordmark />
-          <nav aria-label="Navegación principal" className="hidden items-center gap-5 2xl:flex">
+          <nav aria-label="Navegación principal" className="hidden items-center gap-6 lg:flex">
             {mainNav.map((item) => (
               <Link
                 key={item.to}
@@ -185,25 +166,21 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-1 md:gap-3">
-          <Link
-            to="/visitanos"
-            className="hidden items-center gap-2 eyebrow text-foreground/70 transition-colors hover:text-foreground lg:inline-flex"
+          <a
+            href={site.brandUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="hidden items-center gap-2 border border-border px-4 py-2 eyebrow text-foreground/70 transition-colors hover:border-foreground hover:text-foreground lg:inline-flex"
           >
-            <Clock className="size-3.5" aria-hidden />
-            Hoy {todayHours()}
-          </Link>
+            <Globe2 className="size-3.5" aria-hidden />
+            Cambiar ubicación
+          </a>
 
           <SearchDialog />
 
-
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="rounded-full 2xl:hidden"
-                aria-label="Abrir menú"
-              >
+              <Button variant="ghost" size="icon" className="rounded-full lg:hidden" aria-label="Abrir menú">
                 <Menu className="size-5" />
               </Button>
             </SheetTrigger>
@@ -222,26 +199,35 @@ export function Header() {
                     <X className="size-5" />
                     <span className="hidden sm:inline">Cerrar</span>
                   </Button>
-                  <Link to="/" onClick={() => setOpen(false)} className="wordmark text-lg md:text-2xl" aria-label="CENTRAL San Miguel Centro, inicio">
+                  <Link
+                    to="/"
+                    onClick={() => setOpen(false)}
+                    className="wordmark text-lg md:text-2xl"
+                    aria-label={`${site.fullName}, inicio`}
+                  >
                     CENTRAL
                   </Link>
-                  <Link
-                    to="/visitanos"
-                    onClick={() => setOpen(false)}
+                  <a
+                    href={site.brandUrl}
+                    target="_blank"
+                    rel="noreferrer"
                     className="ml-auto inline-flex items-center gap-2 text-sm font-medium text-ink-foreground transition-opacity hover:opacity-70"
                   >
-                    <Clock className="size-5" aria-hidden />
-                    <span className="hidden sm:inline">Horarios</span>
-                  </Link>
+                    <Globe2 className="size-5" aria-hidden />
+                    <span className="hidden sm:inline">Cambiar ubicación</span>
+                  </a>
                 </div>
 
                 <nav
                   aria-label="Menú principal"
-                  className="container-central grid content-start grid-cols-1 gap-x-10 gap-y-10 py-12 sm:grid-cols-2 lg:grid-cols-4 lg:py-24"
+                  className="container-central grid content-start grid-cols-1 gap-x-10 gap-y-10 py-12 sm:grid-cols-2 lg:grid-cols-3 lg:py-24"
                 >
                   {menuGroups.map((group) => (
                     <section key={group.label} aria-labelledby={`menu-${group.label}`}>
-                      <h2 id={`menu-${group.label}`} className="eyebrow border-b border-ink-foreground/15 pb-5 text-ink-foreground/45">
+                      <h2
+                        id={`menu-${group.label}`}
+                        className="eyebrow border-b border-ink-foreground/15 pb-5 text-ink-foreground/45"
+                      >
                         {group.label}
                       </h2>
                       <ul className="space-y-4 pt-7">
@@ -257,29 +243,22 @@ export function Header() {
                           </li>
                         ))}
                       </ul>
-                      {group.label === "Conecta" && (
-                        <a
-                          href={site.brandUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="mt-4 inline-flex items-center gap-2 text-xl font-medium text-ink-foreground/90 transition-colors hover:text-highlight md:text-2xl"
-                        >
-                          Todos los CENTRAL
-                          <ExternalLink className="size-4" aria-hidden />
-                        </a>
-                      )}
                     </section>
                   ))}
                 </nav>
 
-                <div className="border-t border-ink-foreground/15">
-                  <div className="container-central flex min-h-24 items-center justify-between gap-6">
-                    <SearchDialog expanded />
-                    <span className="inline-flex items-center gap-2 text-sm text-ink-foreground/50">
-                      <Globe2 className="size-4" aria-hidden />
-                      Español
-                    </span>
-                  </div>
+                <div className="container-central flex flex-col gap-4 border-t border-ink-foreground/15 py-8">
+                  <SearchDialog expanded />
+                  <p className="text-xs leading-relaxed text-ink-foreground/50">{center.hoursNote}</p>
+                  <a
+                    href={site.brandUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 eyebrow text-ink-foreground/70 hover:text-ink-foreground"
+                  >
+                    Ver todas las ubicaciones de CENTRAL
+                    <ExternalLink className="size-3.5" aria-hidden />
+                  </a>
                 </div>
               </div>
             </SheetContent>
