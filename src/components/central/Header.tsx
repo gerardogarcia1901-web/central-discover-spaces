@@ -14,7 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { mainNav, SANTA_ROSA_URL, site } from "@/data/site";
+import { SANTA_ROSA_URL, site } from "@/data/site";
 import { center } from "@/data/center";
 import { allStores } from "@/data/stores";
 import { cn } from "@/lib/utils";
@@ -265,6 +265,7 @@ export function Header() {
             </SheetContent>
           </Sheet>
           <Wordmark />
+        </div>
 
         <div className="flex items-center gap-1 md:gap-3">
           <div className="hidden sm:block">
