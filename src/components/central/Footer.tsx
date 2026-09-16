@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Mail, MapPin, MessageCircle } from "lucide-react";
 import { legalLinks, mainNav, site } from "@/data/site";
 import { center } from "@/data/center";
-import { categories } from "@/data/taxonomy";
+import { stores } from "@/data/stores";
 
 export function Footer() {
   return (
@@ -12,20 +12,20 @@ export function Footer() {
           <div>
             <p className="wordmark text-3xl md:text-4xl">CENTRAL</p>
             <p className="mt-2 eyebrow text-ink-foreground/60">{site.subtitle}</p>
-            <p className="mt-6 max-w-sm text-sm leading-relaxed text-ink-foreground/60">{site.description}</p>
+            <p className="mt-6 max-w-sm text-sm leading-relaxed text-ink-foreground/60">{center.description}</p>
             <a
               href={site.brandUrl}
               target="_blank"
               rel="noreferrer"
               className="mt-6 inline-flex items-center gap-2 eyebrow text-ink-foreground/80 underline-offset-8 hover:underline"
             >
-              Ver todos los CENTRAL
+              Cambiar / elegir ubicación
               <ExternalLink className="size-3.5" aria-hidden />
             </a>
             <p className="mt-6 eyebrow text-ink-foreground/40">Una plaza de {site.operator}</p>
           </div>
 
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
             <nav aria-label="Explorar">
               <h2 className="eyebrow text-ink-foreground/40">Explorar</h2>
               <ul className="mt-5 space-y-3 text-sm">
@@ -36,20 +36,31 @@ export function Footer() {
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <a
+                    href={site.brandUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 text-ink-foreground/75 transition-colors hover:text-ink-foreground"
+                  >
+                    Cambiar ubicación
+                    <ExternalLink className="size-3.5" aria-hidden />
+                  </a>
+                </li>
               </ul>
             </nav>
 
-            <nav aria-label="Categorías">
-              <h2 className="eyebrow text-ink-foreground/40">Categorías</h2>
+            <nav aria-label="Comercios">
+              <h2 className="eyebrow text-ink-foreground/40">Comercios</h2>
               <ul className="mt-5 space-y-3 text-sm">
-                {categories.slice(0, 6).map((cat) => (
-                  <li key={cat.slug}>
+                {stores.map((store) => (
+                  <li key={store.slug}>
                     <Link
-                      to="/directorio"
-                      search={{ categoria: cat.slug }}
+                      to="/comercios/$slug"
+                      params={{ slug: store.slug }}
                       className="text-ink-foreground/75 transition-colors hover:text-ink-foreground"
                     >
-                      {cat.name}
+                      {store.name}
                     </Link>
                   </li>
                 ))}
@@ -57,53 +68,26 @@ export function Footer() {
             </nav>
 
             <div>
-              <h2 className="eyebrow text-ink-foreground/40">Horarios</h2>
-              <ul className="mt-5 space-y-2 text-sm text-ink-foreground/75">
-                <li className="flex justify-between gap-4">
-                  <span>Lun – jue</span>
-                  <span className="text-ink-foreground/55">9:00 – 20:00</span>
-                </li>
-                <li className="flex justify-between gap-4">
-                  <span>Vie – sáb</span>
-                  <span className="text-ink-foreground/55">9:00 – 22:00</span>
-                </li>
-                <li className="flex justify-between gap-4">
-                  <span>Domingo</span>
-                  <span className="text-ink-foreground/55">10:00 – 20:00</span>
-                </li>
-              </ul>
-              <Link
-                to="/visitanos"
-                className="mt-5 inline-block eyebrow text-ink-foreground/80 underline-offset-8 hover:underline"
-              >
-                Cómo llegar
-              </Link>
-            </div>
-
-            <div>
               <h2 className="eyebrow text-ink-foreground/40">Contacto</h2>
               <ul className="mt-5 space-y-3 text-sm text-ink-foreground/75">
-                <li>
+                <li className="flex gap-3">
+                  <MessageCircle className="mt-0.5 size-4 shrink-0" aria-hidden />
+                  <a href={site.whatsappUrl} target="_blank" rel="noreferrer" className="hover:text-ink-foreground">
+                    WhatsApp {site.whatsapp}
+                  </a>
+                </li>
+                <li className="flex gap-3">
+                  <Mail className="mt-0.5 size-4 shrink-0" aria-hidden />
                   <a href={`mailto:${site.email}`} className="break-all hover:text-ink-foreground">
                     {site.email}
                   </a>
                 </li>
-                <li>
-                  <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="hover:text-ink-foreground">
-                    {site.phone}
-                  </a>
+                <li className="flex gap-3 text-ink-foreground/55">
+                  <MapPin className="mt-0.5 size-4 shrink-0" aria-hidden />
+                  {center.address}
                 </li>
-                <li className="text-ink-foreground/50">{center.address}</li>
               </ul>
-              <ul className="mt-6 flex flex-wrap gap-x-4 gap-y-2 text-xs uppercase tracking-widest text-ink-foreground/60">
-                {site.social.map((s) => (
-                  <li key={s.label}>
-                    <a href={s.href} target="_blank" rel="noreferrer" className="hover:text-ink-foreground">
-                      {s.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              <p className="mt-6 text-xs leading-relaxed text-ink-foreground/45">{center.hoursNote}</p>
             </div>
           </div>
         </div>

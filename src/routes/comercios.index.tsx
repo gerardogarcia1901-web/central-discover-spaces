@@ -3,24 +3,22 @@ import { useMemo } from "react";
 import { PageHero, Section } from "@/components/central/primitives";
 import { StoreCard } from "@/components/central/cards";
 import { CategoryChips, FilterBar } from "@/components/central/Filters";
-import { categories, levels } from "@/data/taxonomy";
+import { categories } from "@/data/taxonomy";
 import { allStores } from "@/data/stores";
-import pasilloImg from "@/assets/smc-pasillo.jpg";
+import { center } from "@/data/center";
 
-interface DirectorioSearch {
+interface ComerciosSearch {
   categoria?: string | undefined;
-  nivel?: string | undefined;
   q?: string | undefined;
 }
 
-const TITLE = "Directorio de marcas | CENTRAL San Miguel Centro";
+const TITLE = "Comercios de la plaza | CENTRAL San Miguel Centro";
 const DESCRIPTION =
-  "Busca entre las más de 40 marcas de CENTRAL San Miguel Centro. Filtra por categoría y nivel y encuentra el local, el horario y el teléfono de cada tienda.";
+  "Directorio de los comercios de CENTRAL San Miguel Centro: local, horario de atención y contacto de cada establecimiento en el Centro de San Miguel.";
 
-export const Route = createFileRoute("/directorio/")({
-  validateSearch: (search: Record<string, unknown>): DirectorioSearch => ({
+export const Route = createFileRoute("/comercios/")({
+  validateSearch: (search: Record<string, unknown>): ComerciosSearch => ({
     categoria: typeof search["categoria"] === "string" ? search["categoria"] : undefined,
-    nivel: typeof search["nivel"] === "string" ? search["nivel"] : undefined,
     q: typeof search["q"] === "string" ? search["q"] : undefined,
   }),
   head: () => ({
@@ -29,47 +27,49 @@ export const Route = createFileRoute("/directorio/")({
       { name: "description", content: DESCRIPTION },
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESCRIPTION },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: DirectorioPage,
+  component: ComerciosPage,
 });
 
-function DirectorioPage() {
+function ComerciosPage() {
   const search = Route.useSearch();
-  const navigate = useNavigate({ from: "/directorio/" });
+  const navigate = useNavigate({ from: "/comercios/" });
 
-  const setSearch = (patch: DirectorioSearch) =>
-    navigate({ search: (prev: DirectorioSearch) => ({ ...prev, ...patch }), replace: true });
+  const setSearch = (patch: ComerciosSearch) =>
+    navigate({ search: (prev: ComerciosSearch) => ({ ...prev, ...patch }), replace: true });
 
   const categoria = search.categoria ?? "todas";
-  const nivel = search.nivel ?? "todos";
   const q = search.q ?? "";
 
   const results = useMemo(
     () =>
       allStores.filter((s) => {
         const matchCat = categoria === "todas" || s.categorySlug === categoria;
-        const matchLevel = nivel === "todos" || s.level === nivel;
         const matchQ = !q || s.name.toLowerCase().includes(q.toLowerCase());
-        return matchCat && matchLevel && matchQ;
+        return matchCat && matchQ;
       }),
-    [categoria, nivel, q],
+    [categoria, q],
   );
 
   return (
     <>
       <PageHero
-        eyebrow="Marcas y tiendas"
-        title="Directorio de marcas"
-        description="Encuentra rápidamente una tienda, restaurante o servicio dentro de CENTRAL San Miguel Centro."
-        image={pasilloImg}
-        breadcrumbs={[{ label: "Directorio" }]}
-      />
+        eyebrow="Comercios"
+        title="Directorio de la plaza"
+        description="Encuentra cada comercio de CENTRAL San Miguel Centro con su local, su horario de atención y su contacto."
+        breadcrumbs={[{ label: "Comercios" }]}
+      >
+        <p className="max-w-2xl text-sm leading-relaxed text-ink-foreground/70">{center.hoursNote}</p>
+      </PageHero>
+
       <Section className="py-12 md:py-16">
         <FilterBar
           query={q}
           onQueryChange={(value) => setSearch({ q: value || undefined })}
-          searchPlaceholder="Buscar por nombre de tienda o marca"
+          searchPlaceholder="Buscar por nombre del comercio"
           selects={[
             {
               label: "Categoría",
@@ -78,15 +78,6 @@ function DirectorioPage() {
               options: [
                 { value: "todas", label: "Todas las categorías" },
                 ...categories.map((c) => ({ value: c.slug, label: c.name })),
-              ],
-            },
-            {
-              label: "Nivel",
-              value: nivel,
-              onChange: (value) => setSearch({ nivel: value === "todos" ? undefined : value }),
-              options: [
-                { value: "todos", label: "Todos los niveles" },
-                ...levels.map((l) => ({ value: l.slug, label: l.name })),
               ],
             },
           ]}
@@ -104,18 +95,18 @@ function DirectorioPage() {
         </div>
 
         <p className="mt-8 text-sm text-muted-foreground" aria-live="polite">
-          {results.length} {results.length === 1 ? "resultado" : "resultados"}
+          {results.length} {results.length === 1 ? "comercio" : "comercios"}
         </p>
 
         {results.length ? (
-          <div className="mt-6 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-6 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {results.map((store) => (
               <StoreCard key={store.slug} store={store} />
             ))}
           </div>
         ) : (
           <p className="mt-6 border border-dashed border-border p-12 text-center text-sm text-muted-foreground">
-            No encontramos marcas con esos criterios. Prueba con otra categoría o nivel.
+            No encontramos comercios con esos criterios. Prueba con otra categoría.
           </p>
         )}
       </Section>
