@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, Search, ExternalLink, X, Globe2, ChevronDown, Check } from "lucide-react";
+import { Menu, Search, ExternalLink, X, Globe2, ChevronDown, Check, Clock } from "lucide-react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -21,18 +21,26 @@ import { cn } from "@/lib/utils";
 
 const menuGroups = [
   {
-    label: "La plaza",
+    label: "Explorar",
     links: [
       { label: "Inicio", to: "/" },
-      { label: "Comercios", to: "/comercios" },
-      { label: "Visítanos", to: "/visitanos" },
+      { label: "Promociones", to: "/promociones" },
+      { label: "Novedades", to: "/novedades" },
     ],
   },
   {
-    label: "Contenido",
+    label: "Descubre",
     links: [
-      { label: "Promociones", to: "/promociones" },
-      { label: "Novedades", to: "/novedades" },
+      { label: "Comercios", to: "/comercios" },
+      { label: "Directorio completo", to: "/comercios" },
+    ],
+  },
+  {
+    label: "Tu visita",
+    links: [
+      { label: "Planifica tu visita", to: "/visitanos" },
+      { label: "Horarios por comercio", to: "/comercios" },
+      { label: "Cómo llegar", to: "/visitanos" },
     ],
   },
   {
@@ -44,7 +52,7 @@ const menuGroups = [
   },
 ] as const;
 
-function LocationSwitcher({ inverse = false, compact = false }: { inverse?: boolean; compact?: boolean }) {
+export function LocationSwitcher({ inverse = false, compact = false }: { inverse?: boolean; compact?: boolean }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -187,7 +195,7 @@ export function Header() {
       <div className="container-central flex h-16 items-center justify-between gap-6 md:h-20">
         <div className="flex items-center gap-8">
           <Wordmark />
-          <nav aria-label="Navegación principal" className="hidden items-center gap-6 lg:flex">
+          <nav aria-label="Navegación principal" className="hidden items-center gap-5 2xl:flex">
             {mainNav.map((item) => (
               <Link
                 key={item.to}
@@ -202,7 +210,7 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-1 md:gap-3">
-          <div className="hidden lg:block">
+          <div className="hidden 2xl:block">
             <LocationSwitcher />
           </div>
 
@@ -210,7 +218,7 @@ export function Header() {
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="rounded-full lg:hidden" aria-label="Abrir menú">
+              <Button variant="ghost" size="icon" className="rounded-full 2xl:hidden" aria-label="Abrir menú">
                 <Menu className="size-5" />
               </Button>
             </SheetTrigger>
@@ -237,14 +245,19 @@ export function Header() {
                   >
                     CENTRAL
                   </Link>
-                  <div className="ml-auto">
-                    <LocationSwitcher inverse compact />
-                  </div>
+                  <Link
+                    to="/visitanos"
+                    onClick={() => setOpen(false)}
+                    className="ml-auto inline-flex items-center gap-2 text-sm font-medium text-ink-foreground transition-opacity hover:opacity-70"
+                  >
+                    <Clock className="size-5" aria-hidden />
+                    <span className="hidden sm:inline">Horarios</span>
+                  </Link>
                 </div>
 
                 <nav
                   aria-label="Menú principal"
-                  className="container-central grid content-start grid-cols-1 gap-x-10 gap-y-10 py-12 sm:grid-cols-2 lg:grid-cols-3 lg:py-24"
+                   className="container-central grid content-start grid-cols-1 gap-x-10 gap-y-10 py-12 sm:grid-cols-2 lg:grid-cols-4 lg:py-24"
                 >
                   {menuGroups.map((group) => (
                     <section key={group.label} aria-labelledby={`menu-${group.label}`}>
