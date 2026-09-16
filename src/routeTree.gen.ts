@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArrendamientosRouteImport } from './routes/arrendamientos'
 import { Route as ContactoRouteImport } from './routes/contacto'
+import { Route as EventosRouteImport } from './routes/eventos'
+import { Route as GastronomiaRouteImport } from './routes/gastronomia'
 import { Route as PromocionesRouteImport } from './routes/promociones'
 import { Route as VisitanosRouteImport } from './routes/visitanos'
 import { Route as ComerciosIndexRouteImport } from './routes/comercios.index'
@@ -32,6 +34,16 @@ const ArrendamientosRoute = ArrendamientosRouteImport.update({
 const ContactoRoute = ContactoRouteImport.update({
   id: '/contacto',
   path: '/contacto',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventosRoute = EventosRouteImport.update({
+  id: '/eventos',
+  path: '/eventos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GastronomiaRoute = GastronomiaRouteImport.update({
+  id: '/gastronomia',
+  path: '/gastronomia',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PromocionesRoute = PromocionesRouteImport.update({
@@ -69,6 +81,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/arrendamientos': typeof ArrendamientosRoute
   '/contacto': typeof ContactoRoute
+  '/eventos': typeof EventosRoute
+  '/gastronomia': typeof GastronomiaRoute
   '/promociones': typeof PromocionesRoute
   '/visitanos': typeof VisitanosRoute
   '/comercios/$slug': typeof ComerciosSlugRoute
@@ -80,6 +94,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/arrendamientos': typeof ArrendamientosRoute
   '/contacto': typeof ContactoRoute
+  '/eventos': typeof EventosRoute
+  '/gastronomia': typeof GastronomiaRoute
   '/promociones': typeof PromocionesRoute
   '/visitanos': typeof VisitanosRoute
   '/comercios/$slug': typeof ComerciosSlugRoute
@@ -92,6 +108,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/arrendamientos': typeof ArrendamientosRoute
   '/contacto': typeof ContactoRoute
+  '/eventos': typeof EventosRoute
+  '/gastronomia': typeof GastronomiaRoute
   '/promociones': typeof PromocionesRoute
   '/visitanos': typeof VisitanosRoute
   '/comercios/$slug': typeof ComerciosSlugRoute
@@ -105,6 +123,8 @@ export interface FileRouteTypes {
     | '/'
     | '/arrendamientos'
     | '/contacto'
+    | '/eventos'
+    | '/gastronomia'
     | '/promociones'
     | '/visitanos'
     | '/comercios/$slug'
@@ -116,6 +136,8 @@ export interface FileRouteTypes {
     | '/'
     | '/arrendamientos'
     | '/contacto'
+    | '/eventos'
+    | '/gastronomia'
     | '/promociones'
     | '/visitanos'
     | '/comercios/$slug'
@@ -127,6 +149,8 @@ export interface FileRouteTypes {
     | '/'
     | '/arrendamientos'
     | '/contacto'
+    | '/eventos'
+    | '/gastronomia'
     | '/promociones'
     | '/visitanos'
     | '/comercios/$slug'
@@ -139,6 +163,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ArrendamientosRoute: typeof ArrendamientosRoute
   ContactoRoute: typeof ContactoRoute
+  EventosRoute: typeof EventosRoute
+  GastronomiaRoute: typeof GastronomiaRoute
   PromocionesRoute: typeof PromocionesRoute
   VisitanosRoute: typeof VisitanosRoute
   ComerciosSlugRoute: typeof ComerciosSlugRoute
@@ -168,6 +194,20 @@ declare module '@tanstack/react-router' {
       path: '/contacto'
       fullPath: '/contacto'
       preLoaderRoute: typeof ContactoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/eventos': {
+      id: '/eventos'
+      path: '/eventos'
+      fullPath: '/eventos'
+      preLoaderRoute: typeof EventosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gastronomia': {
+      id: '/gastronomia'
+      path: '/gastronomia'
+      fullPath: '/gastronomia'
+      preLoaderRoute: typeof GastronomiaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/promociones': {
@@ -219,6 +259,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ArrendamientosRoute: ArrendamientosRoute,
   ContactoRoute: ContactoRoute,
+  EventosRoute: EventosRoute,
+  GastronomiaRoute: GastronomiaRoute,
   PromocionesRoute: PromocionesRoute,
   VisitanosRoute: VisitanosRoute,
   ComerciosSlugRoute: ComerciosSlugRoute,
