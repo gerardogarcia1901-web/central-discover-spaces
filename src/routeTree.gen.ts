@@ -12,13 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArrendamientosRouteImport } from './routes/arrendamientos'
 import { Route as ContactoRouteImport } from './routes/contacto'
-import { Route as GastronomiaRouteImport } from './routes/gastronomia'
 import { Route as PromocionesRouteImport } from './routes/promociones'
 import { Route as VisitanosRouteImport } from './routes/visitanos'
-import { Route as DirectorioIndexRouteImport } from './routes/directorio.index'
-import { Route as DirectorioSlugRouteImport } from './routes/directorio.$slug'
-import { Route as EventosIndexRouteImport } from './routes/eventos.index'
-import { Route as EventosSlugRouteImport } from './routes/eventos.$slug'
+import { Route as ComerciosIndexRouteImport } from './routes/comercios.index'
+import { Route as ComerciosSlugRouteImport } from './routes/comercios.$slug'
 import { Route as NovedadesIndexRouteImport } from './routes/novedades.index'
 import { Route as NovedadesSlugRouteImport } from './routes/novedades.$slug'
 
@@ -37,11 +34,6 @@ const ContactoRoute = ContactoRouteImport.update({
   path: '/contacto',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GastronomiaRoute = GastronomiaRouteImport.update({
-  id: '/gastronomia',
-  path: '/gastronomia',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PromocionesRoute = PromocionesRouteImport.update({
   id: '/promociones',
   path: '/promociones',
@@ -52,24 +44,14 @@ const VisitanosRoute = VisitanosRouteImport.update({
   path: '/visitanos',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DirectorioIndexRoute = DirectorioIndexRouteImport.update({
-  id: '/directorio/',
-  path: '/directorio/',
+const ComerciosIndexRoute = ComerciosIndexRouteImport.update({
+  id: '/comercios/',
+  path: '/comercios/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DirectorioSlugRoute = DirectorioSlugRouteImport.update({
-  id: '/directorio/$slug',
-  path: '/directorio/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EventosIndexRoute = EventosIndexRouteImport.update({
-  id: '/eventos/',
-  path: '/eventos/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EventosSlugRoute = EventosSlugRouteImport.update({
-  id: '/eventos/$slug',
-  path: '/eventos/$slug',
+const ComerciosSlugRoute = ComerciosSlugRouteImport.update({
+  id: '/comercios/$slug',
+  path: '/comercios/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NovedadesIndexRoute = NovedadesIndexRouteImport.update({
@@ -87,28 +69,22 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/arrendamientos': typeof ArrendamientosRoute
   '/contacto': typeof ContactoRoute
-  '/gastronomia': typeof GastronomiaRoute
   '/promociones': typeof PromocionesRoute
   '/visitanos': typeof VisitanosRoute
-  '/directorio/$slug': typeof DirectorioSlugRoute
-  '/eventos/$slug': typeof EventosSlugRoute
+  '/comercios/$slug': typeof ComerciosSlugRoute
   '/novedades/$slug': typeof NovedadesSlugRoute
-  '/directorio/': typeof DirectorioIndexRoute
-  '/eventos/': typeof EventosIndexRoute
+  '/comercios/': typeof ComerciosIndexRoute
   '/novedades/': typeof NovedadesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/arrendamientos': typeof ArrendamientosRoute
   '/contacto': typeof ContactoRoute
-  '/gastronomia': typeof GastronomiaRoute
   '/promociones': typeof PromocionesRoute
   '/visitanos': typeof VisitanosRoute
-  '/directorio/$slug': typeof DirectorioSlugRoute
-  '/eventos/$slug': typeof EventosSlugRoute
+  '/comercios/$slug': typeof ComerciosSlugRoute
   '/novedades/$slug': typeof NovedadesSlugRoute
-  '/directorio': typeof DirectorioIndexRoute
-  '/eventos': typeof EventosIndexRoute
+  '/comercios': typeof ComerciosIndexRoute
   '/novedades': typeof NovedadesIndexRoute
 }
 export interface FileRoutesById {
@@ -116,14 +92,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/arrendamientos': typeof ArrendamientosRoute
   '/contacto': typeof ContactoRoute
-  '/gastronomia': typeof GastronomiaRoute
   '/promociones': typeof PromocionesRoute
   '/visitanos': typeof VisitanosRoute
-  '/directorio/$slug': typeof DirectorioSlugRoute
-  '/eventos/$slug': typeof EventosSlugRoute
+  '/comercios/$slug': typeof ComerciosSlugRoute
   '/novedades/$slug': typeof NovedadesSlugRoute
-  '/directorio/': typeof DirectorioIndexRoute
-  '/eventos/': typeof EventosIndexRoute
+  '/comercios/': typeof ComerciosIndexRoute
   '/novedades/': typeof NovedadesIndexRoute
 }
 export interface FileRouteTypes {
@@ -132,42 +105,33 @@ export interface FileRouteTypes {
     | '/'
     | '/arrendamientos'
     | '/contacto'
-    | '/gastronomia'
     | '/promociones'
     | '/visitanos'
-    | '/directorio/$slug'
-    | '/eventos/$slug'
+    | '/comercios/$slug'
     | '/novedades/$slug'
-    | '/directorio/'
-    | '/eventos/'
+    | '/comercios/'
     | '/novedades/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/arrendamientos'
     | '/contacto'
-    | '/gastronomia'
     | '/promociones'
     | '/visitanos'
-    | '/directorio/$slug'
-    | '/eventos/$slug'
+    | '/comercios/$slug'
     | '/novedades/$slug'
-    | '/directorio'
-    | '/eventos'
+    | '/comercios'
     | '/novedades'
   id:
     | '__root__'
     | '/'
     | '/arrendamientos'
     | '/contacto'
-    | '/gastronomia'
     | '/promociones'
     | '/visitanos'
-    | '/directorio/$slug'
-    | '/eventos/$slug'
+    | '/comercios/$slug'
     | '/novedades/$slug'
-    | '/directorio/'
-    | '/eventos/'
+    | '/comercios/'
     | '/novedades/'
   fileRoutesById: FileRoutesById
 }
@@ -175,14 +139,11 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ArrendamientosRoute: typeof ArrendamientosRoute
   ContactoRoute: typeof ContactoRoute
-  GastronomiaRoute: typeof GastronomiaRoute
   PromocionesRoute: typeof PromocionesRoute
   VisitanosRoute: typeof VisitanosRoute
-  DirectorioSlugRoute: typeof DirectorioSlugRoute
-  EventosSlugRoute: typeof EventosSlugRoute
+  ComerciosSlugRoute: typeof ComerciosSlugRoute
   NovedadesSlugRoute: typeof NovedadesSlugRoute
-  DirectorioIndexRoute: typeof DirectorioIndexRoute
-  EventosIndexRoute: typeof EventosIndexRoute
+  ComerciosIndexRoute: typeof ComerciosIndexRoute
   NovedadesIndexRoute: typeof NovedadesIndexRoute
 }
 
@@ -209,13 +170,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/gastronomia': {
-      id: '/gastronomia'
-      path: '/gastronomia'
-      fullPath: '/gastronomia'
-      preLoaderRoute: typeof GastronomiaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/promociones': {
       id: '/promociones'
       path: '/promociones'
@@ -230,32 +184,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VisitanosRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/directorio/': {
-      id: '/directorio/'
-      path: '/directorio'
-      fullPath: '/directorio/'
-      preLoaderRoute: typeof DirectorioIndexRouteImport
+    '/comercios/': {
+      id: '/comercios/'
+      path: '/comercios'
+      fullPath: '/comercios/'
+      preLoaderRoute: typeof ComerciosIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/directorio/$slug': {
-      id: '/directorio/$slug'
-      path: '/directorio/$slug'
-      fullPath: '/directorio/$slug'
-      preLoaderRoute: typeof DirectorioSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/eventos/': {
-      id: '/eventos/'
-      path: '/eventos'
-      fullPath: '/eventos/'
-      preLoaderRoute: typeof EventosIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/eventos/$slug': {
-      id: '/eventos/$slug'
-      path: '/eventos/$slug'
-      fullPath: '/eventos/$slug'
-      preLoaderRoute: typeof EventosSlugRouteImport
+    '/comercios/$slug': {
+      id: '/comercios/$slug'
+      path: '/comercios/$slug'
+      fullPath: '/comercios/$slug'
+      preLoaderRoute: typeof ComerciosSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/novedades/': {
@@ -279,14 +219,11 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ArrendamientosRoute: ArrendamientosRoute,
   ContactoRoute: ContactoRoute,
-  GastronomiaRoute: GastronomiaRoute,
   PromocionesRoute: PromocionesRoute,
   VisitanosRoute: VisitanosRoute,
-  DirectorioSlugRoute: DirectorioSlugRoute,
-  EventosSlugRoute: EventosSlugRoute,
+  ComerciosSlugRoute: ComerciosSlugRoute,
   NovedadesSlugRoute: NovedadesSlugRoute,
-  DirectorioIndexRoute: DirectorioIndexRoute,
-  EventosIndexRoute: EventosIndexRoute,
+  ComerciosIndexRoute: ComerciosIndexRoute,
   NovedadesIndexRoute: NovedadesIndexRoute,
 }
 export const routeTree = rootRouteImport

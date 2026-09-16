@@ -1,26 +1,20 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, ArrowUpRight, Clock, Car, Store as StoreIcon, UtensilsCrossed } from "lucide-react";
-import fachadaImg from "@/assets/smc-fachada.jpg";
-import pasilloImg from "@/assets/smc-pasillo.jpg";
-import foodhallImg from "@/assets/smc-foodhall.jpg";
-import eventosImg from "@/assets/smc-eventos.jpg";
-import lifestyleImg from "@/assets/smc-lifestyle.jpg";
+import { ArrowRight, ArrowUpRight, Clock, MapPin, Store as StoreIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeading } from "@/components/central/primitives";
-import { EventCard, NewsCard, PromotionCard, StoreCard } from "@/components/central/cards";
+import { StoreCard } from "@/components/central/cards";
+import { ContentPlaceholder, MediaPlaceholder } from "@/components/central/Placeholders";
 import { CtaSection } from "@/components/central/CtaSection";
-import { categories } from "@/data/taxonomy";
-import { stores, allStores } from "@/data/stores";
-import { dining } from "@/data/dining";
-import { events } from "@/data/events";
-import { promotions } from "@/data/promotions";
-import { articles } from "@/data/news";
+import { stores } from "@/data/stores";
+import { promotions, promotionKinds } from "@/data/promotions";
+import { articles, newsKinds } from "@/data/news";
+import { PromotionCard, NewsCard } from "@/components/central/cards";
 import { center } from "@/data/center";
 import { site } from "@/data/site";
 
-const TITLE = "CENTRAL San Miguel Centro | Tiendas, gastronomía y eventos";
+const TITLE = "CENTRAL San Miguel Centro | El corazón comercial de San Miguel";
 const DESCRIPTION =
-  "CENTRAL San Miguel Centro: más de 30 marcas, food hall con 12 restaurantes, cine, servicios y plaza de eventos en el corazón de San Miguel. Horarios, promociones y cómo llegar.";
+  "Plaza comercial urbana y peatonal en el Centro de San Miguel, frente al nuevo Mercado Central. Conoce sus comercios, horarios de atención y cómo llegar.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -29,50 +23,38 @@ export const Route = createFileRoute("/")({
       { name: "description", content: DESCRIPTION },
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESCRIPTION },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Home,
 });
 
-const datoClave = [
-  { icon: StoreIcon, label: "Marcas y tiendas", value: "30+" },
-  { icon: UtensilsCrossed, label: "Restaurantes y cafés", value: "12" },
-  { icon: Clock, label: "Abierto hoy", value: "9:00 – 20:00" },
-  { icon: Car, label: "Parqueos gratuitos", value: "850" },
-];
-
 function Home() {
-  const featuredStores = stores.filter((s) => s.featured).slice(0, 4);
-  const featuredDining = dining.slice(0, 3);
-  const storeName = (slug: string) => allStores.find((s) => s.slug === slug)?.name;
-
   return (
     <>
       {/* HERO */}
-      <section className="relative isolate flex min-h-[88svh] items-end overflow-hidden bg-ink text-ink-foreground">
-        <img
-          src={fachadaImg}
-          alt="Fachada de CENTRAL San Miguel Centro al atardecer"
-          className="absolute inset-0 -z-10 size-full object-cover opacity-70"
-          width={1920}
-          height={1200}
-          fetchPriority="high"
-        />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-ink/60 to-ink/20" aria-hidden />
+      <section className="relative isolate flex min-h-[78svh] items-end overflow-hidden bg-ink text-ink-foreground">
+        <div className="absolute inset-0 -z-10 opacity-60">
+          <MediaPlaceholder tone="ink" label="Fotografía de la plaza próximamente" />
+        </div>
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-ink/70 to-ink/40" aria-hidden />
         <div className="container-central w-full pb-16 pt-32 md:pb-24">
-          <div className="fade-up max-w-5xl">
-            <p className="eyebrow text-ink-foreground/60">San Miguel · El Salvador</p>
+          <div className="fade-up max-w-4xl">
+            <p className="eyebrow text-ink-foreground/60">Centro de San Miguel · El Salvador</p>
             <h1 className="display-xl mt-6">
-              El centro
+              El corazón
               <br />
-              de San Miguel
+              comercial de
+              <br />
+              San Miguel
             </h1>
             <p className="mt-8 max-w-xl text-base leading-relaxed text-ink-foreground/75 md:text-lg">
               {site.description}
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg" variant="secondary" className="rounded-none px-8 eyebrow">
-                <Link to="/directorio">Ver el directorio</Link>
+                <Link to="/comercios">Ver comercios</Link>
               </Button>
               <Button
                 asChild
@@ -87,12 +69,14 @@ function Home() {
         </div>
       </section>
 
-      {/* DATO CLAVE */}
+      {/* DATOS DE LA PLAZA */}
       <section aria-label="Datos de la plaza" className="border-b border-border bg-background">
         <div className="container-central grid grid-cols-2 gap-px lg:grid-cols-4">
-          {datoClave.map((item) => (
-            <div key={item.label} className="flex flex-col gap-3 border-border py-8 lg:border-l lg:pl-8 lg:first:border-l-0 lg:first:pl-0">
-              <item.icon className="size-5 text-muted-foreground" aria-hidden />
+          {center.stats.map((item) => (
+            <div
+              key={item.label}
+              className="flex flex-col gap-3 border-border py-8 lg:border-l lg:pl-8 lg:first:border-l-0 lg:first:pl-0"
+            >
               <p className="display-md text-2xl md:text-3xl">{item.value}</p>
               <p className="eyebrow text-muted-foreground">{item.label}</p>
             </div>
@@ -100,198 +84,141 @@ function Home() {
         </div>
       </section>
 
-      {/* MARCAS DESTACADAS */}
+      {/* COMERCIOS */}
       <Section>
         <SectionHeading
-          eyebrow="Marcas destacadas"
-          title="Lo que encuentras aquí"
-          description="Moda, tecnología, belleza, hogar, servicios financieros y entretenimiento distribuidos en dos niveles y una terraza."
+          eyebrow="Comercios"
+          title="Los comercios de la plaza"
+          description="Cinco comercios en operación sobre seis locales comerciales, a pie de calle en el Centro de San Miguel."
           action={
             <Button asChild variant="outline" className="rounded-none eyebrow">
-              <Link to="/directorio">Ver todas las marcas</Link>
+              <Link to="/comercios">Ver directorio completo</Link>
             </Button>
           }
         />
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
-          {featuredStores.map((store) => (
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          {stores.map((store) => (
             <StoreCard key={store.slug} store={store} />
           ))}
         </div>
-        <div className="mt-10 flex flex-wrap gap-3">
-          {categories.map((cat) => (
-            <Link
-              key={cat.slug}
-              to="/directorio"
-              search={{ categoria: cat.slug }}
-              className="border border-border px-5 py-3 eyebrow text-muted-foreground transition-colors hover:border-foreground hover:text-foreground"
-            >
-              {cat.name}
-            </Link>
-          ))}
-        </div>
-      </Section>
-
-      {/* GASTRONOMÍA */}
-      <Section tone="sand">
-        <SectionHeading
-          eyebrow="Gastronomía"
-          title="Food hall y terraza"
-          description="Doce conceptos entre cocina salvadoreña, parrilla, cocina asiática, repostería artesanal y coctelería con música en vivo."
-          action={
-            <Button asChild variant="outline" className="rounded-none eyebrow">
-              <Link to="/gastronomia">Ver gastronomía</Link>
-            </Button>
-          }
-        />
-        <div className="mt-12 grid gap-14 lg:grid-cols-12 lg:gap-10">
-          <article className="lg:col-span-7">
-            <div className="hover-zoom aspect-[16/10] overflow-hidden">
-              <img
-                src={foodhallImg}
-                alt="Food hall de CENTRAL San Miguel Centro"
-                className="image-cover"
-                loading="lazy"
-                width={1600}
-                height={1100}
-              />
-            </div>
-            <h3 className="display-md mt-8 text-3xl">Mesas comunales para 260 personas</h3>
-            <p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">
-              El food hall del Nivel 2 abre al atrio de doble altura y cierra una hora después del centro comercial,
-              para que puedas cenar al salir del cine.
-            </p>
-            <Link
-              to="/gastronomia"
-              className="mt-6 inline-flex items-center gap-2 eyebrow underline-offset-8 hover:underline"
-            >
-              Explorar restaurantes <ArrowUpRight className="size-4" />
-            </Link>
-          </article>
-          <div className="grid gap-6 lg:col-span-5">
-            {featuredDining.map((venue) => (
-              <StoreCard key={venue.slug} store={venue} />
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* EVENTOS */}
-      <Section>
-        <SectionHeading
-          eyebrow="Próximos eventos"
-          title="Agenda del centro"
-          description="Música en vivo, ferias de emprendedores, festivales gastronómicos y cine al aire libre en la plaza de eventos."
-          action={
-            <Button asChild variant="outline" className="rounded-none eyebrow">
-              <Link to="/eventos">Ver agenda completa</Link>
-            </Button>
-          }
-        />
-        <div className="mt-12 grid gap-6">
-          {events.slice(0, 3).map((event) => (
-            <EventCard key={event.slug} event={event} />
-          ))}
-        </div>
+        <p className="mt-10 flex items-start gap-3 border-t border-border pt-6 text-sm leading-relaxed text-muted-foreground">
+          <Clock className="mt-0.5 size-4 shrink-0" aria-hidden />
+          {center.hoursNote}
+        </p>
       </Section>
 
       {/* PROMOCIONES */}
-      <Section tone="ink">
+      <Section tone="sand">
         <SectionHeading
-          eyebrow="Promociones vigentes"
-          title="Beneficios de esta temporada"
-          description="Descuentos y beneficios activos en las marcas de la plaza, con su vigencia y marca asociada."
+          eyebrow="Promociones"
+          title="Beneficios de los comercios"
           action={
-            <Button asChild variant="secondary" className="rounded-none eyebrow">
+            <Button asChild variant="outline" className="rounded-none eyebrow">
               <Link to="/promociones">Ver promociones</Link>
             </Button>
           }
         />
-        <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {promotions.slice(0, 3).map((promo) => (
-            <PromotionCard key={promo.slug} promotion={promo} storeName={storeName(promo.storeSlug)} />
-          ))}
+        <div className="mt-12">
+          {promotions.length ? (
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {promotions.slice(0, 3).map((promo) => (
+                <PromotionCard key={promo.slug} promotion={promo} />
+              ))}
+            </div>
+          ) : (
+            <ContentPlaceholder
+              eyebrow="CENTRAL San Miguel Centro"
+              title="Espacio reservado para promociones"
+              description="Aquí se publicarán las promociones de los comercios y las campañas conjuntas de la plaza."
+              items={promotionKinds}
+            />
+          )}
         </div>
       </Section>
 
-      {/* LA PLAZA */}
+      {/* NOVEDADES */}
       <Section>
-        <SectionHeading eyebrow="La plaza" title={center.tagline} />
+        <SectionHeading
+          eyebrow="Novedades"
+          title="Lo que pasa en la plaza"
+          action={
+            <Button asChild variant="outline" className="rounded-none eyebrow">
+              <Link to="/novedades">Ver novedades</Link>
+            </Button>
+          }
+        />
+        <div className="mt-12">
+          {articles.length ? (
+            <div className="grid gap-10 md:grid-cols-3">
+              {articles.slice(0, 3).map((article) => (
+                <NewsCard key={article.slug} article={article} />
+              ))}
+            </div>
+          ) : (
+            <ContentPlaceholder
+              eyebrow="CENTRAL San Miguel Centro"
+              title="Espacio reservado para novedades"
+              description="Aquí se publicarán aperturas, actividades y noticias de la plaza."
+              items={newsKinds}
+            />
+          )}
+        </div>
+      </Section>
+
+      {/* VISÍTANOS */}
+      <Section tone="sand">
+        <SectionHeading eyebrow="Visítanos" title={center.tagline} />
         <div className="mt-14 grid gap-14 lg:grid-cols-12 lg:gap-10">
           <article className="lg:col-span-7">
-            <div className="hover-zoom aspect-[16/10] overflow-hidden">
-              <img
-                src={pasilloImg}
-                alt="Atrio de doble altura de CENTRAL San Miguel Centro"
-                className="image-cover"
-                loading="lazy"
-                width={1600}
-                height={1100}
-              />
+            <div className="aspect-[16/10] overflow-hidden border border-border">
+              <MediaPlaceholder label="Fotografía de la fachada próximamente" />
             </div>
             {center.longDescription.map((p) => (
               <p key={p} className="mt-6 max-w-2xl leading-relaxed text-muted-foreground">
                 {p}
               </p>
             ))}
-            <Link to="/visitanos" className="mt-6 inline-flex items-center gap-2 eyebrow underline-offset-8 hover:underline">
-              Horarios, parqueo y servicios <ArrowUpRight className="size-4" />
+            <Link
+              to="/visitanos"
+              className="mt-6 inline-flex items-center gap-2 eyebrow underline-offset-8 hover:underline"
+            >
+              Dirección, referencias y contacto <ArrowUpRight className="size-4" />
             </Link>
           </article>
           <div className="flex flex-col gap-8 lg:col-span-5">
-            <div className="hover-zoom aspect-[4/3] overflow-hidden">
-              <img
-                src={eventosImg}
-                alt="Plaza de eventos al atardecer"
-                className="image-cover"
-                loading="lazy"
-                width={1600}
-                height={1100}
-              />
+            <div className="rule-line pt-4">
+              <p className="eyebrow flex items-center gap-2 text-muted-foreground">
+                <MapPin className="size-4" aria-hidden /> Dirección
+              </p>
+              <p className="mt-3 leading-relaxed">{center.address}</p>
+              <p className="mt-2 text-sm text-muted-foreground">{center.addressDetail}</p>
             </div>
-            <dl className="grid grid-cols-2 gap-6">
-              {center.stats.map((s) => (
-                <div key={s.label} className="rule-line pt-4">
-                  <dt className="eyebrow text-muted-foreground">{s.label}</dt>
-                  <dd className="display-md mt-2 text-2xl">{s.value}</dd>
-                </div>
-              ))}
-            </dl>
+            <div className="rule-line pt-4">
+              <p className="eyebrow flex items-center gap-2 text-muted-foreground">
+                <Clock className="size-4" aria-hidden /> Horarios
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{center.hoursNote}</p>
+            </div>
             <Link
-              to="/directorio"
+              to="/comercios"
               className="group inline-flex items-center justify-between border border-border p-6 transition-colors hover:border-foreground"
             >
-              <span className="font-display text-lg font-semibold uppercase tracking-tight">Directorio completo</span>
+              <span className="inline-flex items-center gap-3 font-display text-lg font-semibold uppercase tracking-tight">
+                <StoreIcon className="size-5" aria-hidden />
+                Directorio de comercios
+              </span>
               <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" aria-hidden />
             </Link>
           </div>
         </div>
       </Section>
 
-      {/* NOVEDADES */}
-      <Section tone="sand">
-        <SectionHeading
-          eyebrow="Novedades"
-          title="Notas del centro"
-          action={
-            <Button asChild variant="outline" className="rounded-none eyebrow">
-              <Link to="/novedades">Ver todas</Link>
-            </Button>
-          }
-        />
-        <div className="mt-12 grid gap-10 md:grid-cols-3">
-          {articles.slice(0, 3).map((article) => (
-            <NewsCard key={article.slug} article={article} />
-          ))}
-        </div>
-      </Section>
-
       <CtaSection
         eyebrow="Arrendamientos"
-        title="Trae tu marca a San Miguel Centro"
-        description="Locales en línea, módulos de food hall, islas y espacios en terraza con acompañamiento comercial desde el diseño hasta la apertura."
-        primary={{ label: "Solicitar espacio", to: "/arrendamientos" }}
-        secondary={{ label: "Hablar con el equipo", to: "/contacto" }}
-        image={lifestyleImg}
+        title="Trae tu marca al centro de San Miguel"
+        description="Consulta por los locales de CENTRAL San Miguel Centro y el equipo de Grupo Galo te contactará con la información disponible."
+        primary={{ label: "Solicitar información", to: "/arrendamientos" }}
+        secondary={{ label: "Contacto", to: "/contacto" }}
       />
     </>
   );

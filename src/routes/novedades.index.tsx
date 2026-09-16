@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import lifestyleImg from "@/assets/smc-lifestyle.jpg";
 import { PageHero, Section } from "@/components/central/primitives";
 import { NewsCard } from "@/components/central/cards";
-import { articles } from "@/data/news";
+import { ContentPlaceholder } from "@/components/central/Placeholders";
+import { CtaSection } from "@/components/central/CtaSection";
+import { articles, newsKinds } from "@/data/news";
 
-const TITLE = "Novedades del centro | CENTRAL San Miguel Centro";
+const TITLE = "Novedades | CENTRAL San Miguel Centro";
 const DESCRIPTION =
-  "Aperturas, mejoras y notas de la comunidad de CENTRAL San Miguel Centro: lo que ocurre dentro y alrededor de la plaza.";
+  "Aperturas, actividades y noticias de CENTRAL San Miguel Centro, la plaza comercial urbana del Centro de San Miguel.";
 
 export const Route = createFileRoute("/novedades/")({
   head: () => ({
@@ -15,6 +16,8 @@ export const Route = createFileRoute("/novedades/")({
       { name: "description", content: DESCRIPTION },
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESCRIPTION },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: NovedadesPage,
@@ -26,22 +29,40 @@ function NovedadesPage() {
   return (
     <>
       <PageHero
-        eyebrow="Editorial"
-        title="Novedades del centro"
-        description="Aperturas, mejoras a la plaza, programación cultural y comunidad migueleña."
-        image={lifestyleImg}
+        eyebrow="CENTRAL San Miguel Centro"
+        title="Novedades"
+        description="Nuevas aperturas, actividades especiales, noticias de la plaza y avances de la renovación del inmueble."
         breadcrumbs={[{ label: "Novedades" }]}
       />
-      <Section>
-        {featured && <NewsCard article={featured} featured />}
-        {rest.length > 0 && (
-          <div className="mt-16 grid gap-12 border-t border-border pt-16 md:grid-cols-3">
-            {rest.map((article) => (
-              <NewsCard key={article.slug} article={article} />
-            ))}
-          </div>
+      <Section className="py-14 md:py-20">
+        {articles.length ? (
+          <>
+            {featured && <NewsCard article={featured} featured />}
+            {rest.length > 0 && (
+              <div className="mt-16 grid gap-12 border-t border-border pt-16 md:grid-cols-3">
+                {rest.map((article) => (
+                  <NewsCard key={article.slug} article={article} />
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          <ContentPlaceholder
+            eyebrow="CENTRAL San Miguel Centro"
+            title="Aún no hay novedades publicadas"
+            description="Este módulo está listo para publicar las noticias y actividades de la plaza en cuanto estén disponibles."
+            items={newsKinds}
+          />
         )}
       </Section>
+
+      <CtaSection
+        eyebrow="Comercios"
+        title="Mientras tanto, conoce la plaza"
+        description="Revisa los comercios de CENTRAL San Miguel Centro con su local, horario de atención y contacto."
+        primary={{ label: "Ver comercios", to: "/comercios" }}
+        secondary={{ label: "Cómo llegar", to: "/visitanos" }}
+      />
     </>
   );
 }
