@@ -25,8 +25,22 @@ const menuGroups = [
     links: [
       { label: "Inicio", to: "/" },
       { label: "Comercios", to: "/comercios" },
-etiquette_placeholder: true,
     ],
+  },
+  {
+    label: "Descubre",
+    links: [
+      { label: "Promociones", to: "/promociones" },
+      { label: "Novedades", to: "/novedades" },
+    ],
+  },
+  {
+    label: "Tu visita",
+    links: [{ label: "Visítanos", to: "/visitanos" }],
+  },
+  {
+    label: "Conecta",
+    links: [{ label: "Arrendamientos", to: "/arrendamientos" }],
   },
 ] as const;
 
@@ -251,19 +265,6 @@ export function Header() {
             </SheetContent>
           </Sheet>
           <Wordmark />
-          <nav aria-label="Navegación principal" className="hidden items-center gap-5 2xl:flex">
-            {mainNav.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="eyebrow whitespace-nowrap text-foreground/70 transition-colors hover:text-foreground"
-                activeProps={{ className: "text-foreground" }}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
 
         <div className="flex items-center gap-1 md:gap-3">
           <div className="hidden sm:block">
