@@ -24,31 +24,11 @@ const menuGroups = [
     label: "Explorar",
     links: [
       { label: "Inicio", to: "/" },
-      { label: "Promociones", to: "/promociones" },
-      { label: "Eventos", to: "/eventos" },
-      { label: "Novedades", to: "/novedades" },
-    ],
-  },
-  {
-    label: "Descubre",
-    links: [
       { label: "Comercios", to: "/comercios" },
-      { label: "Gastronomía", to: "/gastronomia" },
-    ],
-  },
-  {
-    label: "Tu visita",
-    links: [
-      { label: "Planifica tu visita", to: "/visitanos" },
-      { label: "Horarios por comercio", to: "/comercios" },
-      { label: "Cómo llegar", to: "/visitanos" },
-    ],
-  },
-  {
-    label: "Conecta",
-    links: [
+      { label: "Promociones", to: "/promociones" },
+      { label: "Novedades", to: "/novedades" },
+      { label: "Visítanos", to: "/visitanos" },
       { label: "Arrendamientos", to: "/arrendamientos" },
-      { label: "Contacto", to: "/contacto" },
     ],
   },
 ] as const;
