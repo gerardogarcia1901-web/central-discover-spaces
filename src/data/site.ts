@@ -1,4 +1,4 @@
-/** Sitio de marca CENTRAL (todas las plazas del país). */
+/** Sitio matriz de la marca CENTRAL (todas las ubicaciones). */
 export const BRAND_URL = "https://central.example.sv";
 
 export const site = {
@@ -6,39 +6,28 @@ export const site = {
   subtitle: "San Miguel Centro",
   fullName: "CENTRAL San Miguel Centro",
   operator: "Grupo Galo",
-  tagline: "El punto de encuentro de San Miguel",
+  tagline: "El corazón comercial de San Miguel",
   description:
-    "CENTRAL San Miguel Centro reúne más de 30 marcas, un food hall con 12 conceptos, cine, servicios financieros y una plaza de eventos abierta a la ciudad.",
-  email: "hola@sanmiguelcentro.central.com.sv",
-  leasingEmail: "arrendamientos@sanmiguelcentro.central.com.sv",
-  phone: "+503 2660 1000",
-  whatsapp: "+503 7660 1000",
-  address: "Avenida Roosevelt y 8ª Calle Poniente, Barrio El Calvario, San Miguel",
-  addressShort: "Av. Roosevelt y 8ª Calle Pte., San Miguel",
-  mapsUrl: "https://maps.google.com/?q=San+Miguel,+El+Salvador",
+    "Plaza comercial urbana y peatonal en el Centro de San Miguel, frente al nuevo Mercado Central: cerca de todo y conectada con el movimiento de la ciudad.",
+  email: "info@grupogalo.net",
+  whatsapp: "7697-9921",
+  whatsappUrl: "https://wa.me/50376979921",
+  address: "2da Calle Poniente y 1ra Avenida Norte, Centro de San Miguel, El Salvador",
+  addressShort: "2da C. Pte. y 1ra Av. Nte., Centro de San Miguel",
   brandUrl: BRAND_URL,
-  social: [
-    { label: "Instagram", href: "https://instagram.com" },
-    { label: "Facebook", href: "https://facebook.com" },
-    { label: "TikTok", href: "https://tiktok.com" },
-    { label: "WhatsApp", href: "https://wa.me/50376601000" },
-  ],
+  /** Redes oficiales pendientes de confirmación por Grupo Galo. */
+  social: [] as { label: string; href: string }[],
 } as const;
 
 export const mainNav = [
   { label: "Inicio", to: "/" },
-  { label: "Directorio", to: "/directorio" },
-  { label: "Gastronomía", to: "/gastronomia" },
+  { label: "Comercios", to: "/comercios" },
   { label: "Promociones", to: "/promociones" },
-  { label: "Eventos", to: "/eventos" },
   { label: "Novedades", to: "/novedades" },
   { label: "Visítanos", to: "/visitanos" },
   { label: "Arrendamientos", to: "/arrendamientos" },
-  { label: "Contacto", to: "/contacto" },
 ] as const;
 
 export const legalLinks = [
-  { label: "Política de privacidad", to: "/contacto" },
-  { label: "Términos y condiciones", to: "/contacto" },
-  { label: "Reglamento de visitantes", to: "/contacto" },
+  { label: "Contacto", to: "/contacto" },
 ] as const;

@@ -1,16 +1,6 @@
 // Modelo de contenido de CENTRAL San Miguel Centro.
-// Estos tipos reflejan el esquema futuro del CMS: toda la UI consume estas
-// interfaces, así que cambiar los datos mock por un API/CMS no requiere tocar
-// los componentes.
-
-/** Niveles físicos de la plaza. */
-export type StoreLevel = "nivel-1" | "nivel-2" | "terraza";
-
-export interface Level {
-  slug: StoreLevel;
-  name: string;
-  description: string;
-}
+// Refleja únicamente la información oficial del Brief de Contenido Web
+// (Grupo Galo, septiembre 2026). Toda la UI consume estas interfaces.
 
 export interface Category {
   slug: string;
@@ -18,60 +8,47 @@ export interface Category {
   description: string;
 }
 
-/** Tipo de cocina para el filtro de gastronomía. */
-export interface Cuisine {
-  slug: string;
-  name: string;
+/** Día o rango de días y su horario, p. ej. "Lunes a sábado" / "8:00 a.m. – 5:00 p.m." */
+export interface DayHours {
+  label: string;
+  value: string;
 }
 
 export interface Store {
   slug: string;
   name: string;
   categorySlug: string;
-  /** Nivel dentro de la plaza. */
-  level: StoreLevel;
-  /** Número de local, p. ej. "Local 112". */
+  /** Número de local dentro de la plaza, p. ej. "Local 3". */
   local: string;
-  hours: string;
-  phone: string;
+  /** Horario propio del comercio. */
+  hours: DayHours[];
+  phone?: string;
+  whatsapp?: string;
+  /** Nota de pedidos o canal de venta, p. ej. "Pedidos mediante PedidosYa". */
+  orderNote?: string;
   website?: string;
   instagram?: string;
   facebook?: string;
-  description: string;
-  image: string;
+  /** Solo cuando Grupo Galo proporcione texto oficial. */
+  description?: string;
+  /** Fotografía oficial; si falta, la UI usa un placeholder. */
+  image?: string;
+  /** Logotipo oficial; si falta, la UI usa las iniciales. */
+  logo?: string;
   logoText: string;
   featured?: boolean;
-  /** True para restaurantes, cafés y conceptos del food hall. */
-  gastronomy?: boolean;
-  /** Tipo de cocina (solo gastronomía). */
-  cuisineSlug?: string;
-  /** True si opera dentro del food hall. */
-  foodHall?: boolean;
 }
 
 export interface Promotion {
   slug: string;
   title: string;
   description: string;
-  image: string;
-  /** Marca asociada (slug de Store). */
-  storeSlug: string;
-  categorySlug: string;
+  /** Tipo de contenido: promoción de comercio, campaña conjunta, temporada. */
+  kind: string;
   validity: string;
-  cta: string;
-}
-
-export interface CentralEvent {
-  slug: string;
-  title: string;
-  description: string;
-  longDescription: string[];
-  image: string;
-  date: string;
-  displayDate: string;
-  time: string;
-  place: string;
-  admission: string;
+  /** Comercio asociado, cuando aplique. */
+  storeSlug?: string;
+  image?: string;
 }
 
 export interface Article {
@@ -79,35 +56,14 @@ export interface Article {
   title: string;
   summary: string;
   body: string[];
-  image: string;
   category: string;
   date: string;
   displayDate: string;
-  author: string;
+  image?: string;
+  author?: string;
 }
 
 /* ---------- Información de la plaza ---------- */
-
-export interface DayHours {
-  /** Día o rango de días, p. ej. "Lunes a jueves". */
-  label: string;
-  value: string;
-}
-
-export interface ServiceItem {
-  label: string;
-  description: string;
-}
-
-export interface ParkingZone {
-  label: string;
-  description: string;
-}
-
-export interface TransportOption {
-  label: string;
-  description: string;
-}
 
 export interface DirectionReference {
   label: string;
@@ -132,19 +88,13 @@ export interface CenterInfo {
   tagline: string;
   description: string;
   longDescription: string[];
-  openedIn: string;
   address: string;
   addressDetail: string;
   mapsUrl: string;
-  hours: DayHours[];
-  specialHours: string;
+  mapsEmbedUrl: string;
+  /** Aviso oficial: los horarios varían según cada comercio. */
+  hoursNote: string;
   stats: Stat[];
-  levels: Level[];
-  services: ServiceItem[];
-  accessibility: ServiceItem[];
-  parking: ParkingZone[];
-  parkingNote: string;
-  transport: TransportOption[];
   directions: DirectionReference[];
   faqs: Faq[];
 }
