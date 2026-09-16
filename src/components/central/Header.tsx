@@ -25,7 +25,7 @@ const menuGroups = [
     links: [
       { label: "Inicio", to: "/" },
       { label: "Promociones", to: "/promociones" },
-      { label: "Eventos", to: "/novedades" },
+      { label: "Eventos", to: "/eventos" },
       { label: "Novedades", to: "/novedades" },
     ],
   },
@@ -33,8 +33,7 @@ const menuGroups = [
     label: "Descubre",
     links: [
       { label: "Comercios", to: "/comercios" },
-      { label: "Directorio", to: "/comercios" },
-      { label: "Gastronomía", to: "/comercios", search: { categoria: "comida" } },
+      { label: "Gastronomía", to: "/gastronomia" },
     ],
   },
   {
