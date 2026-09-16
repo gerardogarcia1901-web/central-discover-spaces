@@ -14,7 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { mainNav, SANTA_ROSA_URL, site } from "@/data/site";
+import { SANTA_ROSA_URL, site } from "@/data/site";
 import { center } from "@/data/center";
 import { allStores } from "@/data/stores";
 import { cn } from "@/lib/utils";
@@ -25,11 +25,22 @@ const menuGroups = [
     links: [
       { label: "Inicio", to: "/" },
       { label: "Comercios", to: "/comercios" },
+    ],
+  },
+  {
+    label: "Descubre",
+    links: [
       { label: "Promociones", to: "/promociones" },
       { label: "Novedades", to: "/novedades" },
-      { label: "Visítanos", to: "/visitanos" },
-      { label: "Arrendamientos", to: "/arrendamientos" },
     ],
+  },
+  {
+    label: "Tu visita",
+    links: [{ label: "Visítanos", to: "/visitanos" }],
+  },
+  {
+    label: "Conecta",
+    links: [{ label: "Arrendamientos", to: "/arrendamientos" }],
   },
 ] as const;
 
@@ -243,10 +254,10 @@ export function Header() {
                   ))}
                 </nav>
 
-                <div className="container-central flex flex-col gap-4 border-t border-ink-foreground/15 py-8">
+                <div className="container-central flex flex-col gap-4 border-t border-ink-foreground/15 py-8 md:flex-row md:items-center md:justify-between md:gap-8">
                   <SearchDialog expanded />
-                  <p className="text-xs leading-relaxed text-ink-foreground/50">{center.hoursNote}</p>
-                  <div className="w-fit">
+                  <p className="max-w-md text-xs leading-relaxed text-ink-foreground/50">{center.hoursNote}</p>
+                  <div className="w-fit md:shrink-0">
                     <LocationSwitcher inverse />
                   </div>
                 </div>
@@ -254,18 +265,6 @@ export function Header() {
             </SheetContent>
           </Sheet>
           <Wordmark />
-          <nav aria-label="Navegación principal" className="hidden items-center gap-5 2xl:flex">
-            {mainNav.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="eyebrow whitespace-nowrap text-foreground/70 transition-colors hover:text-foreground"
-                activeProps={{ className: "text-foreground" }}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
         </div>
 
         <div className="flex items-center gap-1 md:gap-3">
