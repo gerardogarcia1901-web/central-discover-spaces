@@ -193,38 +193,16 @@ export function Header() {
       )}
     >
       <div className="container-central flex h-16 items-center justify-between gap-6 md:h-20">
-        <div className="flex items-center gap-8">
-          <Wordmark />
-          <nav aria-label="Navegación principal" className="hidden items-center gap-5 2xl:flex">
-            {mainNav.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="eyebrow whitespace-nowrap text-foreground/70 transition-colors hover:text-foreground"
-                activeProps={{ className: "text-foreground" }}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-
-        <div className="flex items-center gap-1 md:gap-3">
-          <div className="hidden 2xl:block">
-            <LocationSwitcher />
-          </div>
-
-          <SearchDialog />
-
+        <div className="flex items-center gap-3 md:gap-6">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="rounded-full 2xl:hidden" aria-label="Abrir menú">
+              <Button variant="ghost" size="icon" className="rounded-full" aria-label="Abrir menú">
                 <Menu className="size-5" />
               </Button>
             </SheetTrigger>
             <SheetContent
-              side="right"
-              className="w-full overflow-y-auto border-0 bg-ink p-0 text-ink-foreground shadow-none sm:max-w-none [&>button]:hidden"
+              side="top"
+              className="h-dvh w-full overflow-y-auto border-0 bg-ink p-0 text-ink-foreground shadow-none [&>button]:hidden"
             >
               <div className="grid min-h-full grid-rows-[auto_1fr_auto]">
                 <div className="grid min-h-20 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center border-b border-ink-foreground/15 px-5 md:min-h-24 md:px-12">
@@ -257,7 +235,7 @@ export function Header() {
 
                 <nav
                   aria-label="Menú principal"
-                   className="container-central grid content-start grid-cols-1 gap-x-10 gap-y-10 py-12 sm:grid-cols-2 lg:grid-cols-4 lg:py-24"
+                  className="container-central grid content-start grid-cols-1 gap-x-10 gap-y-10 py-12 sm:grid-cols-2 lg:grid-cols-4 lg:py-24"
                 >
                   {menuGroups.map((group) => (
                     <section key={group.label} aria-labelledby={`menu-${group.label}`}>
@@ -294,6 +272,30 @@ export function Header() {
               </div>
             </SheetContent>
           </Sheet>
+          <Wordmark />
+          <nav aria-label="Navegación principal" className="hidden items-center gap-5 2xl:flex">
+            {mainNav.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="eyebrow whitespace-nowrap text-foreground/70 transition-colors hover:text-foreground"
+                activeProps={{ className: "text-foreground" }}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+
+        <div className="flex items-center gap-1 md:gap-3">
+          <div className="hidden sm:block">
+            <LocationSwitcher />
+          </div>
+
+          <SearchDialog />
+          <div className="sm:hidden">
+            <LocationSwitcher compact />
+          </div>
         </div>
       </div>
     </header>
