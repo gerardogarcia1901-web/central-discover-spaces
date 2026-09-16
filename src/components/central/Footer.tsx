@@ -12,7 +12,9 @@ export function Footer() {
           <div>
             <p className="wordmark text-3xl md:text-4xl">CENTRAL</p>
             <p className="mt-2 eyebrow text-ink-foreground/60">{site.subtitle}</p>
-            <p className="mt-6 max-w-sm text-sm leading-relaxed text-ink-foreground/60">{center.description}</p>
+            <p className="mt-6 max-w-sm text-sm leading-relaxed text-ink-foreground/60">
+              Plaza urbana y peatonal en el corazón de San Miguel.
+            </p>
             <a
               href={site.brandUrl}
               target="_blank"

@@ -1,5 +1,6 @@
 /** Sitio matriz de la marca CENTRAL (todas las ubicaciones). */
 export const BRAND_URL = "https://central.example.sv";
+export const SANTA_ROSA_URL = `${BRAND_URL}/ubicaciones/santa-rosa-de-lima`;
 
 export const site = {
   name: "CENTRAL",

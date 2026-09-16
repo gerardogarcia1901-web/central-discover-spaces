@@ -1,12 +1,20 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, Search, ExternalLink, X, ArrowUpRight, Globe2 } from "lucide-react";
+import { Menu, Search, ExternalLink, X, Globe2, ChevronDown, Check } from "lucide-react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { mainNav, site } from "@/data/site";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { mainNav, SANTA_ROSA_URL, site } from "@/data/site";
 import { center } from "@/data/center";
 import { allStores } from "@/data/stores";
 import { cn } from "@/lib/utils";
@@ -36,25 +44,54 @@ const menuGroups = [
   },
 ] as const;
 
-function TopBar() {
+function LocationSwitcher({ inverse = false, compact = false }: { inverse?: boolean; compact?: boolean }) {
   return (
-    <div className="w-full bg-ink text-ink-foreground">
-      <div className="container-central flex h-9 items-center justify-between gap-4">
-        <p className="eyebrow truncate text-ink-foreground/60">
-          {center.city}, {center.department} · Plaza peatonal en el centro
-        </p>
-        <a
-          href={site.brandUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex shrink-0 items-center gap-1.5 eyebrow text-ink-foreground/70 transition-colors hover:text-ink-foreground"
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          className={cn(
+            "h-auto gap-2 rounded-none px-0 py-2 eyebrow",
+            inverse
+              ? "text-ink-foreground hover:bg-transparent hover:text-ink-foreground/70"
+              : "text-foreground/70 hover:bg-transparent hover:text-foreground",
+          )}
+          aria-label="Cambiar ubicación"
         >
           <Globe2 className="size-3.5" aria-hidden />
-          Cambiar ubicación
-          <ArrowUpRight className="size-3.5" aria-hidden />
-        </a>
-      </div>
-    </div>
+          {!compact && <span>Cambiar ubicación</span>}
+          <ChevronDown className="size-3.5" aria-hidden />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align="end"
+        sideOffset={12}
+        className="w-72 rounded-none border-border p-0 shadow-elevated"
+      >
+        <DropdownMenuLabel className="px-5 py-4 eyebrow text-muted-foreground">
+          Elige tu CENTRAL
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator className="m-0" />
+        <DropdownMenuItem asChild className="rounded-none p-0 focus:bg-muted">
+          <a href={site.brandUrl} target="_blank" rel="noreferrer" className="flex w-full items-center px-5 py-4">
+            <span className="font-display text-base font-semibold uppercase">CENTRAL</span>
+            <ExternalLink className="ml-auto size-4 text-muted-foreground" aria-hidden />
+          </a>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator className="m-0" />
+        <DropdownMenuItem asChild className="rounded-none p-0 focus:bg-muted">
+          <a href={SANTA_ROSA_URL} target="_blank" rel="noreferrer" className="flex w-full items-center px-5 py-4">
+            <span className="font-display text-base font-semibold uppercase">CENTRAL Santa Rosa de Lima</span>
+            <ExternalLink className="ml-auto size-4 text-muted-foreground" aria-hidden />
+          </a>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator className="m-0" />
+        <div className="flex items-center gap-3 px-5 py-3 text-xs text-muted-foreground">
+          <Check className="size-3.5" aria-hidden />
+          Estás en San Miguel Centro
+        </div>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
@@ -147,7 +184,6 @@ export function Header() {
           : "bg-background border-b border-transparent",
       )}
     >
-      <TopBar />
       <div className="container-central flex h-16 items-center justify-between gap-6 md:h-20">
         <div className="flex items-center gap-8">
           <Wordmark />
@@ -166,15 +202,9 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-1 md:gap-3">
-          <a
-            href={site.brandUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="hidden items-center gap-2 border border-border px-4 py-2 eyebrow text-foreground/70 transition-colors hover:border-foreground hover:text-foreground lg:inline-flex"
-          >
-            <Globe2 className="size-3.5" aria-hidden />
-            Cambiar ubicación
-          </a>
+          <div className="hidden lg:block">
+            <LocationSwitcher />
+          </div>
 
           <SearchDialog />
 
@@ -207,15 +237,9 @@ export function Header() {
                   >
                     CENTRAL
                   </Link>
-                  <a
-                    href={site.brandUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="ml-auto inline-flex items-center gap-2 text-sm font-medium text-ink-foreground transition-opacity hover:opacity-70"
-                  >
-                    <Globe2 className="size-5" aria-hidden />
-                    <span className="hidden sm:inline">Cambiar ubicación</span>
-                  </a>
+                  <div className="ml-auto">
+                    <LocationSwitcher inverse compact />
+                  </div>
                 </div>
 
                 <nav
@@ -250,15 +274,9 @@ export function Header() {
                 <div className="container-central flex flex-col gap-4 border-t border-ink-foreground/15 py-8">
                   <SearchDialog expanded />
                   <p className="text-xs leading-relaxed text-ink-foreground/50">{center.hoursNote}</p>
-                  <a
-                    href={site.brandUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 eyebrow text-ink-foreground/70 hover:text-ink-foreground"
-                  >
-                    Ver todas las ubicaciones de CENTRAL
-                    <ExternalLink className="size-3.5" aria-hidden />
-                  </a>
+                  <div className="w-fit">
+                    <LocationSwitcher inverse />
+                  </div>
                 </div>
               </div>
             </SheetContent>
