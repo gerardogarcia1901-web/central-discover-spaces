@@ -252,6 +252,7 @@ export function Header() {
                           <li key={`${group.label}-${item.label}`}>
                             <Link
                               to={item.to}
+                              search={"search" in item ? item.search : undefined}
                               onClick={() => setOpen(false)}
                               className="text-xl font-medium text-ink-foreground/90 transition-colors hover:text-highlight md:text-2xl"
                             >
