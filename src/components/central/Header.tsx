@@ -254,10 +254,10 @@ export function Header() {
                   ))}
                 </nav>
 
-                <div className="container-central flex flex-col gap-4 border-t border-ink-foreground/15 py-8">
+                <div className="container-central flex flex-col gap-4 border-t border-ink-foreground/15 py-8 md:flex-row md:items-center md:justify-between md:gap-8">
                   <SearchDialog expanded />
-                  <p className="text-xs leading-relaxed text-ink-foreground/50">{center.hoursNote}</p>
-                  <div className="w-fit">
+                  <p className="max-w-md text-xs leading-relaxed text-ink-foreground/50">{center.hoursNote}</p>
+                  <div className="w-fit md:shrink-0">
                     <LocationSwitcher inverse />
                   </div>
                 </div>
