@@ -25,10 +25,7 @@ const menuGroups = [
     links: [
       { label: "Inicio", to: "/" },
       { label: "Comercios", to: "/comercios" },
-      { label: "Promociones", to: "/promociones" },
-      { label: "Novedades", to: "/novedades" },
-      { label: "Visítanos", to: "/visitanos" },
-      { label: "Arrendamientos", to: "/arrendamientos" },
+etiquette_placeholder: true,
     ],
   },
 ] as const;
