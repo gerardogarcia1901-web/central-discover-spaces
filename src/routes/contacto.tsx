@@ -76,7 +76,16 @@ function ContactoPage() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="c-ubicacion">Ubicación de interés</Label>
-                  <Input id="c-ubicacion" name="ubicacion" value={site.fullName} readOnly aria-readonly className="h-11 rounded-none bg-sand" />
+                  <select
+                    id="c-ubicacion"
+                    name="ubicacion"
+                    defaultValue="San Miguel Centro"
+                    className="h-11 w-full rounded-none border border-input bg-background px-3 text-sm"
+                  >
+                    <option value="CENTRAL general">CENTRAL general</option>
+                    <option value="San Miguel Centro">San Miguel Centro</option>
+                    <option value="Santa Rosa de Lima">Santa Rosa de Lima</option>
+                  </select>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="c-asunto">Asunto</Label>
