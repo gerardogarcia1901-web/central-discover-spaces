@@ -78,9 +78,9 @@ function StorePage() {
               <p className="eyebrow text-muted-foreground">{categoryName(store.categorySlug)}</p>
             </div>
             <h1 className="display-lg mt-6">{store.name}</h1>
-            <p className="mt-6 leading-relaxed text-muted-foreground">
-              {store.description ?? `Comercio de CENTRAL San Miguel Centro, ubicado en ${store.local}.`}
-            </p>
+            {store.description && (
+              <p className="mt-6 leading-relaxed text-muted-foreground">{store.description}</p>
+            )}
 
             <dl className="mt-10 divide-y divide-border border-y border-border text-sm">
               <div className="flex items-start justify-between gap-6 py-4">

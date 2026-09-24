@@ -12,9 +12,9 @@ interface ComerciosSearch {
   q?: string | undefined;
 }
 
-const TITLE = "Comercios de la plaza | CENTRAL San Miguel Centro";
+const TITLE = "Directorio | CENTRAL San Miguel Centro";
 const DESCRIPTION =
-  "Directorio de los comercios de CENTRAL San Miguel Centro: local, horario de atención y contacto de cada establecimiento en el Centro de San Miguel.";
+  "Directorio de Central San Miguel Centro: tiendas, gastronomía y servicios con: local, horario de atención y contacto de cada establecimiento en el Centro de San Miguel.";
 
 export const Route = createFileRoute("/comercios/")({
   validateSearch: (search: Record<string, unknown>): ComerciosSearch => ({
@@ -57,38 +57,27 @@ function ComerciosPage() {
   return (
     <>
       <PageHero
-        eyebrow="Comercios"
-        title="Directorio de la plaza"
-        description="Encuentra cada comercio de CENTRAL San Miguel Centro con su local, su horario de atención y su contacto."
-        breadcrumbs={[{ label: "Comercios" }]}
+        eyebrow="Directorio"
+        title="Encuentra lo que buscas."
+        description="Tiendas, gastronomía, servicios y más en Central San Miguel Centro."
+        breadcrumbs={[{ label: "Directorio" }]}
       >
-        <p className="max-w-2xl text-sm leading-relaxed text-ink-foreground/70">{center.hoursNote}</p>
+        <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">{center.hoursNote}</p>
       </PageHero>
 
       <Section className="py-12 md:py-16">
         <FilterBar
           query={q}
           onQueryChange={(value) => setSearch({ q: value || undefined })}
-          searchPlaceholder="Buscar por nombre del comercio"
-          selects={[
-            {
-              label: "Categoría",
-              value: categoria,
-              onChange: (value) => setSearch({ categoria: value === "todas" ? undefined : value }),
-              options: [
-                { value: "todas", label: "Todas las categorías" },
-                ...categories.map((c) => ({ value: c.slug, label: c.name })),
-              ],
-            },
-          ]}
+          searchPlaceholder="¿Qué quieres encontrar?"
         />
 
-        <div className="mt-8 hidden lg:block">
+        <div className="mt-8">
           <CategoryChips
             value={categoria}
             onChange={(value) => setSearch({ categoria: value === "todas" ? undefined : value })}
             options={[
-              { value: "todas", label: "Todas" },
+              { value: "todas", label: "Todos" },
               ...categories.map((c) => ({ value: c.slug, label: c.name })),
             ]}
           />
