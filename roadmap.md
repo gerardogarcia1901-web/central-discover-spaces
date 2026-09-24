@@ -8,7 +8,8 @@
 - [x] Integrar el logotipo oficial en la barra de menú.
 - [x] Quitar Farmacia La Buena de la página Servicios.
 - [x] Actualizar Google Maps, Waze y el mapa incrustado al pin oficial compartido.
-- [ ] Ajustar arrendamiento, campos requeridos, estados y envío real a info@grupogalo.net.
+- [x] Ajustar arrendamiento, campos requeridos y estados de confirmación/error.
+- [ ] Activar el envío real de arrendamiento a info@grupogalo.net cuando el dominio remitente esté verificado.
 - [x] Reorganizar el footer sin Arrendamiento y agregar Preguntas frecuentes y Acerca de CENTRAL.
 - [x] Aplicar los requisitos adjuntos de cookies, Contacto y metadatos SEO.
 
