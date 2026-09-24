@@ -18,6 +18,7 @@ import { site } from "@/data/site";
 import { center } from "@/data/center";
 import { allStores } from "@/data/stores";
 import { cn } from "@/lib/utils";
+import logoAsset from "@/assets/central-san-miguel-centro.png.asset.json";
 
 const menuGroups = [
   {
@@ -95,11 +96,14 @@ export function LocationSwitcher({ inverse = false, compact = false }: { inverse
 
 function Wordmark({ onNavigate }: { onNavigate?: () => void }) {
   return (
-    <Link to="/" onClick={onNavigate} className="flex flex-col leading-none" aria-label={`${site.fullName}, inicio`}>
-      <span className="wordmark text-xl leading-none md:text-2xl">CENTRAL</span>
-      <span className="mt-1 text-[0.6rem] font-medium uppercase tracking-[0.28em] text-muted-foreground md:text-[0.65rem]">
-        {site.subtitle}
-      </span>
+    <Link to="/" onClick={onNavigate} className="block" aria-label={`${site.fullName}, inicio`}>
+      <img
+        src={logoAsset.url}
+        alt="CENTRAL San Miguel Centro"
+        width={1512}
+        height={447}
+        className="h-8 w-auto max-w-[12rem] object-contain object-left md:h-10 md:max-w-[15rem]"
+      />
     </Link>
   );
 }
@@ -205,14 +209,7 @@ export function Header() {
                     <X className="size-5" />
                     <span className="hidden sm:inline">Cerrar</span>
                   </Button>
-                  <Link
-                    to="/"
-                    onClick={() => setOpen(false)}
-                    className="wordmark text-lg md:text-2xl"
-                    aria-label={`${site.fullName}, inicio`}
-                  >
-                    CENTRAL
-                  </Link>
+                  <Wordmark onNavigate={() => setOpen(false)} />
                   <Link
                     to="/visitanos"
                     onClick={() => setOpen(false)}
