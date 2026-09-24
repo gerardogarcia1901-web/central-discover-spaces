@@ -27,23 +27,22 @@ function EventosPage() {
       <PageHero
         eyebrow="CENTRAL San Miguel Centro"
         title="Eventos"
-        description="Actividades especiales de la plaza, publicadas en cuanto estén confirmadas."
+        description="Conoce nuestros eventos."
         breadcrumbs={[{ label: "Eventos" }]}
       />
       <Section className="py-14 md:py-20">
         <ContentPlaceholder
           eyebrow="CENTRAL San Miguel Centro"
-          title="Aún no hay eventos publicados"
-          description="Este módulo está listo para publicar las actividades especiales de la plaza en cuanto estén disponibles."
-          items={["Actividades especiales"]}
+          title="Por ahora no hay eventos publicados."
+          description="Vuelve pronto para conocer lo que viene."
         />
       </Section>
 
       <CtaSection
-        eyebrow="Comercios"
-        title="Mientras tanto, conoce la plaza"
-        description="Revisa los comercios de CENTRAL San Miguel Centro con su local, horario de atención y contacto."
-        primary={{ label: "Ver comercios", to: "/comercios" }}
+        eyebrow="Directorio"
+        title="Encuentra lo que buscas."
+        description="Tiendas, gastronomía, servicios y más."
+        primary={{ label: "Ver directorio", to: "/comercios" }}
         secondary={{ label: "Cómo llegar", to: "/visitanos" }}
       />
     </>

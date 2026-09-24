@@ -3,7 +3,7 @@ import { PageHero, Section } from "@/components/central/primitives";
 import { NewsCard } from "@/components/central/cards";
 import { ContentPlaceholder } from "@/components/central/Placeholders";
 import { CtaSection } from "@/components/central/CtaSection";
-import { articles, newsKinds } from "@/data/news";
+import { articles } from "@/data/news";
 
 const TITLE = "Novedades | CENTRAL San Miguel Centro";
 const DESCRIPTION =
@@ -31,7 +31,7 @@ function NovedadesPage() {
       <PageHero
         eyebrow="CENTRAL San Miguel Centro"
         title="Novedades"
-        description="Nuevas aperturas, actividades especiales, noticias de la plaza y avances de la renovación del inmueble."
+        description="Noticias y contenido editorial de Central San Miguel Centro."
         breadcrumbs={[{ label: "Novedades" }]}
       />
       <Section className="py-14 md:py-20">
@@ -49,18 +49,17 @@ function NovedadesPage() {
         ) : (
           <ContentPlaceholder
             eyebrow="CENTRAL San Miguel Centro"
-            title="Aún no hay novedades publicadas"
-            description="Este módulo está listo para publicar las noticias y actividades de la plaza en cuanto estén disponibles."
-            items={newsKinds}
+            title="Por ahora no hay novedades publicadas."
+            description="Vuelve pronto para conocer las novedades de CENTRAL."
           />
         )}
       </Section>
 
       <CtaSection
-        eyebrow="Comercios"
-        title="Mientras tanto, conoce la plaza"
-        description="Revisa los comercios de CENTRAL San Miguel Centro con su local, horario de atención y contacto."
-        primary={{ label: "Ver comercios", to: "/comercios" }}
+        eyebrow="Directorio"
+        title="Encuentra lo que buscas."
+        description="Tiendas, gastronomía, servicios y más."
+        primary={{ label: "Ver directorio", to: "/comercios" }}
         secondary={{ label: "Cómo llegar", to: "/visitanos" }}
       />
     </>

@@ -1,10 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero, Section } from "@/components/central/primitives";
 import { LeasingForm } from "@/components/central/LeasingForm";
-import { center } from "@/data/center";
-import { site } from "@/data/site";
 
-const TITLE = "Arrendamientos | CENTRAL San Miguel Centro";
+const TITLE = "Arrendamiento | CENTRAL San Miguel Centro";
 const DESCRIPTION =
   "Solicita información para arrendar un local en CENTRAL San Miguel Centro, plaza comercial urbana y peatonal en el Centro de San Miguel.";
 
@@ -26,11 +24,22 @@ function ArrendamientosPage() {
   return (
     <>
       <PageHero
-        eyebrow="Arrendamientos"
-        title="Tu marca en el centro de San Miguel"
-        description={`${center.name} es una plaza urbana y peatonal a pie de calle, frente al nuevo Mercado Central. Solicita información y el equipo de ${site.operator} te contactará.`}
-        breadcrumbs={[{ label: "Arrendamientos" }]}
-      />
+        eyebrow="Arrendamiento"
+        title="Su marca puede ser parte de CENTRAL."
+        description="Conoce las oportunidades de arrendamiento en Central San Miguel Centro."
+        breadcrumbs={[{ label: "Arrendamiento" }]}
+      >
+        <dl className="grid max-w-xl grid-cols-2 gap-6 border-t border-foreground/15 pt-6">
+          <div>
+            <dt className="eyebrow text-muted-foreground">Área arrendable</dt>
+            <dd className="display-md mt-2 text-2xl">≈ 1,300 m²</dd>
+          </div>
+          <div>
+            <dt className="eyebrow text-muted-foreground">Locales comerciales</dt>
+            <dd className="display-md mt-2 text-2xl">6</dd>
+          </div>
+        </dl>
+      </PageHero>
 
       <Section className="py-14 md:py-20">
         <LeasingForm />

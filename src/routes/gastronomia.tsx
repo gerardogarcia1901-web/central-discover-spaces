@@ -24,17 +24,17 @@ export const Route = createFileRoute("/gastronomia")({
 });
 
 function GastronomiaPage() {
-  const results = allStores.filter((s) => s.categorySlug === "comida");
+  const results = allStores.filter((s) => s.categorySlug === "gastronomia");
 
   return (
     <>
       <PageHero
-        eyebrow="Gastronomía"
-        title="Comida y bebida en la plaza"
-        description="Los comercios de comida y bebida de CENTRAL San Miguel Centro, con su local, su horario de atención y su contacto."
+        eyebrow="Central San Miguel Centro"
+        title="Gastronomía"
+        description="Encuentra opciones para comer en Central San Miguel Centro."
         breadcrumbs={[{ label: "Gastronomía" }]}
       >
-        <p className="max-w-2xl text-sm leading-relaxed text-ink-foreground/70">{center.hoursNote}</p>
+        <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">{center.hoursNote}</p>
       </PageHero>
 
       <Section className="py-12 md:py-16">
@@ -49,10 +49,10 @@ function GastronomiaPage() {
       </Section>
 
       <CtaSection
-        eyebrow="Comercios"
-        title="Conoce todo el directorio"
-        description="Revisa los comercios de CENTRAL San Miguel Centro con su local, horario de atención y contacto."
-        primary={{ label: "Ver comercios", to: "/comercios" }}
+        eyebrow="Directorio"
+        title="Encuentra lo que buscas."
+        description="Tiendas, gastronomía, servicios y más."
+        primary={{ label: "Ver directorio", to: "/comercios" }}
         secondary={{ label: "Cómo llegar", to: "/visitanos" }}
       />
     </>
