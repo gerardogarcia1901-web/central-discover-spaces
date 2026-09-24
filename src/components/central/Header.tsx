@@ -19,6 +19,7 @@ import { center } from "@/data/center";
 import { allStores } from "@/data/stores";
 import { cn } from "@/lib/utils";
 import logoAsset from "@/assets/central-san-miguel-centro.png.asset.json";
+import logoInverseAsset from "@/assets/central-san-miguel-centro-inverse.png.asset.json";
 
 const menuGroups = [
   {
@@ -98,14 +99,11 @@ function Wordmark({ onNavigate, inverse = false }: { onNavigate?: () => void; in
   return (
     <Link to="/" onClick={onNavigate} className="block" aria-label={`${site.fullName}, inicio`}>
       <img
-        src={logoAsset.url}
+        src={inverse ? logoInverseAsset.url : logoAsset.url}
         alt="CENTRAL San Miguel Centro"
         width={1512}
         height={447}
-        className={cn(
-          "h-8 w-auto max-w-[12rem] object-contain object-left md:h-10 md:max-w-[15rem]",
-          inverse && "brightness-0 invert",
-        )}
+        className="h-8 w-auto max-w-[12rem] object-contain object-left md:h-10 md:max-w-[15rem]"
       />
     </Link>
   );

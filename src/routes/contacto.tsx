@@ -41,10 +41,8 @@ function ContactoPage() {
       toast.error(!acepta ? "Debes aceptar la política de privacidad para enviar tu mensaje." : "Revisa los campos obligatorios.");
       return;
     }
-    setEstado("ok");
-    toast.success("Mensaje enviado. Te responderemos pronto.");
-    form.reset();
-    setAcepta(false);
+    setEstado("error");
+    toast.error("No pudimos enviar tu mensaje. Intenta nuevamente.");
   };
 
   return (
