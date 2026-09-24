@@ -161,6 +161,17 @@ function ContactoPage() {
                   <span className="text-muted-foreground">{center.hoursNote}</span>
                 </li>
               </ul>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Button asChild size="sm" className="rounded-none eyebrow">
+                  <a href={site.whatsappUrl} target="_blank" rel="noreferrer">Escribir por WhatsApp</a>
+                </Button>
+                <Button asChild size="sm" variant="outline" className="rounded-none eyebrow">
+                  <a href={`mailto:${site.email}`}>Enviar correo</a>
+                </Button>
+                <Button asChild size="sm" variant="outline" className="rounded-none eyebrow">
+                  <a href={site.instagramUrl} target="_blank" rel="noreferrer">Ver Instagram</a>
+                </Button>
+              </div>
             </div>
             <div>
               <p className="eyebrow text-muted-foreground">Enlaces útiles</p>
