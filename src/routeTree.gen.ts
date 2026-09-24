@@ -14,8 +14,10 @@ import { Route as ArrendamientosRouteImport } from './routes/arrendamientos'
 import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as GastronomiaRouteImport } from './routes/gastronomia'
+import { Route as PrivacidadRouteImport } from './routes/privacidad'
 import { Route as PromocionesRouteImport } from './routes/promociones'
 import { Route as ServiciosRouteImport } from './routes/servicios'
+import { Route as TerminosRouteImport } from './routes/terminos'
 import { Route as VisitanosRouteImport } from './routes/visitanos'
 import { Route as ComerciosIndexRouteImport } from './routes/comercios.index'
 import { Route as ComerciosSlugRouteImport } from './routes/comercios.$slug'
@@ -47,6 +49,11 @@ const GastronomiaRoute = GastronomiaRouteImport.update({
   path: '/gastronomia',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacidadRoute = PrivacidadRouteImport.update({
+  id: '/privacidad',
+  path: '/privacidad',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PromocionesRoute = PromocionesRouteImport.update({
   id: '/promociones',
   path: '/promociones',
@@ -55,6 +62,11 @@ const PromocionesRoute = PromocionesRouteImport.update({
 const ServiciosRoute = ServiciosRouteImport.update({
   id: '/servicios',
   path: '/servicios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TerminosRoute = TerminosRouteImport.update({
+  id: '/terminos',
+  path: '/terminos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VisitanosRoute = VisitanosRouteImport.update({
@@ -89,8 +101,10 @@ export interface FileRoutesByFullPath {
   '/contacto': typeof ContactoRoute
   '/eventos': typeof EventosRoute
   '/gastronomia': typeof GastronomiaRoute
+  '/privacidad': typeof PrivacidadRoute
   '/promociones': typeof PromocionesRoute
   '/servicios': typeof ServiciosRoute
+  '/terminos': typeof TerminosRoute
   '/visitanos': typeof VisitanosRoute
   '/comercios/$slug': typeof ComerciosSlugRoute
   '/novedades/$slug': typeof NovedadesSlugRoute
@@ -103,8 +117,10 @@ export interface FileRoutesByTo {
   '/contacto': typeof ContactoRoute
   '/eventos': typeof EventosRoute
   '/gastronomia': typeof GastronomiaRoute
+  '/privacidad': typeof PrivacidadRoute
   '/promociones': typeof PromocionesRoute
   '/servicios': typeof ServiciosRoute
+  '/terminos': typeof TerminosRoute
   '/visitanos': typeof VisitanosRoute
   '/comercios/$slug': typeof ComerciosSlugRoute
   '/novedades/$slug': typeof NovedadesSlugRoute
@@ -118,8 +134,10 @@ export interface FileRoutesById {
   '/contacto': typeof ContactoRoute
   '/eventos': typeof EventosRoute
   '/gastronomia': typeof GastronomiaRoute
+  '/privacidad': typeof PrivacidadRoute
   '/promociones': typeof PromocionesRoute
   '/servicios': typeof ServiciosRoute
+  '/terminos': typeof TerminosRoute
   '/visitanos': typeof VisitanosRoute
   '/comercios/$slug': typeof ComerciosSlugRoute
   '/novedades/$slug': typeof NovedadesSlugRoute
@@ -134,8 +152,10 @@ export interface FileRouteTypes {
     | '/contacto'
     | '/eventos'
     | '/gastronomia'
+    | '/privacidad'
     | '/promociones'
     | '/servicios'
+    | '/terminos'
     | '/visitanos'
     | '/comercios/$slug'
     | '/novedades/$slug'
@@ -148,8 +168,10 @@ export interface FileRouteTypes {
     | '/contacto'
     | '/eventos'
     | '/gastronomia'
+    | '/privacidad'
     | '/promociones'
     | '/servicios'
+    | '/terminos'
     | '/visitanos'
     | '/comercios/$slug'
     | '/novedades/$slug'
@@ -162,8 +184,10 @@ export interface FileRouteTypes {
     | '/contacto'
     | '/eventos'
     | '/gastronomia'
+    | '/privacidad'
     | '/promociones'
     | '/servicios'
+    | '/terminos'
     | '/visitanos'
     | '/comercios/$slug'
     | '/novedades/$slug'
@@ -177,8 +201,10 @@ export interface RootRouteChildren {
   ContactoRoute: typeof ContactoRoute
   EventosRoute: typeof EventosRoute
   GastronomiaRoute: typeof GastronomiaRoute
+  PrivacidadRoute: typeof PrivacidadRoute
   PromocionesRoute: typeof PromocionesRoute
   ServiciosRoute: typeof ServiciosRoute
+  TerminosRoute: typeof TerminosRoute
   VisitanosRoute: typeof VisitanosRoute
   ComerciosSlugRoute: typeof ComerciosSlugRoute
   NovedadesSlugRoute: typeof NovedadesSlugRoute
@@ -223,6 +249,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GastronomiaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacidad': {
+      id: '/privacidad'
+      path: '/privacidad'
+      fullPath: '/privacidad'
+      preLoaderRoute: typeof PrivacidadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/promociones': {
       id: '/promociones'
       path: '/promociones'
@@ -235,6 +268,13 @@ declare module '@tanstack/react-router' {
       path: '/servicios'
       fullPath: '/servicios'
       preLoaderRoute: typeof ServiciosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terminos': {
+      id: '/terminos'
+      path: '/terminos'
+      fullPath: '/terminos'
+      preLoaderRoute: typeof TerminosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/visitanos': {
@@ -281,8 +321,10 @@ const rootRouteChildren: RootRouteChildren = {
   ContactoRoute: ContactoRoute,
   EventosRoute: EventosRoute,
   GastronomiaRoute: GastronomiaRoute,
+  PrivacidadRoute: PrivacidadRoute,
   PromocionesRoute: PromocionesRoute,
   ServiciosRoute: ServiciosRoute,
+  TerminosRoute: TerminosRoute,
   VisitanosRoute: VisitanosRoute,
   ComerciosSlugRoute: ComerciosSlugRoute,
   NovedadesSlugRoute: NovedadesSlugRoute,
