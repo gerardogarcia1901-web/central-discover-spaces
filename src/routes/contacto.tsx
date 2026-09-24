@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
-import { Clock, Mail, MapPin, MessageCircle } from "lucide-react";
+import { Clock, Instagram, Mail, MapPin, MessageCircle } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,14 +30,21 @@ export const Route = createFileRoute("/contacto")({
 });
 
 function ContactoPage() {
-  const [enviando, setEnviando] = useState(false);
+  const [acepta, setAcepta] = useState(false);
+  const [estado, setEstado] = useState<"idle" | "ok" | "error">("idle");
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setEnviando(true);
+    const form = e.currentTarget;
+    if (!form.checkValidity() || !acepta) {
+      setEstado("error");
+      toast.error(!acepta ? "Debes aceptar la política de privacidad para enviar tu mensaje." : "Revisa los campos obligatorios.");
+      return;
+    }
+    setEstado("ok");
     toast.success("Mensaje enviado. Te responderemos pronto.");
-    e.currentTarget.reset();
-    setEnviando(false);
+    form.reset();
+    setAcepta(false);
   };
 
   return (
@@ -52,38 +60,50 @@ function ContactoPage() {
         <div className="grid gap-14 lg:grid-cols-[1.25fr_1fr]">
           <div>
             <SectionHeading eyebrow="Formulario" title="Envíanos un mensaje" />
-            <form onSubmit={onSubmit} className="mt-10 space-y-6">
+            <form onSubmit={onSubmit} noValidate className="mt-10 space-y-6">
               <div className="grid gap-6 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="c-nombre">Nombre</Label>
+                <div className="space-y-2 sm:col-span-2">
+                  <Label htmlFor="c-nombre">Nombre completo</Label>
                   <Input id="c-nombre" name="nombre" required autoComplete="name" className="h-11 rounded-none" />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="c-email">Correo</Label>
-                  <Input
-                    id="c-email"
-                    name="email"
-                    type="email"
-                    required
-                    autoComplete="email"
-                    className="h-11 rounded-none"
-                  />
+                  <Label htmlFor="c-email">Correo electrónico</Label>
+                  <Input id="c-email" name="email" type="email" required autoComplete="email" className="h-11 rounded-none" />
                 </div>
-                <div className="space-y-2 sm:col-span-2">
-                  <Label htmlFor="c-tel">Teléfono (opcional)</Label>
-                  <Input id="c-tel" name="telefono" type="tel" autoComplete="tel" className="h-11 rounded-none" />
+                <div className="space-y-2">
+                  <Label htmlFor="c-tel">Teléfono</Label>
+                  <Input id="c-tel" name="telefono" type="tel" required autoComplete="tel" className="h-11 rounded-none" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="c-ubicacion">Ubicación de interés</Label>
+                  <Input id="c-ubicacion" name="ubicacion" value={site.fullName} readOnly aria-readonly className="h-11 rounded-none bg-sand" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="c-asunto">Asunto</Label>
+                  <Input id="c-asunto" name="asunto" required className="h-11 rounded-none" />
                 </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="c-mensaje">Mensaje</Label>
                 <Textarea id="c-mensaje" name="mensaje" rows={6} required className="rounded-none" />
               </div>
-              <Button
-                type="submit"
-                size="lg"
-                disabled={enviando}
-                className="w-full rounded-none eyebrow sm:w-auto sm:px-12"
-              >
+              <div className="flex items-start gap-3">
+                <Checkbox id="c-acepta" checked={acepta} onCheckedChange={(v) => setAcepta(v === true)} className="mt-0.5 rounded-none" />
+                <Label htmlFor="c-acepta" className="text-sm font-normal leading-relaxed text-muted-foreground">
+                  Acepto que {site.operator} utilice mis datos para responder a mi mensaje, de acuerdo con su política de privacidad.
+                </Label>
+              </div>
+              {estado === "ok" && (
+                <p role="status" className="border border-border bg-sand p-4 text-sm">
+                  Gracias. Recibimos tu mensaje y te responderemos pronto.
+                </p>
+              )}
+              {estado === "error" && (
+                <p role="alert" className="border border-destructive p-4 text-sm text-destructive">
+                  No pudimos enviar tu mensaje. Completa todos los campos y acepta la política de privacidad.
+                </p>
+              )}
+              <Button type="submit" size="lg" className="w-full rounded-none eyebrow sm:w-auto sm:px-12">
                 Enviar mensaje
               </Button>
             </form>
@@ -106,6 +126,12 @@ function ContactoPage() {
                   </a>
                 </li>
                 <li className="flex gap-3">
+                  <Instagram className="mt-0.5 size-4 shrink-0" aria-hidden />
+                  <a href={site.instagramUrl} target="_blank" rel="noreferrer" className="hover:underline">
+                    Instagram {site.instagram}
+                  </a>
+                </li>
+                <li className="flex gap-3">
                   <MapPin className="mt-0.5 size-4 shrink-0" aria-hidden />
                   <span>{center.address}</span>
                 </li>
@@ -120,7 +146,7 @@ function ContactoPage() {
               <ul className="mt-5 space-y-3 text-sm">
                 <li>
                   <Link to="/comercios" className="underline-offset-8 hover:underline">
-                    Directorio de comercios
+                    Directorio
                   </Link>
                 </li>
                 <li>
@@ -130,7 +156,7 @@ function ContactoPage() {
                 </li>
                 <li>
                   <Link to="/arrendamientos" className="underline-offset-8 hover:underline">
-                    Arrendamientos
+                    Arrendamiento
                   </Link>
                 </li>
               </ul>

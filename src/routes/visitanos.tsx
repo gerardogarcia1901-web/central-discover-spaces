@@ -120,11 +120,14 @@ function VisitanosPage() {
                   <MapPin className="size-3.5 shrink-0" aria-hidden />
                   Ubicación exacta · {center.addressDetail}
                 </p>
-                <Button asChild variant="outline" size="sm" className="rounded-none eyebrow">
-                  <a href={center.mapsUrl} target="_blank" rel="noreferrer">
-                    Cómo llegar
-                  </a>
-                </Button>
+                <div className="flex w-full gap-2 sm:w-auto">
+                  <Button asChild size="sm" className="flex-1 rounded-none eyebrow sm:flex-none">
+                    <a href={center.mapsUrl} target="_blank" rel="noreferrer">Google Maps</a>
+                  </Button>
+                  <Button asChild variant="outline" size="sm" className="flex-1 rounded-none eyebrow sm:flex-none">
+                    <a href={center.wazeUrl} target="_blank" rel="noreferrer">Waze</a>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
