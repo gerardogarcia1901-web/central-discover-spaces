@@ -3,6 +3,7 @@ import type { CenterInfo } from "./types";
 const OFFICIAL_MAPS_URL = "https://maps.app.goo.gl/DDknT8fWG61nBKt27";
 const MAP_LATITUDE = 13.4822358;
 const MAP_LONGITUDE = -88.1776408;
+const MAPS_PLACE = "central plaza | San Miguel Centro";
 
 export const center: CenterInfo = {
   name: "CENTRAL San Miguel Centro",
@@ -20,7 +21,7 @@ export const center: CenterInfo = {
   addressDetail: "Frente al nuevo Mercado Central, ex Parque Barrios.",
   mapsUrl: OFFICIAL_MAPS_URL,
   wazeUrl: OFFICIAL_MAPS_URL,
-  mapsEmbedUrl: `https://www.google.com/maps?q=${MAP_LATITUDE},${MAP_LONGITUDE}&z=20&output=embed`,
+  mapsEmbedUrl: `https://www.google.com/maps?q=${encodeURIComponent(`${MAPS_PLACE} ${MAP_LATITUDE},${MAP_LONGITUDE}`)}&z=20&output=embed`,
   hoursNote:
     "Los horarios varían según cada comercio. Consulta el Directorio para conocer los horarios de atención.",
   stats: [

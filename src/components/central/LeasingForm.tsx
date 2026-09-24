@@ -38,7 +38,7 @@ export function LeasingForm() {
 
         <form onSubmit={onSubmit} noValidate className="mt-10 space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="l-proyecto">Proyecto de interés</Label>
+              <Label htmlFor="l-proyecto">Proyecto de interés <span className="text-destructive">Requerido</span></Label>
             <Input
               id="l-proyecto"
               name="proyecto"
