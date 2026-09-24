@@ -14,7 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { SANTA_ROSA_URL, site } from "@/data/site";
+import { site } from "@/data/site";
 import { center } from "@/data/center";
 import { allStores } from "@/data/stores";
 import { cn } from "@/lib/utils";
@@ -24,23 +24,27 @@ const menuGroups = [
     label: "Explorar",
     links: [
       { label: "Inicio", to: "/" },
-      { label: "Comercios", to: "/comercios" },
+      { label: "Directorio", to: "/comercios" },
     ],
   },
   {
     label: "Descubre",
     links: [
+      { label: "Gastronomía", to: "/gastronomia" },
       { label: "Promociones", to: "/promociones" },
-      { label: "Novedades", to: "/novedades" },
+      { label: "Eventos", to: "/eventos" },
     ],
   },
   {
     label: "Tu visita",
-    links: [{ label: "Visítanos", to: "/visitanos" }],
+    links: [
+      { label: "Servicios", to: "/servicios" },
+      { label: "Cómo llegar", to: "/visitanos" },
+    ],
   },
   {
     label: "Conecta",
-    links: [{ label: "Arrendamientos", to: "/arrendamientos" }],
+    links: [{ label: "Arrendamiento", to: "/arrendamientos" }],
   },
 ] as const;
 
@@ -74,17 +78,11 @@ export function LocationSwitcher({ inverse = false, compact = false }: { inverse
         <DropdownMenuSeparator className="m-0" />
         <DropdownMenuItem asChild className="rounded-none p-0 focus:bg-muted">
           <a href={site.brandUrl} target="_blank" rel="noreferrer" className="flex w-full items-center px-5 py-4">
-            <span className="font-display text-base font-semibold uppercase">CENTRAL</span>
+            <span className="font-display text-base font-semibold uppercase">Volver a CENTRAL</span>
             <ExternalLink className="ml-auto size-4 text-muted-foreground" aria-hidden />
           </a>
         </DropdownMenuItem>
-        <DropdownMenuSeparator className="m-0" />
-        <DropdownMenuItem asChild className="rounded-none p-0 focus:bg-muted">
-          <a href={SANTA_ROSA_URL} target="_blank" rel="noreferrer" className="flex w-full items-center px-5 py-4">
-            <span className="font-display text-base font-semibold uppercase">CENTRAL Santa Rosa de Lima</span>
-            <ExternalLink className="ml-auto size-4 text-muted-foreground" aria-hidden />
-          </a>
-        </DropdownMenuItem>
+
         <DropdownMenuSeparator className="m-0" />
         <div className="flex items-center gap-3 px-5 py-3 text-xs text-muted-foreground">
           <Check className="size-3.5" aria-hidden />
@@ -243,7 +241,7 @@ export function Header() {
                             <Link
                               to={item.to}
                               onClick={() => setOpen(false)}
-                              className="text-xl font-medium text-ink-foreground/90 transition-colors hover:text-highlight md:text-2xl"
+                              className="text-xl font-medium text-ink-foreground/90 transition-colors hover:text-primary md:text-2xl"
                             >
                               {item.label}
                             </Link>

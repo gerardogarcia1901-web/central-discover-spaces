@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ExternalLink, Mail, MapPin, MessageCircle } from "lucide-react";
+import { ExternalLink, Instagram, Mail, MapPin, MessageCircle } from "lucide-react";
 import { legalLinks, mainNav, site } from "@/data/site";
 import { center } from "@/data/center";
 import { stores } from "@/data/stores";
@@ -14,7 +14,7 @@ export function Footer() {
             <p className="wordmark text-3xl md:text-4xl">CENTRAL</p>
             <p className="mt-2 eyebrow text-ink-foreground/60">{site.subtitle}</p>
             <p className="mt-6 max-w-sm text-sm leading-relaxed text-ink-foreground/60">
-              Plaza urbana y peatonal en el corazón de San Miguel.
+              Plaza comercial urbana en el Centro de San Miguel.
             </p>
             <div className="mt-4 w-fit">
               <LocationSwitcher inverse />
@@ -47,8 +47,8 @@ export function Footer() {
               </ul>
             </nav>
 
-            <nav aria-label="Comercios">
-              <h2 className="eyebrow text-ink-foreground/40">Comercios</h2>
+            <nav aria-label="Directorio">
+              <h2 className="eyebrow text-ink-foreground/40">Directorio</h2>
               <ul className="mt-5 space-y-3 text-sm">
                 {stores.map((store) => (
                   <li key={store.slug}>
@@ -77,6 +77,12 @@ export function Footer() {
                   <Mail className="mt-0.5 size-4 shrink-0" aria-hidden />
                   <a href={`mailto:${site.email}`} className="break-all hover:text-ink-foreground">
                     {site.email}
+                  </a>
+                </li>
+                <li className="flex gap-3">
+                  <Instagram className="mt-0.5 size-4 shrink-0" aria-hidden />
+                  <a href={site.instagramUrl} target="_blank" rel="noreferrer" className="hover:text-ink-foreground">
+                    {site.instagram}
                   </a>
                 </li>
                 <li className="flex gap-3 text-ink-foreground/55">

@@ -3,7 +3,7 @@ import { PageHero, Section, SectionHeading } from "@/components/central/primitiv
 import { PromotionCard } from "@/components/central/cards";
 import { ContentPlaceholder } from "@/components/central/Placeholders";
 import { CtaSection } from "@/components/central/CtaSection";
-import { promotions, promotionKinds } from "@/data/promotions";
+import { promotions } from "@/data/promotions";
 import { allStores } from "@/data/stores";
 
 const TITLE = "Promociones | CENTRAL San Miguel Centro";
@@ -32,7 +32,7 @@ function PromocionesPage() {
       <PageHero
         eyebrow="CENTRAL San Miguel Centro"
         title="Promociones"
-        description="Promociones de los comercios, campañas conjuntas y temporadas comerciales de la plaza."
+        description="Conoce las promociones disponibles en Central San Miguel Centro."
         breadcrumbs={[{ label: "Promociones" }]}
       />
 
@@ -49,18 +49,17 @@ function PromocionesPage() {
         ) : (
           <ContentPlaceholder
             eyebrow="CENTRAL San Miguel Centro"
-            title="Aún no hay promociones publicadas"
-            description="Este módulo está listo para publicar promociones de los comercios y campañas de la plaza en cuanto estén disponibles."
-            items={promotionKinds}
+            title="Por ahora no hay promociones disponibles."
+            description="Vuelve pronto para conocer nuevas promociones en Central San Miguel Centro."
           />
         )}
       </Section>
 
       <CtaSection
-        eyebrow="Comercios"
-        title="Conoce los comercios de la plaza"
-        description="Consulta el local, el horario de atención y el contacto de cada comercio de CENTRAL San Miguel Centro."
-        primary={{ label: "Ver comercios", to: "/comercios" }}
+        eyebrow="Directorio"
+        title="Encuentra lo que buscas."
+        description="Tiendas, gastronomía, servicios y más."
+        primary={{ label: "Ver directorio", to: "/comercios" }}
         secondary={{ label: "Cómo llegar", to: "/visitanos" }}
       />
     </>

@@ -7,7 +7,7 @@ import { CtaSection } from "@/components/central/CtaSection";
 import { center } from "@/data/center";
 import { site } from "@/data/site";
 
-const TITLE = "Visítanos: dirección y cómo llegar | CENTRAL San Miguel Centro";
+const TITLE = "Cómo llegar | CENTRAL San Miguel Centro";
 const DESCRIPTION =
   "Dirección, referencias y contacto de CENTRAL San Miguel Centro: 2da Calle Poniente y 1ra Avenida Norte, frente al nuevo Mercado Central, ex Parque Barrios.";
 
@@ -50,25 +50,20 @@ function VisitanosPage() {
   return (
     <>
       <PageHero
-        eyebrow="Cómo llegar"
-        title="Visítanos"
+        eyebrow="Central San Miguel Centro"
+        title="Cómo llegar"
         description={`${center.address}. ${center.addressDetail}`}
-        breadcrumbs={[{ label: "Visítanos" }]}
+        breadcrumbs={[{ label: "Cómo llegar" }]}
       >
         <div className="flex flex-col gap-3 sm:flex-row">
-          <Button asChild size="lg" variant="secondary" className="rounded-none px-8 eyebrow">
+          <Button asChild size="lg" className="rounded-none px-8 eyebrow">
             <a href={center.mapsUrl} target="_blank" rel="noreferrer">
-              Cómo llegar
+              Abrir en Google Maps
             </a>
           </Button>
-          <Button
-            asChild
-            size="lg"
-            variant="outline"
-            className="rounded-none border-white/30 bg-transparent px-8 eyebrow text-ink-foreground hover:bg-white/10 hover:text-ink-foreground"
-          >
-            <a href={site.whatsappUrl} target="_blank" rel="noreferrer">
-              WhatsApp {site.whatsapp}
+          <Button asChild size="lg" variant="outline" className="rounded-none px-8 eyebrow">
+            <a href={center.wazeUrl} target="_blank" rel="noreferrer">
+              Abrir en Waze
             </a>
           </Button>
         </div>
@@ -125,11 +120,14 @@ function VisitanosPage() {
                   <MapPin className="size-3.5 shrink-0" aria-hidden />
                   Ubicación exacta · {center.addressDetail}
                 </p>
-                <Button asChild variant="outline" size="sm" className="rounded-none eyebrow">
-                  <a href={center.mapsUrl} target="_blank" rel="noreferrer">
-                    Cómo llegar
-                  </a>
-                </Button>
+                <div className="flex w-full gap-2 sm:w-auto">
+                  <Button asChild size="sm" className="flex-1 rounded-none eyebrow sm:flex-none">
+                    <a href={center.mapsUrl} target="_blank" rel="noreferrer">Google Maps</a>
+                  </Button>
+                  <Button asChild variant="outline" size="sm" className="flex-1 rounded-none eyebrow sm:flex-none">
+                    <a href={center.wazeUrl} target="_blank" rel="noreferrer">Waze</a>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -171,7 +169,7 @@ function VisitanosPage() {
         title="¿Tienes una consulta sobre la plaza?"
         description={`Escríbenos al WhatsApp ${site.whatsapp} o al correo ${site.email} y te ayudamos.`}
         primary={{ label: "Ir a contacto", to: "/contacto" }}
-        secondary={{ label: "Ver comercios", to: "/comercios" }}
+        secondary={{ label: "Ver directorio", to: "/comercios" }}
       />
     </>
   );

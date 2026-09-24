@@ -92,6 +92,7 @@ export interface CenterInfo {
   addressDetail: string;
   mapsUrl: string;
   mapsEmbedUrl: string;
+  wazeUrl: string;
   /** Aviso oficial: los horarios varían según cada comercio. */
   hoursNote: string;
   stats: Stat[];

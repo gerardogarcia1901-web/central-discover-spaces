@@ -102,29 +102,26 @@ export function PageHero({
   children?: ReactNode;
 }) {
   return (
-    <section className="relative isolate overflow-hidden bg-ink text-ink-foreground">
+    <section className="relative isolate overflow-hidden border-b border-border bg-sand text-foreground">
       {image && (
-        <>
-          <img
-            src={image}
-            alt=""
-            aria-hidden
-            className="absolute inset-0 size-full object-cover opacity-40"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/30" aria-hidden />
-        </>
+        <img
+          src={image}
+          alt=""
+          aria-hidden
+          className="absolute inset-0 -z-10 size-full object-cover opacity-15"
+          loading="lazy"
+        />
       )}
-      <div className="container-central relative py-20 md:py-28 lg:py-36">
+      <div className="container-central relative py-16 md:py-24 lg:py-28">
         {breadcrumbs && (
-          <div className="mb-10 [&_a]:text-ink-foreground/60 [&_a:hover]:text-ink-foreground [&_span]:text-ink-foreground/80">
+          <div className="mb-10">
             <Breadcrumbs items={breadcrumbs} />
           </div>
         )}
-        {eyebrow && <p className="eyebrow text-ink-foreground/50">{eyebrow}</p>}
+        {eyebrow && <p className="eyebrow text-muted-foreground">{eyebrow}</p>}
         <h1 className="display-lg mt-5 max-w-5xl">{title}</h1>
         {description && (
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-ink-foreground/70 md:text-lg">{description}</p>
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">{description}</p>
         )}
         {children && <div className="mt-10">{children}</div>}
       </div>
