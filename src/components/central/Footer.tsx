@@ -28,7 +28,9 @@ export function Footer() {
             <nav aria-label="Explorar">
               <h2 className="eyebrow text-ink-foreground/40">Explorar</h2>
               <ul className="mt-5 space-y-3 text-sm">
-                {mainNav.filter((item) => item.to !== "/arrendamientos").map((item) => (
+                {mainNav
+                  .filter((item) => item.to !== "/arrendamientos" && item.to !== "/comercios")
+                  .map((item) => (
                   <li key={item.to}>
                     <Link to={item.to} className="text-ink-foreground/75 transition-colors hover:text-ink-foreground">
                       {item.label}

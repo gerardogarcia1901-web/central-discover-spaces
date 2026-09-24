@@ -103,7 +103,7 @@ function Wordmark({ onNavigate, inverse = false }: { onNavigate?: () => void; in
         alt="CENTRAL San Miguel Centro"
         width={1512}
         height={447}
-        className="h-8 w-auto max-w-[12rem] object-contain object-left md:h-10 md:max-w-[15rem]"
+        className="h-10 w-auto max-w-[14rem] object-contain object-left md:h-12 md:max-w-[17rem]"
       />
     </Link>
   );
