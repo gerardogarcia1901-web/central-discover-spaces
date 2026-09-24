@@ -5,6 +5,7 @@ import { center } from "@/data/center";
 import { stores } from "@/data/stores";
 import { LocationSwitcher } from "@/components/central/Header";
 import { openCookiePreferences } from "@/components/central/CookieConsent";
+import { Button } from "@/components/ui/button";
 
 export function Footer() {
   return (
@@ -114,9 +115,14 @@ export function Footer() {
               </li>
             ))}
             <li>
-              <button type="button" onClick={openCookiePreferences} className="hover:text-ink-foreground">
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={openCookiePreferences}
+                className="h-auto rounded-none p-0 text-xs font-normal text-ink-foreground/45 hover:bg-transparent hover:text-ink-foreground"
+              >
                 Preferencias de cookies
-              </button>
+              </Button>
             </li>
           </ul>
         </div>

@@ -9,7 +9,7 @@ import { site } from "@/data/site";
 
 const TITLE = "Cómo llegar | CENTRAL San Miguel Centro";
 const DESCRIPTION =
-  "Dirección, referencias y contacto de CENTRAL San Miguel Centro: 2da Calle Poniente y 1ra Avenida Norte, frente al nuevo Mercado Central, ex Parque Barrios.";
+  "Encuentra la dirección y abre tu ruta en Google Maps o Waze para visitar Central San Miguel Centro.";
 
 export const Route = createFileRoute("/visitanos")({
   head: () => ({

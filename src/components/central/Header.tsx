@@ -94,7 +94,7 @@ export function LocationSwitcher({ inverse = false, compact = false }: { inverse
   );
 }
 
-function Wordmark({ onNavigate }: { onNavigate?: () => void }) {
+function Wordmark({ onNavigate, inverse = false }: { onNavigate?: () => void; inverse?: boolean }) {
   return (
     <Link to="/" onClick={onNavigate} className="block" aria-label={`${site.fullName}, inicio`}>
       <img
@@ -102,7 +102,10 @@ function Wordmark({ onNavigate }: { onNavigate?: () => void }) {
         alt="CENTRAL San Miguel Centro"
         width={1512}
         height={447}
-        className="h-8 w-auto max-w-[12rem] object-contain object-left md:h-10 md:max-w-[15rem]"
+        className={cn(
+          "h-8 w-auto max-w-[12rem] object-contain object-left md:h-10 md:max-w-[15rem]",
+          inverse && "brightness-0 invert",
+        )}
       />
     </Link>
   );
@@ -209,7 +212,7 @@ export function Header() {
                     <X className="size-5" />
                     <span className="hidden sm:inline">Cerrar</span>
                   </Button>
-                  <Wordmark onNavigate={() => setOpen(false)} />
+                  <Wordmark onNavigate={() => setOpen(false)} inverse />
                   <Link
                     to="/visitanos"
                     onClick={() => setOpen(false)}
