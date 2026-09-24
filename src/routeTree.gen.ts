@@ -10,10 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AcercaDeCentralRouteImport } from './routes/acerca-de-central'
 import { Route as ArrendamientosRouteImport } from './routes/arrendamientos'
 import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as GastronomiaRouteImport } from './routes/gastronomia'
+import { Route as PreguntasFrecuentesRouteImport } from './routes/preguntas-frecuentes'
 import { Route as PrivacidadRouteImport } from './routes/privacidad'
 import { Route as PromocionesRouteImport } from './routes/promociones'
 import { Route as ServiciosRouteImport } from './routes/servicios'
@@ -27,6 +29,11 @@ import { Route as NovedadesSlugRouteImport } from './routes/novedades.$slug'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AcercaDeCentralRoute = AcercaDeCentralRouteImport.update({
+  id: '/acerca-de-central',
+  path: '/acerca-de-central',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ArrendamientosRoute = ArrendamientosRouteImport.update({
@@ -47,6 +54,11 @@ const EventosRoute = EventosRouteImport.update({
 const GastronomiaRoute = GastronomiaRouteImport.update({
   id: '/gastronomia',
   path: '/gastronomia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PreguntasFrecuentesRoute = PreguntasFrecuentesRouteImport.update({
+  id: '/preguntas-frecuentes',
+  path: '/preguntas-frecuentes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacidadRoute = PrivacidadRouteImport.update({
@@ -97,10 +109,12 @@ const NovedadesSlugRoute = NovedadesSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/acerca-de-central': typeof AcercaDeCentralRoute
   '/arrendamientos': typeof ArrendamientosRoute
   '/contacto': typeof ContactoRoute
   '/eventos': typeof EventosRoute
   '/gastronomia': typeof GastronomiaRoute
+  '/preguntas-frecuentes': typeof PreguntasFrecuentesRoute
   '/privacidad': typeof PrivacidadRoute
   '/promociones': typeof PromocionesRoute
   '/servicios': typeof ServiciosRoute
@@ -113,10 +127,12 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/acerca-de-central': typeof AcercaDeCentralRoute
   '/arrendamientos': typeof ArrendamientosRoute
   '/contacto': typeof ContactoRoute
   '/eventos': typeof EventosRoute
   '/gastronomia': typeof GastronomiaRoute
+  '/preguntas-frecuentes': typeof PreguntasFrecuentesRoute
   '/privacidad': typeof PrivacidadRoute
   '/promociones': typeof PromocionesRoute
   '/servicios': typeof ServiciosRoute
@@ -130,10 +146,12 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/acerca-de-central': typeof AcercaDeCentralRoute
   '/arrendamientos': typeof ArrendamientosRoute
   '/contacto': typeof ContactoRoute
   '/eventos': typeof EventosRoute
   '/gastronomia': typeof GastronomiaRoute
+  '/preguntas-frecuentes': typeof PreguntasFrecuentesRoute
   '/privacidad': typeof PrivacidadRoute
   '/promociones': typeof PromocionesRoute
   '/servicios': typeof ServiciosRoute
@@ -148,10 +166,12 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/acerca-de-central'
     | '/arrendamientos'
     | '/contacto'
     | '/eventos'
     | '/gastronomia'
+    | '/preguntas-frecuentes'
     | '/privacidad'
     | '/promociones'
     | '/servicios'
@@ -164,10 +184,12 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/acerca-de-central'
     | '/arrendamientos'
     | '/contacto'
     | '/eventos'
     | '/gastronomia'
+    | '/preguntas-frecuentes'
     | '/privacidad'
     | '/promociones'
     | '/servicios'
@@ -180,10 +202,12 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/acerca-de-central'
     | '/arrendamientos'
     | '/contacto'
     | '/eventos'
     | '/gastronomia'
+    | '/preguntas-frecuentes'
     | '/privacidad'
     | '/promociones'
     | '/servicios'
@@ -197,10 +221,12 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AcercaDeCentralRoute: typeof AcercaDeCentralRoute
   ArrendamientosRoute: typeof ArrendamientosRoute
   ContactoRoute: typeof ContactoRoute
   EventosRoute: typeof EventosRoute
   GastronomiaRoute: typeof GastronomiaRoute
+  PreguntasFrecuentesRoute: typeof PreguntasFrecuentesRoute
   PrivacidadRoute: typeof PrivacidadRoute
   PromocionesRoute: typeof PromocionesRoute
   ServiciosRoute: typeof ServiciosRoute
@@ -219,6 +245,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/acerca-de-central': {
+      id: '/acerca-de-central'
+      path: '/acerca-de-central'
+      fullPath: '/acerca-de-central'
+      preLoaderRoute: typeof AcercaDeCentralRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/arrendamientos': {
@@ -247,6 +280,13 @@ declare module '@tanstack/react-router' {
       path: '/gastronomia'
       fullPath: '/gastronomia'
       preLoaderRoute: typeof GastronomiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/preguntas-frecuentes': {
+      id: '/preguntas-frecuentes'
+      path: '/preguntas-frecuentes'
+      fullPath: '/preguntas-frecuentes'
+      preLoaderRoute: typeof PreguntasFrecuentesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacidad': {
@@ -317,10 +357,12 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AcercaDeCentralRoute: AcercaDeCentralRoute,
   ArrendamientosRoute: ArrendamientosRoute,
   ContactoRoute: ContactoRoute,
   EventosRoute: EventosRoute,
   GastronomiaRoute: GastronomiaRoute,
+  PreguntasFrecuentesRoute: PreguntasFrecuentesRoute,
   PrivacidadRoute: PrivacidadRoute,
   PromocionesRoute: PromocionesRoute,
   ServiciosRoute: ServiciosRoute,
