@@ -105,12 +105,12 @@ export function LeasingForm() {
               className="mt-0.5 rounded-none"
             />
             <Label htmlFor="l-acepta" className="text-xs font-normal leading-relaxed text-muted-foreground">
-              Autorizo a {site.operator} a utilizar mis datos para dar seguimiento a esta solicitud.
+              He leído la Política de Privacidad y autorizo a Grupo Galo, S.A. de C.V. a tratar mis datos para atender esta solicitud.
             </Label>
           </div>
 
           <Button type="submit" size="lg" className="w-full rounded-none eyebrow sm:w-auto sm:px-12">
-            Solicitar información
+            Enviar solicitud
           </Button>
         </form>
       </div>

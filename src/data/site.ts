@@ -29,9 +29,11 @@ export const mainNav = [
   { label: "Servicios", to: "/servicios" },
   { label: "Cómo llegar", to: "/visitanos" },
   { label: "Arrendamiento", to: "/arrendamientos" },
+  { label: "Contacto", to: "/contacto" },
 ] as const;
 
 export const legalLinks = [
   { label: "Novedades", to: "/novedades" },
-  { label: "Contacto", to: "/contacto" },
+  { label: "Política de Privacidad", to: "/privacidad" },
+  { label: "Términos y Condiciones", to: "/terminos" },
 ] as const;
