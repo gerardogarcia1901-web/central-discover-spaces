@@ -1,10 +1,31 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight, Clock, MapPin, MessageCircle, Phone, ShoppingBag } from "lucide-react";
+import { ArrowUpRight, Clock, MapPin, MessageCircle, Phone, ShoppingBag, Store as StoreIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { categoryName } from "@/data/taxonomy";
 import { storeContact } from "@/data/stores";
 import { MediaPlaceholder } from "@/components/central/Placeholders";
 import type { Article, Promotion, Store } from "@/data/types";
+
+/** Logotipo oficial; mientras no exista, un marcador neutro reemplazable. */
+export function StoreLogo({ store, size = "sm" }: { store: Store; size?: "sm" | "lg" }) {
+  const box = size === "lg" ? "size-20" : "size-12";
+  if (store.logo) {
+    return (
+      <span className={cn("flex shrink-0 items-center justify-center border border-border bg-card p-1.5", box)}>
+        <img src={store.logo} alt={`Logotipo de ${store.name}`} className="max-h-full max-w-full object-contain" />
+      </span>
+    );
+  }
+  return (
+    <span
+      role="img"
+      aria-label={`Logotipo de ${store.name} próximamente`}
+      className={cn("flex shrink-0 items-center justify-center border border-dashed border-border bg-sand text-muted-foreground", box)}
+    >
+      <StoreIcon className={size === "lg" ? "size-7" : "size-5"} aria-hidden />
+    </span>
+  );
+}
 
 export function StoreCard({ store }: { store: Store }) {
   const contact = storeContact(store);
@@ -25,9 +46,7 @@ export function StoreCard({ store }: { store: Store }) {
       </Link>
       <div className="flex flex-1 flex-col gap-3 p-5">
         <div className="flex items-center gap-3">
-          <span className="flex size-9 shrink-0 items-center justify-center bg-ink text-xs font-semibold tracking-widest text-ink-foreground">
-            {store.logoText}
-          </span>
+          <StoreLogo store={store} />
           <div className="min-w-0">
             <h3 className="truncate font-display text-base font-semibold uppercase tracking-tight">{store.name}</h3>
             <p className="text-xs text-muted-foreground">{categoryName(store.categorySlug)}</p>
@@ -72,7 +91,7 @@ export function StoreCard({ store }: { store: Store }) {
           params={{ slug: store.slug }}
           className="mt-auto inline-flex items-center gap-2 border-t border-border pt-4 eyebrow underline-offset-8 hover:underline"
         >
-          Ver comercio <ArrowUpRight className="size-3.5" aria-hidden />
+          Ver más <ArrowUpRight className="size-3.5" aria-hidden />
         </Link>
       </div>
     </article>
@@ -96,7 +115,7 @@ export function PromotionCard({ promotion, storeName }: { promotion: Promotion; 
           <MediaPlaceholder tone="ink" label="Imagen próximamente" />
         </div>
       )}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-ink/70 to-transparent" aria-hidden />
+      <div className="absolute inset-0 -z-10 bg-ink/60" aria-hidden />
       <div className="p-7">
         <p className="eyebrow text-ink-foreground/60">CENTRAL San Miguel Centro · {promotion.kind}</p>
         <h3 className="display-md mt-4 text-2xl md:text-3xl">{promotion.title}</h3>

@@ -1,3 +1,4 @@
+import { StoreLogo } from "@/components/central/cards";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Clock, Facebook, Globe, Instagram, MapPin, MessageCircle, Phone, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -73,9 +74,7 @@ function StorePage() {
           </div>
           <div>
             <div className="flex items-center gap-4">
-              <span className="flex size-14 items-center justify-center bg-ink text-sm tracking-widest text-ink-foreground">
-                {store.logoText}
-              </span>
+              <StoreLogo store={store} size="lg" />
               <p className="eyebrow text-muted-foreground">{categoryName(store.categorySlug)}</p>
             </div>
             <h1 className="display-lg mt-6">{store.name}</h1>

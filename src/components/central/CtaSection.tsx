@@ -17,29 +17,21 @@ export function CtaSection({
   image?: string;
 }) {
   return (
-    <section className="relative isolate overflow-hidden bg-ink text-ink-foreground">
+    <section className="relative isolate overflow-hidden border-t border-border bg-sand text-foreground">
       {image && (
-        <>
-          <img src={image} alt="" aria-hidden loading="lazy" className="absolute inset-0 size-full object-cover opacity-25" />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/40" aria-hidden />
-        </>
+        <img src={image} alt="" aria-hidden loading="lazy" className="absolute inset-0 -z-10 size-full object-cover opacity-15" />
       )}
       <div className="container-central relative py-20 md:py-28">
         <div className="max-w-3xl">
-          {eyebrow && <p className="eyebrow text-ink-foreground/50">{eyebrow}</p>}
+          {eyebrow && <p className="eyebrow text-muted-foreground">{eyebrow}</p>}
           <h2 className="display-lg mt-5">{title}</h2>
-          <p className="mt-6 text-base leading-relaxed text-ink-foreground/70 md:text-lg">{description}</p>
+          <p className="mt-6 text-base leading-relaxed text-muted-foreground md:text-lg">{description}</p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <Button asChild size="lg" variant="secondary" className="rounded-none eyebrow">
+            <Button asChild size="lg" className="rounded-none eyebrow">
               <Link to={primary.to as never}>{primary.label}</Link>
             </Button>
             {secondary && (
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="rounded-none border-white/30 bg-transparent eyebrow text-ink-foreground hover:bg-white/10 hover:text-ink-foreground"
-              >
+              <Button asChild size="lg" variant="outline" className="rounded-none eyebrow">
                 <Link to={secondary.to as never}>{secondary.label}</Link>
               </Button>
             )}
