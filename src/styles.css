@@ -58,53 +58,55 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --shadow-elevated: 0 24px 60px -24px oklch(0.15 0 0 / 0.35);
+  --shadow-elevated: 0 8px 24px -12px rgb(17 17 17 / 0.12);
   --ease-central: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 :root {
-  --font-family-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
-  --font-family-body: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-family-display: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-family-body: "Inter", "Helvetica Neue", Arial, sans-serif;
 
   --radius: 0.25rem;
 
-  --background: oklch(0.985 0.002 90);
-  --foreground: oklch(0.16 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.16 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.16 0 0);
+  /* Paleta oficial CENTRAL San Miguel Centro */
+  --background: #fffdf9;
+  --foreground: #111111;
+  --card: #ffffff;
+  --card-foreground: #111111;
+  --popover: #ffffff;
+  --popover-foreground: #111111;
 
-  --primary: oklch(0.16 0 0);
-  --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.955 0.003 90);
-  --secondary-foreground: oklch(0.16 0 0);
-  --muted: oklch(0.955 0.003 90);
-  --muted-foreground: oklch(0.5 0.005 90);
-  --accent: oklch(0.93 0.006 90);
-  --accent-foreground: oklch(0.16 0 0);
-  --destructive: oklch(0.55 0.19 27);
-  --destructive-foreground: oklch(0.99 0 0);
+  /* CTA y acciones principales */
+  --primary: #f84c04;
+  --primary-foreground: #111111;
+  --secondary: #f5f1e9;
+  --secondary-foreground: #111111;
+  --muted: #f5f1e9;
+  --muted-foreground: #6b6b6b;
+  --accent: #f5f1e9;
+  --accent-foreground: #111111;
+  --destructive: #b42318;
+  --destructive-foreground: #ffffff;
 
-  --border: oklch(0.9 0.004 90);
-  --input: oklch(0.9 0.004 90);
-  --ring: oklch(0.16 0 0);
+  --border: #e8e4dd;
+  --input: #e8e4dd;
+  --ring: #111111;
 
-  /* Superficies editoriales */
-  --ink: oklch(0.14 0 0);
-  --ink-foreground: oklch(0.98 0 0);
-  --sand: oklch(0.94 0.008 85);
-  --highlight: oklch(0.72 0.13 62);
-  --highlight-foreground: oklch(0.16 0 0);
+  --ink: #111111;
+  --ink-foreground: #ffffff;
+  --sand: #f5f1e9;
+  /* Acento puntual */
+  --highlight: #fdab00;
+  --highlight-foreground: #111111;
 
-  --sidebar: oklch(0.985 0.002 90);
-  --sidebar-foreground: oklch(0.16 0 0);
-  --sidebar-primary: oklch(0.16 0 0);
-  --sidebar-primary-foreground: oklch(0.99 0 0);
-  --sidebar-accent: oklch(0.94 0.008 85);
-  --sidebar-accent-foreground: oklch(0.16 0 0);
-  --sidebar-border: oklch(0.9 0.004 90);
-  --sidebar-ring: oklch(0.16 0 0);
+  --sidebar: #fffdf9;
+  --sidebar-foreground: #111111;
+  --sidebar-primary: #f84c04;
+  --sidebar-primary-foreground: #111111;
+  --sidebar-accent: #f5f1e9;
+  --sidebar-accent-foreground: #111111;
+  --sidebar-border: #e8e4dd;
+  --sidebar-ring: #111111;
 }
 
 .dark {
