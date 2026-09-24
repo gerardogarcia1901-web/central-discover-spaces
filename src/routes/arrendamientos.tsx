@@ -31,7 +31,7 @@ function ArrendamientosPage() {
       >
         <dl className="grid max-w-xl grid-cols-2 gap-6 border-t border-foreground/15 pt-6">
           <div>
-            <dt className="eyebrow text-muted-foreground">Área arrendable</dt>
+            <dt className="eyebrow text-muted-foreground">Área arrendable aproximada</dt>
             <dd className="display-md mt-2 text-2xl">≈ 1,300 m²</dd>
           </div>
           <div>

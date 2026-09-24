@@ -12,16 +12,19 @@ import { center } from "@/data/center";
 
 export function LeasingForm() {
   const [acepta, setAcepta] = useState(false);
+  const [estado, setEstado] = useState<"idle" | "ok" | "error">("idle");
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!acepta) {
-      toast.error("Debes aceptar el uso de tus datos para continuar.");
+    const form = e.currentTarget;
+    if (!form.checkValidity() || !acepta) {
+      setEstado("error");
+      toast.error(!acepta ? "Debes aceptar el uso de tus datos para continuar." : "Revisa los campos requeridos.");
       return;
     }
-    toast.success("Solicitud enviada. El equipo de Grupo Galo te contactará pronto.");
-    e.currentTarget.reset();
-    setAcepta(false);
+
+    setEstado("error");
+    toast.error("No pudimos enviar tu solicitud. Intenta nuevamente.");
   };
 
   return (
@@ -33,13 +36,13 @@ export function LeasingForm() {
           description={`Cuéntanos sobre tu marca y el espacio que necesitas. El equipo de ${site.operator} revisará tu solicitud y te contactará.`}
         />
 
-        <form onSubmit={onSubmit} className="mt-10 space-y-6">
+        <form onSubmit={onSubmit} noValidate className="mt-10 space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="l-proyecto">Proyecto de interés</Label>
+              <Label htmlFor="l-proyecto">Proyecto de interés <span className="text-destructive">Requerido</span></Label>
             <Input
               id="l-proyecto"
               name="proyecto"
-              value={site.fullName}
+              value="San Miguel Centro"
               readOnly
               aria-readonly
               className="h-11 rounded-none bg-sand"
@@ -48,23 +51,23 @@ export function LeasingForm() {
 
           <div className="grid gap-6 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="l-nombre">Nombre</Label>
+              <Label htmlFor="l-nombre">Nombre <span className="text-destructive">Requerido</span></Label>
               <Input id="l-nombre" name="nombre" required autoComplete="name" className="h-11 rounded-none" />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="l-marca">Empresa o marca</Label>
+              <Label htmlFor="l-marca">Empresa / marca <span className="text-destructive">Requerido</span></Label>
               <Input id="l-marca" name="marca" required autoComplete="organization" className="h-11 rounded-none" />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="l-giro">Giro comercial</Label>
+              <Label htmlFor="l-giro">Giro comercial <span className="text-destructive">Requerido</span></Label>
               <Input id="l-giro" name="giro" required className="h-11 rounded-none" />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="l-tel">Teléfono</Label>
+              <Label htmlFor="l-tel">Teléfono <span className="text-destructive">Requerido</span></Label>
               <Input id="l-tel" name="telefono" type="tel" required autoComplete="tel" className="h-11 rounded-none" />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="l-email">Correo</Label>
+              <Label htmlFor="l-email">Correo electrónico <span className="text-destructive">Requerido</span></Label>
               <Input
                 id="l-email"
                 name="email"
@@ -75,7 +78,7 @@ export function LeasingForm() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="l-espacio">Espacio requerido</Label>
+              <Label htmlFor="l-espacio">Espacio requerido <span className="text-destructive">Requerido</span></Label>
               <Input
                 id="l-espacio"
                 name="espacio"
@@ -87,7 +90,7 @@ export function LeasingForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="l-mensaje">Comentarios</Label>
+            <Label htmlFor="l-mensaje">Comentarios <span className="text-muted-foreground">Opcional</span></Label>
             <Textarea
               id="l-mensaje"
               name="comentarios"
@@ -105,9 +108,20 @@ export function LeasingForm() {
               className="mt-0.5 rounded-none"
             />
             <Label htmlFor="l-acepta" className="text-xs font-normal leading-relaxed text-muted-foreground">
-              He leído la Política de Privacidad y autorizo a Grupo Galo, S.A. de C.V. a tratar mis datos para atender esta solicitud.
+              He leído la Política de Privacidad y autorizo a Grupo Galo, S.A. de C.V. a tratar mis datos para atender esta solicitud. <span className="text-destructive">Requerido</span>
             </Label>
           </div>
+
+          {estado === "ok" && (
+            <p role="status" className="border border-border bg-sand p-4 text-sm">
+              Solicitud enviada. Gracias por su interés en CENTRAL. Hemos recibido su información.
+            </p>
+          )}
+          {estado === "error" && (
+            <p role="alert" className="border border-destructive p-4 text-sm text-destructive">
+              No pudimos enviar tu solicitud. Intenta nuevamente.
+            </p>
+          )}
 
           <Button type="submit" size="lg" className="w-full rounded-none eyebrow sm:w-auto sm:px-12">
             Enviar solicitud

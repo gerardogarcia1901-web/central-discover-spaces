@@ -41,18 +41,16 @@ function ContactoPage() {
       toast.error(!acepta ? "Debes aceptar la política de privacidad para enviar tu mensaje." : "Revisa los campos obligatorios.");
       return;
     }
-    setEstado("ok");
-    toast.success("Mensaje enviado. Te responderemos pronto.");
-    form.reset();
-    setAcepta(false);
+    setEstado("error");
+    toast.error("No pudimos enviar tu mensaje. Intenta nuevamente.");
   };
 
   return (
     <>
       <PageHero
         eyebrow="Contacto"
-        title="Hablemos"
-        description={`Escríbenos al WhatsApp ${site.whatsapp} o al correo ${site.email} y te ayudamos con tu consulta sobre la plaza.`}
+        title="Contacto"
+        description="Estamos para ayudarte. Escríbenos para consultas, comentarios, sugerencias u oportunidades comerciales."
         breadcrumbs={[{ label: "Contacto" }]}
       />
 
@@ -89,7 +87,19 @@ function ContactoPage() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="c-asunto">Asunto</Label>
-                  <Input id="c-asunto" name="asunto" required className="h-11 rounded-none" />
+                  <select
+                    id="c-asunto"
+                    name="asunto"
+                    required
+                    defaultValue="Información general"
+                    className="h-11 w-full rounded-none border border-input bg-background px-3 text-sm"
+                  >
+                    <option value="Información general">Información general</option>
+                    <option value="Comentario o sugerencia">Comentario o sugerencia</option>
+                    <option value="Promociones y eventos">Promociones y eventos</option>
+                    <option value="Arrendamiento">Arrendamiento</option>
+                    <option value="Otro">Otro</option>
+                  </select>
                 </div>
               </div>
               <div className="space-y-2">
@@ -99,17 +109,17 @@ function ContactoPage() {
               <div className="flex items-start gap-3">
                 <Checkbox id="c-acepta" checked={acepta} onCheckedChange={(v) => setAcepta(v === true)} className="mt-0.5 rounded-none" />
                 <Label htmlFor="c-acepta" className="text-sm font-normal leading-relaxed text-muted-foreground">
-                  Acepto que {site.operator} utilice mis datos para responder a mi mensaje, de acuerdo con su política de privacidad.
+                  He leído la Política de Privacidad y autorizo el tratamiento de mis datos para atender esta consulta.
                 </Label>
               </div>
               {estado === "ok" && (
                 <p role="status" className="border border-border bg-sand p-4 text-sm">
-                  Gracias. Recibimos tu mensaje y te responderemos pronto.
+                  Mensaje enviado. Gracias por escribirnos. Hemos recibido tu consulta.
                 </p>
               )}
               {estado === "error" && (
                 <p role="alert" className="border border-destructive p-4 text-sm text-destructive">
-                  No pudimos enviar tu mensaje. Completa todos los campos y acepta la política de privacidad.
+                  No pudimos enviar tu mensaje. Intenta nuevamente.
                 </p>
               )}
               <Button type="submit" size="lg" className="w-full rounded-none eyebrow sm:w-auto sm:px-12">
@@ -125,7 +135,7 @@ function ContactoPage() {
                 <li className="flex gap-3">
                   <MessageCircle className="mt-0.5 size-4 shrink-0" aria-hidden />
                   <a href={site.whatsappUrl} target="_blank" rel="noreferrer" className="hover:underline">
-                    WhatsApp {site.whatsapp}
+                    {site.whatsapp}
                   </a>
                 </li>
                 <li className="flex gap-3">
@@ -137,7 +147,7 @@ function ContactoPage() {
                 <li className="flex gap-3">
                   <Instagram className="mt-0.5 size-4 shrink-0" aria-hidden />
                   <a href={site.instagramUrl} target="_blank" rel="noreferrer" className="hover:underline">
-                    Instagram {site.instagram}
+                    {site.instagram}
                   </a>
                 </li>
                 <li className="flex gap-3">
@@ -149,6 +159,17 @@ function ContactoPage() {
                   <span className="text-muted-foreground">{center.hoursNote}</span>
                 </li>
               </ul>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Button asChild size="sm" className="rounded-none eyebrow">
+                  <a href={site.whatsappUrl} target="_blank" rel="noreferrer">Escribir por WhatsApp</a>
+                </Button>
+                <Button asChild size="sm" variant="outline" className="rounded-none eyebrow">
+                  <a href={`mailto:${site.email}`}>Enviar correo</a>
+                </Button>
+                <Button asChild size="sm" variant="outline" className="rounded-none eyebrow">
+                  <a href={site.instagramUrl} target="_blank" rel="noreferrer">Ver Instagram</a>
+                </Button>
+              </div>
             </div>
             <div>
               <p className="eyebrow text-muted-foreground">Enlaces útiles</p>

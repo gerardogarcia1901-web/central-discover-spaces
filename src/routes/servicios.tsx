@@ -2,9 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Clock, Footprints, Mail, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageHero, Section } from "@/components/central/primitives";
-import { StoreCard } from "@/components/central/cards";
 import { CtaSection } from "@/components/central/CtaSection";
-import { allStores } from "@/data/stores";
 import { site } from "@/data/site";
 
 const TITLE = "Servicios | CENTRAL San Miguel Centro";
@@ -26,8 +24,6 @@ export const Route = createFileRoute("/servicios")({
 });
 
 function ServiciosPage() {
-  const results = allStores.filter((s) => s.categorySlug === "servicios");
-
   return (
     <>
       <PageHero
@@ -77,17 +73,6 @@ function ServiciosPage() {
             </ul>
           </div>
         </div>
-
-        {results.length > 0 && (
-          <div className="mt-16">
-            <p className="eyebrow text-muted-foreground">Comercios de servicios</p>
-            <div className="mt-6 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-              {results.map((store) => (
-                <StoreCard key={store.slug} store={store} />
-              ))}
-            </div>
-          </div>
-        )}
       </Section>
 
       <CtaSection

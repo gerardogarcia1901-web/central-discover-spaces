@@ -5,7 +5,7 @@ import { CtaSection } from "@/components/central/CtaSection";
 
 const TITLE = "Eventos | CENTRAL San Miguel Centro";
 const DESCRIPTION =
-  "Actividades especiales y eventos de CENTRAL San Miguel Centro, la plaza comercial urbana del Centro de San Miguel.";
+  "Conoce los eventos y actividades publicadas en Central San Miguel Centro.";
 
 export const Route = createFileRoute("/eventos")({
   head: () => ({

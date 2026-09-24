@@ -10,8 +10,8 @@ import { promotions } from "@/data/promotions";
 import { articles } from "@/data/news";
 import { center } from "@/data/center";
 
-const TITLE = "Central San Miguel Centro | Comercios, gastronomía y servicios";
-const DESCRIPTION = "Encuentra comercios, gastronomía y servicios en el centro de San Miguel.";
+const TITLE = "Central San Miguel Centro | CENTRAL";
+const DESCRIPTION = "Encuentra comercios, gastronomía, servicios, promociones, eventos y cómo llegar a Central San Miguel Centro.";
 
 export const Route = createFileRoute("/")({
   head: () => ({

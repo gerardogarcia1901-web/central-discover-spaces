@@ -4,6 +4,8 @@ import { legalLinks, mainNav, site } from "@/data/site";
 import { center } from "@/data/center";
 import { stores } from "@/data/stores";
 import { LocationSwitcher } from "@/components/central/Header";
+import { openCookiePreferences } from "@/components/central/CookieConsent";
+import { Button } from "@/components/ui/button";
 
 export function Footer() {
   return (
@@ -26,7 +28,7 @@ export function Footer() {
             <nav aria-label="Explorar">
               <h2 className="eyebrow text-ink-foreground/40">Explorar</h2>
               <ul className="mt-5 space-y-3 text-sm">
-                {mainNav.map((item) => (
+                {mainNav.filter((item) => item.to !== "/arrendamientos").map((item) => (
                   <li key={item.to}>
                     <Link to={item.to} className="text-ink-foreground/75 transition-colors hover:text-ink-foreground">
                       {item.label}
@@ -44,6 +46,11 @@ export function Footer() {
                     <ExternalLink className="size-3.5" aria-hidden />
                   </a>
                 </li>
+              </ul>
+              <h2 className="mt-8 eyebrow text-ink-foreground/40">Información</h2>
+              <ul className="mt-5 space-y-3 text-sm">
+                <li><Link to="/preguntas-frecuentes" className="text-ink-foreground/75 hover:text-ink-foreground">Preguntas frecuentes</Link></li>
+                <li><Link to="/acerca-de-central" className="text-ink-foreground/75 hover:text-ink-foreground">Acerca de CENTRAL</Link></li>
               </ul>
             </nav>
 
@@ -107,6 +114,16 @@ export function Footer() {
                 </Link>
               </li>
             ))}
+            <li>
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={openCookiePreferences}
+                className="h-auto rounded-none p-0 text-xs font-normal text-ink-foreground/45 hover:bg-transparent hover:text-ink-foreground"
+              >
+                Preferencias de cookies
+              </Button>
+            </li>
           </ul>
         </div>
       </div>

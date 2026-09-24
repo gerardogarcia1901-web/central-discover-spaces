@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header } from "@/components/central/Header";
 import { Footer } from "@/components/central/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import { CookieConsent } from "@/components/central/CookieConsent";
 
 function NotFoundComponent() {
   return (
@@ -84,13 +85,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Centro comercial CENTRAL San Miguel Centro: marcas, gastronomía, cine y eventos en el corazón de San Miguel, El Salvador.",
+          "Encuentra comercios, gastronomía, servicios, promociones, eventos y cómo llegar a Central San Miguel Centro.",
       },
       { name: "author", content: "CENTRAL San Miguel Centro · Grupo Galo" },
       { property: "og:title", content: "CENTRAL San Miguel Centro" },
       {
         property: "og:description",
-        content: "Marcas, gastronomía, cine y eventos en CENTRAL San Miguel Centro.",
+        content: "Encuentra comercios, gastronomía, servicios, promociones, eventos y cómo llegar a Central San Miguel Centro.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -144,6 +145,7 @@ function RootComponent() {
         <Footer />
       </div>
       <Toaster />
+      <CookieConsent />
     </QueryClientProvider>
   );
 }

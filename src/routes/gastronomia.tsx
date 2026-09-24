@@ -7,7 +7,7 @@ import { center } from "@/data/center";
 
 const TITLE = "Gastronomía | CENTRAL San Miguel Centro";
 const DESCRIPTION =
-  "Opciones de comida y bebida en CENTRAL San Miguel Centro: horarios de atención y contacto de cada establecimiento en el Centro de San Miguel.";
+  "Conoce las opciones para comer disponibles en Central San Miguel Centro.";
 
 export const Route = createFileRoute("/gastronomia")({
   head: () => ({

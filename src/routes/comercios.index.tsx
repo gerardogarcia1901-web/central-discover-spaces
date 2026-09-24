@@ -14,7 +14,7 @@ interface ComerciosSearch {
 
 const TITLE = "Directorio | CENTRAL San Miguel Centro";
 const DESCRIPTION =
-  "Directorio de Central San Miguel Centro: tiendas, gastronomía y servicios con: local, horario de atención y contacto de cada establecimiento en el Centro de San Miguel.";
+  "Encuentra comercios, horarios, ubicación y contactos en Central San Miguel Centro.";
 
 export const Route = createFileRoute("/comercios/")({
   validateSearch: (search: Record<string, unknown>): ComerciosSearch => ({
