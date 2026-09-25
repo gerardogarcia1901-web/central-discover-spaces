@@ -14,7 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { site } from "@/data/site";
+import { site, SANTA_ROSA_URL } from "@/data/site";
 import { center } from "@/data/center";
 import { allStores } from "@/data/stores";
 import { cn } from "@/lib/utils";
@@ -81,6 +81,13 @@ export function LocationSwitcher({ inverse = false, compact = false }: { inverse
         <DropdownMenuItem asChild className="rounded-none p-0 focus:bg-muted">
           <a href={site.brandUrl} target="_blank" rel="noreferrer" className="flex w-full items-center px-5 py-4">
             <span className="font-display text-base font-semibold uppercase">Volver a CENTRAL</span>
+            <ExternalLink className="ml-auto size-4 text-muted-foreground" aria-hidden />
+          </a>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem asChild className="rounded-none p-0 focus:bg-muted">
+          <a href={SANTA_ROSA_URL} target="_blank" rel="noreferrer" className="flex w-full items-center px-5 py-4">
+            <span className="font-display text-base font-semibold uppercase">Central Santa Rosa de Lima</span>
             <ExternalLink className="ml-auto size-4 text-muted-foreground" aria-hidden />
           </a>
         </DropdownMenuItem>
