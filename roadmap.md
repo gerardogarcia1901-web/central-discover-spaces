@@ -12,6 +12,7 @@
 - [ ] Activar el envío real de arrendamiento a info@grupogalo.net cuando el dominio remitente esté verificado.
 - [x] Reorganizar el footer sin Arrendamiento y agregar Preguntas frecuentes y Acerca de CENTRAL.
 - [x] Aplicar los requisitos adjuntos de cookies, Contacto y metadatos SEO.
+- [x] Publicar íntegros los textos proporcionados de Privacidad y Términos y enlazarlos desde ambos formularios.
 
 ## Pendiente (bloqueado por Grupo Galo)
 - [ ] Fotografías reales y logotipos oficiales de los 5 comercios.

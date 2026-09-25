@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero, Section } from "@/components/central/primitives";
-import { ContentPlaceholder } from "@/components/central/Placeholders";
+import { LegalDocument } from "@/components/central/LegalDocument";
+import privacyText from "@/data/legal/privacidad.md?raw";
 
 const TITLE = "Política de Privacidad | CENTRAL San Miguel Centro";
 const DESCRIPTION = "Política de Privacidad de Central San Miguel Centro, plaza operada por Grupo Galo, S.A. de C.V.";
@@ -18,12 +19,14 @@ export const Route = createFileRoute("/privacidad")({
   }),
   component: () => (
     <>
-      <PageHero eyebrow="Legal" title="Política de Privacidad" breadcrumbs={[{ label: "Política de Privacidad" }]} />
+      <PageHero eyebrow="Política de Privacidad" title="Tus datos, con claridad." breadcrumbs={[{ label: "Política de Privacidad" }]}>
+        <div className="max-w-2xl space-y-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+          <p>En CENTRAL respetamos tu privacidad y protegemos la información que nos compartes cuando utilizas nuestro sitio web, formularios y canales digitales.</p>
+          <p>Esta política de privacidad explica de forma sencilla qué información podemos recopilar, para qué la utilizamos y qué opciones tienes sobre tus datos personales.</p>
+        </div>
+      </PageHero>
       <Section className="py-12 md:py-16">
-        <ContentPlaceholder
-          title="Texto en preparación."
-          description="Grupo Galo, S.A. de C.V. publicará aquí su Política de Privacidad oficial."
-        />
+        <LegalDocument content={privacyText} />
       </Section>
     </>
   ),
