@@ -85,6 +85,13 @@ export function LocationSwitcher({ inverse = false, compact = false }: { inverse
           </a>
         </DropdownMenuItem>
 
+        <DropdownMenuItem asChild className="rounded-none p-0 focus:bg-muted">
+          <a href={SANTA_ROSA_URL} target="_blank" rel="noreferrer" className="flex w-full items-center px-5 py-4">
+            <span className="font-display text-base font-semibold uppercase">Central Santa Rosa de Lima</span>
+            <ExternalLink className="ml-auto size-4 text-muted-foreground" aria-hidden />
+          </a>
+        </DropdownMenuItem>
+
         <DropdownMenuSeparator className="m-0" />
         <div className="flex items-center gap-3 px-5 py-3 text-xs text-muted-foreground">
           <Check className="size-3.5" aria-hidden />
