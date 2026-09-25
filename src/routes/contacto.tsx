@@ -98,6 +98,7 @@ function ContactoPage() {
                     <option value="Comentario o sugerencia">Comentario o sugerencia</option>
                     <option value="Promociones y eventos">Promociones y eventos</option>
                     <option value="Arrendamiento">Arrendamiento</option>
+                    <option value="Privacidad y datos personales">Privacidad y datos personales</option>
                     <option value="Otro">Otro</option>
                   </select>
                 </div>
@@ -108,9 +109,12 @@ function ContactoPage() {
               </div>
               <div className="flex items-start gap-3">
                 <Checkbox id="c-acepta" checked={acepta} onCheckedChange={(v) => setAcepta(v === true)} className="mt-0.5 rounded-none" />
-                <Label htmlFor="c-acepta" className="text-sm font-normal leading-relaxed text-muted-foreground">
-                  He leído la Política de Privacidad y autorizo el tratamiento de mis datos para atender esta consulta.
-                </Label>
+                <div className="text-sm leading-relaxed text-muted-foreground">
+                  <Label htmlFor="c-acepta" className="inline cursor-pointer text-sm font-normal leading-relaxed text-muted-foreground">He leído la </Label>
+                  <Link to="/privacidad" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-primary">Política de Privacidad</Link>
+                  <Label htmlFor="c-acepta" className="inline cursor-pointer text-sm font-normal leading-relaxed text-muted-foreground"> y autorizo el tratamiento de mis datos para atender esta consulta.</Label>
+                  <p className="mt-1">Consulta también los <Link to="/terminos" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-primary">Términos y Condiciones</Link>.</p>
+                </div>
               </div>
               {estado === "ok" && (
                 <p role="status" className="border border-border bg-sand p-4 text-sm">

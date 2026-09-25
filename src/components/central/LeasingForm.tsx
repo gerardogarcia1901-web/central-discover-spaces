@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { Link } from "@tanstack/react-router";
 import { Mail, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -107,9 +108,12 @@ export function LeasingForm() {
               onCheckedChange={(v) => setAcepta(v === true)}
               className="mt-0.5 rounded-none"
             />
-            <Label htmlFor="l-acepta" className="text-xs font-normal leading-relaxed text-muted-foreground">
-              He leído la Política de Privacidad y autorizo a Grupo Galo, S.A. de C.V. a tratar mis datos para atender esta solicitud. <span className="text-destructive">Requerido</span>
-            </Label>
+            <div className="text-xs leading-relaxed text-muted-foreground">
+              <Label htmlFor="l-acepta" className="inline cursor-pointer text-xs font-normal leading-relaxed text-muted-foreground">He leído la </Label>
+              <Link to="/privacidad" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-primary">Política de Privacidad</Link>
+              <Label htmlFor="l-acepta" className="inline cursor-pointer text-xs font-normal leading-relaxed text-muted-foreground"> y autorizo a Grupo Galo, S.A. de C.V. a tratar mis datos para atender esta solicitud. <span className="text-destructive">Requerido</span></Label>
+              <p className="mt-1">Consulta también los <Link to="/terminos" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-primary">Términos y Condiciones</Link>.</p>
+            </div>
           </div>
 
           {estado === "ok" && (
